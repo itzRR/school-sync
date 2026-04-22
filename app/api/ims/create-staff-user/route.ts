@@ -3,9 +3,9 @@ import { createClient } from "@supabase/supabase-js"
 
 // This route runs server-side and uses the service role key
 // to bypass RLS when creating staff users.
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+const getSupabaseAdmin = () => createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+  process.env.SUPABASE_SERVICE_ROLE_KEY || "",
   { auth: { autoRefreshToken: false, persistSession: false } }
 )
 
@@ -23,6 +23,8 @@ export async function POST(req: NextRequest) {
     if (!email || !password || !name) {
       return NextResponse.json({ error: "Email, password and name are required" }, { status: 400 })
     }
+
+    const supabaseAdmin = getSupabaseAdmin()
 
     // Step 1: Create the auth user using admin API (no email confirmation needed)
     const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
