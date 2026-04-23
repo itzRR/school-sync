@@ -127,7 +127,7 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <Clock className="h-6 w-6 text-blue-400" /> My Attendance
+            <Clock className="h-6 w-6 text-blue-600" /> My Attendance
           </h1>
           <p className="text-sm text-white/50">{format(new Date(), "EEEE, MMMM d, yyyy")} · Colombo time</p>
         </div>
@@ -176,7 +176,7 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
                   <div key={s.id} className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium border ${s.time_out ? "bg-white/5 border-white/10 text-white/80" : "bg-green-500/20 border-green-500/30 text-green-400"}`}>
                     <span>Session {s.session_index}</span>
                     <span className="text-white/40">{timeStr(s.time_in)} → {s.time_out ? timeStr(s.time_out) : "Active"}</span>
-                    <Badge className={s.status === "late" ? "bg-orange-500/20 text-orange-400 border-none px-1.5 text-[10px]" : "bg-green-500/20 text-green-400 border-none px-1.5 text-[10px]"}>{s.status}</Badge>
+                    <Badge className={s.status === "late" ? "bg-orange-500/20 text-orange-700 border-none px-1.5 text-[10px]" : "bg-green-500/20 text-green-400 border-none px-1.5 text-[10px]"}>{s.status}</Badge>
                   </div>
                 ))}
               </div>
@@ -189,9 +189,9 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { label: "Present Days", value: presentDays, icon: CheckCircle, color: "text-green-400", bg: "bg-green-500/10 border-green-500/20" },
-          { label: "Total Sessions", value: sessions.filter(s => s.time_out).length, icon: Clock, color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20" },
+          { label: "Total Sessions", value: sessions.filter(s => s.time_out).length, icon: Clock, color: "text-blue-600", bg: "bg-blue-500/10 border-blue-500/20" },
           { label: "Avg Duration", value: `${Math.floor(avgDuration / 60)}h ${avgDuration % 60}m`, icon: Calendar, color: "text-purple-400", bg: "bg-purple-500/10 border-purple-500/20" },
-          { label: "This Month", value: sessions.filter(s => s.date.startsWith(today.slice(0, 7))).length, icon: User, color: "text-indigo-400", bg: "bg-indigo-500/10 border-indigo-500/20" },
+          { label: "This Month", value: sessions.filter(s => s.date.startsWith(today.slice(0, 7))).length, icon: User, color: "text-indigo-700", bg: "bg-indigo-500/10 border-indigo-500/20" },
         ].map((s, i) => (
           <Card key={i} className={`border ${s.bg}`}>
             <CardContent className="p-4 flex items-center gap-3">
@@ -211,7 +211,7 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
       {isAdmin && (
         <div className="flex gap-1 border-b border-white/10">
           {(["my", "team"] as const).map(t => (
-            <button key={t} onClick={() => setTab(t)} className={`px-4 py-2 text-sm font-medium capitalize border-b-2 transition-colors ${tab === t ? "border-blue-400 text-blue-400" : "border-transparent text-white/50 hover:text-white/80"}`}>
+            <button key={t} onClick={() => setTab(t)} className={`px-4 py-2 text-sm font-medium capitalize border-b-2 transition-colors ${tab === t ? "border-blue-400 text-blue-600" : "border-transparent text-white/50 hover:text-white/80"}`}>
               {t === "my" ? "My Records" : `Team Records (${allSessions.length})`}
             </button>
           ))}
@@ -242,8 +242,8 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
                 <td className="py-3 px-4 text-white">{durationStr(s.time_in, s.time_out)}</td>
                 <td className="py-3 px-4">
                   <Badge className={`border-none ${
-                    s.status === "late" ? "bg-orange-500/20 text-orange-400" :
-                    !s.time_out ? "bg-green-500/20 text-green-400" : "bg-blue-500/20 text-blue-400"
+                    s.status === "late" ? "bg-orange-500/20 text-orange-700" :
+                    !s.time_out ? "bg-green-500/20 text-green-400" : "bg-blue-500/20 text-blue-600"
                   }`}>{!s.time_out ? "active" : s.status}</Badge>
                 </td>
                 <td className="py-3 px-4 text-white/50 text-xs max-w-[150px] truncate" title={s.daily_report || ""}>
@@ -260,7 +260,7 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
       {/* Clock Out modal with daily report */}
       {showReportModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="dark-glass-strong rounded-2xl shadow-xl w-full max-w-md border border-white/10">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-xl w-full max-w-md border border-white/10">
             <div className="p-5 border-b border-white/10">
               <h2 className="font-semibold text-lg text-white">Daily Report</h2>
               <p className="text-sm text-white/50 mt-0.5">Write a short summary of what you did today before clocking out.</p>
@@ -287,3 +287,4 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
     </div>
   )
 }
+

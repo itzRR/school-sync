@@ -36,13 +36,13 @@ const ROLE_COLORS: Record<string, string> = {
   super_admin:      "bg-red-100 text-red-600 border-red-200",
   branch_manager:   "bg-purple-100 text-purple-600 border-purple-200",
   marketing_staff:  "bg-pink-100 text-pink-600 border-pink-200",
-  academic_staff:   "bg-blue-500/20 text-blue-400 border-blue-500/20",
+  academic_staff:   "bg-blue-500/20 text-blue-600 border-blue-500/20",
   finance_officer:  "bg-green-100 text-green-700 border-green-200",
-  hr_officer:       "bg-orange-500/20 text-orange-400 border-orange-500/20",
+  hr_officer:       "bg-orange-500/20 text-orange-700 border-orange-500/20",
   staff:            "bg-gray-500/20 text-gray-300 border-gray-500/20",
-  student:          "bg-cyan-500/20 text-cyan-400 border-cyan-500/20",
+  student:          "bg-cyan-500/20 text-cyan-700 border-cyan-500/20",
   trainer:          "bg-yellow-100 text-yellow-700 border-yellow-200",
-  academic_manager: "bg-indigo-500/20 text-indigo-400 border-indigo-500/20",
+  academic_manager: "bg-indigo-500/20 text-indigo-700 border-indigo-500/20",
   coordinator:      "bg-teal-500/20 text-teal-400 border-teal-500/20",
 }
 
@@ -122,12 +122,12 @@ function PermissionGrid({ role, grantedPermissions, onChange, readOnly }: Permis
                       <div className="flex items-center gap-2">
                         <span className={`text-sm font-bold transition-colors ${isGranted ? 'text-gray-900' : 'text-gray-600'}`}>{def.label}</span>
                         {isBase && (
-                          <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-blue-500/20 text-blue-400 font-bold border border-blue-500/20 uppercase tracking-tighter">
+                          <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-blue-500/20 text-blue-600 font-bold border border-blue-500/20 uppercase tracking-tighter">
                             Default
                           </span>
                         )}
                         {isExtra && (
-                          <motion.span initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} className="text-[9px] px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/20 uppercase tracking-tighter">
+                          <motion.span initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} className="text-[9px] px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-700 font-bold border border-emerald-500/20 uppercase tracking-tighter">
                             Granted
                           </motion.span>
                         )}
@@ -143,11 +143,11 @@ function PermissionGrid({ role, grantedPermissions, onChange, readOnly }: Permis
       })}
 
       <div className="flex items-center gap-3 bg-blue-500/5 p-4 rounded-2xl border border-blue-500/10">
-        <Info className="h-5 w-5 flex-shrink-0 text-blue-400" />
+        <Info className="h-5 w-5 flex-shrink-0 text-blue-600" />
         <p className="text-[11px] text-gray-500 leading-relaxed">
-          <strong className="text-blue-400">Blue/Lock</strong> permissions are fixed for this role. 
+          <strong className="text-blue-600">Blue/Lock</strong> permissions are fixed for this role. 
           <br />
-          <strong className="text-emerald-400">Emerald</strong> permissions are custom overrides granted to this specific user.
+          <strong className="text-emerald-700">Emerald</strong> permissions are custom overrides granted to this specific user.
         </p>
       </div>
     </div>
@@ -320,7 +320,7 @@ export default function IMSUsersPage() {
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Users className="h-6 w-6 text-cyan-400" /> Staff Users
+            <Users className="h-6 w-6 text-cyan-700" /> Staff Users
           </h1>
           <p className="text-sm text-gray-500 mt-1">Manage accounts, roles and individual access permissions</p>
         </div>
@@ -348,7 +348,7 @@ export default function IMSUsersPage() {
           <div key={g.role} onClick={() => setFilterRole(g.role)}
             className={`cursor-pointer p-4 rounded-2xl border transition-all ${filterRole === g.role ? 'bg-cyan-500/20 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.15)]' : 'bg-gray-100 border-gray-200 hover:border-white/30 hover:bg-gray-100'}`}>
             <p className="text-xs text-gray-600 mb-1">{g.label}</p>
-            <p className={`text-2xl font-black ${filterRole === g.role ? 'text-cyan-400' : 'text-gray-900'}`}>{g.count}</p>
+            <p className={`text-2xl font-black ${filterRole === g.role ? 'text-cyan-700' : 'text-gray-900'}`}>{g.count}</p>
           </div>
         ))}
       </div>
@@ -409,7 +409,7 @@ export default function IMSUsersPage() {
                             {p.role.replace(/_/g, ' ')}
                           </span>
                           {extrasCount > 0 && (
-                            <div className="flex items-center gap-1 text-[10px] text-emerald-400 font-medium">
+                            <div className="flex items-center gap-1 text-[10px] text-emerald-700 font-medium">
                               <ShieldPlus className="h-3 w-3" /> +{extrasCount} custom perms
                             </div>
                           )}
@@ -434,7 +434,7 @@ export default function IMSUsersPage() {
                       <td className="px-6 py-4 text-right">
                         {isAdmin && (
                           <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => openEditModal(p)} className="p-2 bg-gray-100 hover:bg-blue-500/20 text-gray-600 hover:text-blue-400 rounded-lg transition-colors" title="Edit user">
+                            <button onClick={() => openEditModal(p)} className="p-2 bg-gray-100 hover:bg-blue-500/20 text-gray-600 hover:text-blue-600 rounded-lg transition-colors" title="Edit user">
                               <Edit className="h-4 w-4" />
                             </button>
                             <button onClick={() => handleToggleDisable(p)} className={`p-2 rounded-lg transition-colors ${p.disabled ? 'bg-green-500/10 text-green-700 hover:bg-green-100' : 'bg-red-500/10 text-red-600 hover:bg-red-100'}`} title={p.disabled ? "Enable user" : "Disable user"}>
@@ -466,7 +466,7 @@ export default function IMSUsersPage() {
 
             <div className="space-y-6">
               <div>
-                <h3 className="text-sm font-bold text-cyan-400 mb-4 uppercase tracking-wider">Account Credentials</h3>
+                <h3 className="text-sm font-bold text-cyan-700 mb-4 uppercase tracking-wider">Account Credentials</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-600">Full Name *</label>
@@ -487,7 +487,7 @@ export default function IMSUsersPage() {
               </div>
 
               <div>
-                <h3 className="text-sm font-bold text-cyan-400 mb-4 uppercase tracking-wider mt-6">Role & Position</h3>
+                <h3 className="text-sm font-bold text-cyan-700 mb-4 uppercase tracking-wider mt-6">Role & Position</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-600">System Role *</label>
@@ -531,7 +531,7 @@ export default function IMSUsersPage() {
             <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white z-10 rounded-t-[2rem]">
               <div>
                 <h2 className="font-bold text-xl text-gray-900 flex items-center gap-2">
-                  <ShieldPlus className="h-5 w-5 text-cyan-400" />
+                  <ShieldPlus className="h-5 w-5 text-cyan-700" />
                   Role & Permissions
                 </h2>
                 <p className="text-sm text-gray-500 mt-0.5">{editingProfile.full_name} — {editingProfile.email}</p>
@@ -569,7 +569,7 @@ export default function IMSUsersPage() {
                   <div className="flex gap-2">
                     {[{v:1,label:"Standard"},{v:2,label:"Head"}].map(lvl => (
                       <button key={lvl.v} type="button" onClick={() => setEditForm(p => ({ ...p, access_level: lvl.v }))}
-                        className={`flex-1 py-2.5 rounded-xl text-xs font-bold border transition-all ${editForm.access_level === lvl.v ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400' : 'bg-gray-100 border-gray-200 text-gray-400 hover:border-white/30'}`}>
+                        className={`flex-1 py-2.5 rounded-xl text-xs font-bold border transition-all ${editForm.access_level === lvl.v ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-700' : 'bg-gray-100 border-gray-200 text-gray-400 hover:border-white/30'}`}>
                         {lvl.label}
                       </button>
                     ))}
@@ -579,9 +579,9 @@ export default function IMSUsersPage() {
 
               {/* Permission Grid */}
               <div>
-                <h3 className="text-xs font-bold text-cyan-400 mb-4 uppercase tracking-wider">Granular Permissions</h3>
+                <h3 className="text-xs font-bold text-cyan-700 mb-4 uppercase tracking-wider">Granular Permissions</h3>
                 {!canGrantPermissions ? (
-                  <div className="bg-orange-500/10 border border-orange-500/20 text-orange-400 p-4 rounded-xl text-sm font-medium">
+                  <div className="bg-orange-500/10 border border-orange-500/20 text-orange-700 p-4 rounded-xl text-sm font-medium">
                     You do not have sufficient privileges to modify granular permissions.
                   </div>
                 ) : (
@@ -598,10 +598,10 @@ export default function IMSUsersPage() {
               {/* Active permissions summary */}
               {editForm.permissions.length > 0 && (
                 <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4">
-                  <p className="text-xs font-bold text-emerald-400 mb-2">Extra permissions being granted:</p>
+                  <p className="text-xs font-bold text-emerald-700 mb-2">Extra permissions being granted:</p>
                   <div className="flex flex-wrap gap-1.5">
                     {editForm.permissions.map(key => (
-                      <span key={key} className="text-xs px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-medium">
+                      <span key={key} className="text-xs px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 font-medium">
                         {PERMISSION_DEFS.find(d => d.key === key)?.label || key}
                       </span>
                     ))}
@@ -616,7 +616,7 @@ export default function IMSUsersPage() {
                   <input type="time" value={tempShiftTime} onChange={e => setTempShiftTime(e.target.value)}
                     className="flex-1 bg-gray-200 border border-gray-200 rounded-xl px-3 py-2.5 text-gray-900 text-sm focus:outline-none focus:border-cyan-500 [color-scheme:dark]" />
                   <button type="button" onClick={() => { if (tempShiftTime) { setEditForm(p => ({ ...p, work_schedule: [...p.work_schedule, { startTime: tempShiftTime, durationHours: 8 }] })); setTempShiftTime(''); }}}
-                    className="px-4 py-2.5 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 border border-cyan-500/30 rounded-xl text-sm font-bold transition-all">
+                    className="px-4 py-2.5 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-700 border border-cyan-500/30 rounded-xl text-sm font-bold transition-all">
                     Add
                   </button>
                 </div>
@@ -642,7 +642,7 @@ export default function IMSUsersPage() {
                   <input placeholder="Serial" value={tempAssetSerial} onChange={e => setTempAssetSerial(e.target.value)}
                     className="w-24 bg-gray-200 border border-gray-200 rounded-xl px-3 py-2.5 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-cyan-500 transition-all" />
                   <button type="button" onClick={() => { if (tempAssetItem) { setEditForm(p => ({ ...p, office_assets: [...p.office_assets, { item: tempAssetItem, serialNo: tempAssetSerial, issuedDate: new Date().toISOString() }] })); setTempAssetItem(''); setTempAssetSerial(''); }}}
-                    className="px-4 py-2.5 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 border border-cyan-500/30 rounded-xl text-sm font-bold transition-all">
+                    className="px-4 py-2.5 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-700 border border-cyan-500/30 rounded-xl text-sm font-bold transition-all">
                     Add
                   </button>
                 </div>
@@ -679,5 +679,6 @@ export default function IMSUsersPage() {
     </div>
   )
 }
+
 
 

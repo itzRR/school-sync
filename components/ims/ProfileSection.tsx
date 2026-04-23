@@ -119,7 +119,7 @@ const PhotoEditor = ({ uid, currentPhotoURL, name, onClose, onUpdate }: { uid: s
             <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input type="url" value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://..." className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
           </div>
-          {isGoogleDriveLink(url) && <p className="text-xs text-blue-400 flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" /> Drive link detected.</p>}
+          {isGoogleDriveLink(url) && <p className="text-xs text-blue-600 flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" /> Drive link detected.</p>}
         </div>
         <div className="flex gap-2">
           {currentPhotoURL && <button onClick={handleRemove} disabled={saving} className="px-3 py-2.5 bg-red-100 text-red-600 rounded-xl text-sm font-medium hover:bg-red-500/30 transition-all">Remove</button>}
@@ -306,7 +306,7 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
             </motion.div>
             <div className="text-center">
               <h3 className="text-2xl font-bold text-white">{localUser.full_name || "Anonymous"}</h3>
-              <p className="text-blue-400 font-medium text-sm mt-1">{localUser.position || "Member"}</p>
+              <p className="text-blue-600 font-medium text-sm mt-1">{localUser.position || "Member"}</p>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 mt-3 bg-white/10 text-white rounded-full text-xs font-semibold border border-white/5">
                 <Shield className="w-3.5 h-3.5" /> <span className="capitalize">{localUser.role.replace('_', ' ')}</span>
               </span>
@@ -338,12 +338,12 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
               <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2"><Briefcase className="w-4 h-4" /> Account Details</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-blue-500/10 p-4 rounded-xl border border-blue-500/20 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400"><CalendarIcon className="w-5 h-5" /></div>
-                  <div><p className="text-xs text-blue-300/70">Member Since</p><p className="text-sm font-semibold text-blue-100">{localUser.created_at ? format(new Date(localUser.created_at), 'MMM d, yyyy') : 'Unknown'}</p></div>
+                  <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-600"><CalendarIcon className="w-5 h-5" /></div>
+                  <div><p className="text-xs text-blue-600/70">Member Since</p><p className="text-sm font-semibold text-blue-100">{localUser.created_at ? format(new Date(localUser.created_at), 'MMM d, yyyy') : 'Unknown'}</p></div>
                 </div>
                 <div className="bg-emerald-500/10 p-4 rounded-xl border border-emerald-500/20 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400"><Clock className="w-5 h-5" /></div>
-                  <div><p className="text-xs text-emerald-300/70">Last Active</p><p className="text-sm font-semibold text-emerald-100">{localUser.last_active ? format(new Date(localUser.last_active), 'MMM d, yyyy') : 'Recently'}</p></div>
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-700"><Clock className="w-5 h-5" /></div>
+                  <div><p className="text-xs text-emerald-700/70">Last Active</p><p className="text-sm font-semibold text-emerald-100">{localUser.last_active ? format(new Date(localUser.last_active), 'MMM d, yyyy') : 'Recently'}</p></div>
                 </div>
                 {localUser.department && (
                   <div className="bg-purple-100 p-4 rounded-xl border border-purple-200 flex items-center gap-4">
@@ -402,7 +402,7 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
                         </div>
                       </div>
                       <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                        <a href={docItem.url} target="_blank" rel="noreferrer" className="w-8 h-8 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center hover:bg-blue-500 hover:text-gray-900 transition-all border border-blue-500/20 shadow-lg shadow-blue-500/20" title="Open Link">
+                        <a href={docItem.url} target="_blank" rel="noreferrer" className="w-8 h-8 bg-blue-500/20 text-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-500 hover:text-gray-900 transition-all border border-blue-500/20 shadow-lg shadow-blue-500/20" title="Open Link">
                           <LinkIcon className="w-4 h-4" />
                         </a>
                         <button onClick={() => handleDeleteDoc(docItem.id)} className="w-8 h-8 bg-red-100 text-red-600 rounded-xl flex items-center justify-center hover:bg-red-500 hover:text-gray-900 transition-all border border-red-200 shadow-lg shadow-red-500/20" title="Delete">
@@ -420,4 +420,5 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
     </div>
   )
 }
+
 

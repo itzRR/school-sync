@@ -21,8 +21,8 @@ type CmdType = "force_logout" | "popup" | "broadcast" | "disable_user"
 const CMD_META: Record<CmdType, { icon: React.ReactNode; label: string; color: string }> = {
   force_logout:  { icon: <LogOut className="h-4 w-4" />,  label: "Force Logout",    color: "text-red-400" },
   popup:         { icon: <Bell className="h-4 w-4" />,     label: "Popup Alert",     color: "text-yellow-400" },
-  broadcast:     { icon: <Send className="h-4 w-4" />,     label: "Broadcast",       color: "text-blue-400" },
-  disable_user:  { icon: <Shield className="h-4 w-4" />,   label: "Disable Account", color: "text-orange-400" },
+  broadcast:     { icon: <Send className="h-4 w-4" />,     label: "Broadcast",       color: "text-blue-600" },
+  disable_user:  { icon: <Shield className="h-4 w-4" />,   label: "Disable Account", color: "text-orange-700" },
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -145,7 +145,7 @@ export default function IMSControlPanelPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: "Active Staff",   value: users.length,                                    icon: Users,    color: "text-blue-400",   glow: "shadow-blue-500/10" },
+          { label: "Active Staff",   value: users.length,                                    icon: Users,    color: "text-blue-600",   glow: "shadow-blue-500/10" },
           { label: "Commands Sent",  value: commands.length,                                 icon: Terminal, color: "text-purple-400", glow: "shadow-purple-500/10" },
           { label: "Pending Cmds",   value: commands.filter(c => c.status === "pending").length, icon: Clock, color: "text-yellow-400", glow: "shadow-yellow-500/10" },
           { label: "Login Events",   value: loginLogs.length,                                icon: Shield,   color: "text-green-400",  glow: "shadow-green-500/10" },
@@ -185,7 +185,7 @@ export default function IMSControlPanelPage() {
             </div>
 
             {!isSuperAdmin && (
-              <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-4 text-sm text-orange-400 font-medium">
+              <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-4 text-sm text-orange-700 font-medium">
                 Read-only: You don't have permission to send commands.
               </div>
             )}
@@ -235,7 +235,7 @@ export default function IMSControlPanelPage() {
             <div className={`rounded-xl p-4 text-sm font-medium ${
               cmdType === "force_logout" || cmdType === "disable_user"
                 ? "bg-red-500/10 border border-red-500/20 text-red-400"
-                : "bg-blue-500/10 border border-blue-500/20 text-blue-400"
+                : "bg-blue-500/10 border border-blue-500/20 text-blue-600"
             }`}>
               {cmdType === "force_logout" && "⚠️ This will immediately end the selected user's session."}
               {cmdType === "disable_user" && "⚠️ This will permanently disable the account until re-enabled."}
@@ -318,7 +318,7 @@ export default function IMSControlPanelPage() {
                     <td className="py-4 px-6 text-white/60 text-xs">
                       {log.login_time ? format(new Date(log.login_time), "MMM d yyyy, HH:mm:ss") : "—"}
                     </td>
-                    <td className="py-4 px-6 text-cyan-400/70 text-xs font-mono">{log.ip_address || "—"}</td>
+                    <td className="py-4 px-6 text-cyan-700/70 text-xs font-mono">{log.ip_address || "—"}</td>
                     <td className="py-4 px-6 text-white/30 text-xs max-w-[200px] truncate" title={log.device_info || ""}>
                       {log.device_info ? log.device_info.replace(/Mozilla\/[^ ]+/, "").substring(0, 50) + "…" : "—"}
                     </td>
@@ -348,7 +348,7 @@ export default function IMSControlPanelPage() {
                 <p className="font-bold text-white truncate">{u.full_name || "—"}</p>
                 <p className="text-xs text-white/40 truncate">{u.email}</p>
                 <div className="flex items-center gap-2 mt-2 flex-wrap">
-                  <span className="inline-flex px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/20 capitalize">
+                  <span className="inline-flex px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-500/20 text-blue-600 border border-blue-500/20 capitalize">
                     {u.role.replace(/_/g, " ")}
                   </span>
                   {u.department && (
@@ -371,3 +371,4 @@ export default function IMSControlPanelPage() {
     </div>
   )
 }
+

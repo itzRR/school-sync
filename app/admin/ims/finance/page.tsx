@@ -290,7 +290,7 @@ export default function FinanceDashboard() {
       </AnimatePresence>
 
       {/* Header */}
-      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="dark-glass-strong p-4 md:p-6 flex items-center justify-between">
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button className="md:hidden text-gray-900" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -299,7 +299,7 @@ export default function FinanceDashboard() {
             <DollarSign className="w-6 h-6 text-gray-900" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-blue-400">Finance Dashboard</h1>
+            <h1 className="text-xl font-bold text-blue-600">Finance Dashboard</h1>
             <p className="text-gray-500 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
           </div>
         </div>
@@ -316,7 +316,7 @@ export default function FinanceDashboard() {
       <div className="flex">
         {/* Sidebar */}
         <motion.aside initial={{ x: -100 }} animate={{ x: 0 }}
-          className={`dark-glass-strong h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
+          className={`bg-white border-r border-gray-200 h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
           {mobileMenuOpen && <div className="flex justify-end p-3 md:hidden"><button onClick={() => setMobileMenuOpen(false)} className="text-gray-900"><X size={20} /></button></div>}
 
           {/* Profile Card */}
@@ -326,7 +326,7 @@ export default function FinanceDashboard() {
                 {currentUser?.name?.charAt(0).toUpperCase() || 'F'}
               </div>
               <div className="min-w-0">
-                <p className="text-blue-300 text-xs font-semibold">Finance Dept.</p>
+                <p className="text-blue-600 text-xs font-semibold">Finance Dept.</p>
                 <p className="text-gray-400 text-[10px] mt-0.5">CCL Taskflow</p>
               </div>
             </div>
@@ -384,7 +384,7 @@ export default function FinanceDashboard() {
                 <div className="flex-1 min-w-[180px] relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search payments…"
-                    className="w-full pl-9 pr-3 py-2 dark-glass-card text-gray-900 placeholder-gray-400 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
+                    className="w-full pl-9 pr-3 py-2 bg-gray-50 text-gray-900 placeholder-gray-400 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <motion.button whileHover={{ scale: 1.05 }} onClick={exportFinance}
                   className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">
@@ -396,7 +396,7 @@ export default function FinanceDashboard() {
                 </motion.button>
               </div>
 
-              <div className="dark-glass-card rounded-2xl overflow-hidden">
+              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-gray-700">
                     <thead className="bg-gray-100">
@@ -443,7 +443,7 @@ export default function FinanceDashboard() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredInvoices.map(inv => (
-                  <div key={inv.id} className="dark-glass-card p-5 rounded-2xl border border-gray-200 space-y-3 relative overflow-hidden group hover:border-blue-500/50 transition-colors">
+                  <div key={inv.id} className="bg-white border border-gray-200 p-5 rounded-2xl border border-gray-200 space-y-3 relative overflow-hidden group hover:border-blue-500/50 transition-colors">
                     <div className={`absolute top-0 right-0 px-3 py-1 text-xs font-bold rounded-bl-xl ${inv.status === 'Paid' ? 'bg-green-100 text-green-700' : inv.status === 'Unpaid' ? 'bg-red-100 text-red-600' : 'bg-yellow-100 text-yellow-700'}`}>
                       {inv.status}
                     </div>
@@ -451,7 +451,7 @@ export default function FinanceDashboard() {
                       <h3 className="font-bold text-gray-900 text-lg">{inv.student_name}</h3>
                       <p className="text-gray-400 text-xs">ID: {inv.student_id} | Course: {inv.course_name}</p>
                     </div>
-                    <div className="text-3xl font-black text-blue-400">LKR {inv.total.toLocaleString()}</div>
+                    <div className="text-3xl font-black text-blue-600">LKR {inv.total.toLocaleString()}</div>
                     <div className="text-xs text-gray-600 space-y-1">
                       <div className="flex justify-between border-b border-gray-100 pb-1"><span>Issued:</span> <span>{format(new Date(inv.generated_at), 'dd MMM yyyy')}</span></div>
                       <div className="flex justify-between"><span>Due:</span> <span className={new Date(inv.due_date || '') < new Date() && inv.status !== 'Paid' ? 'text-red-600 font-bold' : ''}>{inv.due_date}</span></div>
@@ -490,7 +490,7 @@ export default function FinanceDashboard() {
                 </motion.button>
               </div>
 
-              <div className="dark-glass-card rounded-2xl overflow-hidden">
+              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
                 <table className="w-full text-sm text-gray-700">
                   <thead className="bg-gray-100">
                     <tr>{['Date','Category','Amount','Notes','Actions'].map(h => (
@@ -523,26 +523,26 @@ export default function FinanceDashboard() {
             <div className="space-y-4">
               <h2 className="text-xl font-bold text-gray-900">Profit & Loss Report</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="dark-glass-card p-6 rounded-2xl border border-green-200 bg-green-500/5">
+                <div className="bg-white border border-gray-200 p-6 rounded-2xl border border-green-200 bg-green-500/5">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 bg-green-100 rounded-lg text-green-700"><TrendingUp className="w-5 h-5" /></div>
                     <p className="text-gray-600 font-semibold">Total Revenue</p>
                   </div>
                   <h3 className="text-3xl font-black text-green-700">LKR {totalIncome.toLocaleString()}</h3>
                 </div>
-                <div className="dark-glass-card p-6 rounded-2xl border border-red-200 bg-red-500/5">
+                <div className="bg-white border border-gray-200 p-6 rounded-2xl border border-red-200 bg-red-500/5">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 bg-red-100 rounded-lg text-red-600"><TrendingDown className="w-5 h-5" /></div>
                     <p className="text-gray-600 font-semibold">Total Expenses</p>
                   </div>
                   <h3 className="text-3xl font-black text-red-600">LKR {totalExpenses.toLocaleString()}</h3>
                 </div>
-                <div className={`dark-glass-card p-6 rounded-2xl border ${netProfit >= 0 ? 'border-blue-500/20 bg-blue-500/5' : 'border-orange-500/20 bg-orange-500/5'}`}>
+                <div className={`bg-white border border-gray-200 p-6 rounded-2xl border ${netProfit >= 0 ? 'border-blue-500/20 bg-blue-500/5' : 'border-orange-500/20 bg-orange-500/5'}`}>
                   <div className="flex items-center gap-3 mb-2">
-                    <div className={`p-2 rounded-lg ${netProfit >= 0 ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'}`}><DollarSign className="w-5 h-5" /></div>
+                    <div className={`p-2 rounded-lg ${netProfit >= 0 ? 'bg-blue-500/20 text-blue-600' : 'bg-orange-500/20 text-orange-700'}`}><DollarSign className="w-5 h-5" /></div>
                     <p className="text-gray-600 font-semibold">Net Profit</p>
                   </div>
-                  <h3 className={`text-3xl font-black ${netProfit >= 0 ? 'text-blue-400' : 'text-orange-400'}`}>LKR {netProfit.toLocaleString()}</h3>
+                  <h3 className={`text-3xl font-black ${netProfit >= 0 ? 'text-blue-600' : 'text-orange-700'}`}>LKR {netProfit.toLocaleString()}</h3>
                 </div>
               </div>
             </div>
@@ -550,7 +550,7 @@ export default function FinanceDashboard() {
 
           {activeTab === 'calendar' && <SriLankaCalendar accentColor="blue" />}
           {activeTab === 'attendance' && (
-            <div className="dark-glass-card p-6 rounded-2xl border border-gray-200">
+            <div className="bg-white border border-gray-200 p-6 rounded-2xl border border-gray-200">
               <h2 className="text-xl font-bold text-gray-900 mb-4">My Attendance</h2>
               <p className="text-gray-500 mb-4">Your personal attendance records.</p>
               <StaffAttendance />
@@ -569,7 +569,7 @@ export default function FinanceDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-xl font-bold text-gray-900">Record Payment</h2>
                 <button onClick={() => setShowPaymentModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -580,18 +580,18 @@ export default function FinanceDashboard() {
                     <label className="block text-gray-600 text-sm mb-1">{label as string}</label>
                     <input type={type as string} required={req as boolean} value={(paymentForm as any)[key as string]}
                       onChange={e => setPaymentForm(p => ({ ...p, [key as string]: e.target.value }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                   </div>
                 ))}
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Amount (LKR) *</label>
                   <input type="number" required value={paymentForm.amount} onChange={e => setPaymentForm(p => ({ ...p, amount: Number(e.target.value) }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Method</label>
                   <select value={paymentForm.method} onChange={e => setPaymentForm(p => ({ ...p, method: e.target.value as 'Cash' | 'Bank Transfer' | 'Online' }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500">
                     {PAYMENT_METHODS.map(m => <option key={m} value={m}>{m}</option>)}
                   </select>
                 </div>
@@ -599,7 +599,7 @@ export default function FinanceDashboard() {
                   <div key={key}>
                     <label className="block text-gray-600 text-sm mb-1">{label}</label>
                     <input type={type} value={(paymentForm as any)[key]} onChange={e => setPaymentForm(p => ({ ...p, [key]: e.target.value }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                   </div>
                 ))}
                 <div className="flex gap-3 pt-2">
@@ -618,7 +618,7 @@ export default function FinanceDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-xl font-bold text-gray-900">New Invoice</h2>
                 <button onClick={() => setShowInvoiceModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -629,35 +629,35 @@ export default function FinanceDashboard() {
                     <label className="block text-gray-600 text-sm mb-1">{label as string}</label>
                     <input required={req as boolean} value={(invoiceForm as any)[key as string]}
                       onChange={e => setInvoiceForm(p => ({ ...p, [key as string]: e.target.value }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                   </div>
                 ))}
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Due Date</label>
                   <input type="date" value={invoiceForm.due_date} onChange={e => setInvoiceForm(p => ({ ...p, due_date: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
                   <div className="flex justify-between items-center mb-2">
                     <label className="text-gray-600 text-sm">Line Items</label>
                     <button type="button" onClick={() => setInvoiceForm(p => ({ ...p, items: [...p.items, { description: '', amount: 0 }] }))}
-                      className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"><Plus className="w-3 h-3" /> Add Item</button>
+                      className="text-xs text-blue-600 hover:text-blue-600 flex items-center gap-1"><Plus className="w-3 h-3" /> Add Item</button>
                   </div>
                   {invoiceForm.items.map((item, i) => (
                     <div key={i} className="flex gap-2 mb-2">
                       <input placeholder="Description" value={item.description}
                         onChange={e => { const items = [...invoiceForm.items]; items[i].description = e.target.value; setInvoiceForm(p => ({ ...p, items })); }}
-                        className="flex-1 dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm" />
+                        className="flex-1 bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm" />
                       <input type="number" placeholder="LKR" value={item.amount}
                         onChange={e => { const items = [...invoiceForm.items]; items[i].amount = Number(e.target.value); setInvoiceForm(p => ({ ...p, items })); }}
-                        className="w-28 dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm" />
+                        className="w-28 bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm" />
                       {invoiceForm.items.length > 1 && (
                         <button type="button" onClick={() => setInvoiceForm(p => ({ ...p, items: p.items.filter((_, j) => j !== i) }))}
                           className="text-gray-400 hover:text-red-600"><X className="w-4 h-4" /></button>
                       )}
                     </div>
                   ))}
-                  <div className="text-right text-sm font-bold text-blue-400">
+                  <div className="text-right text-sm font-bold text-blue-600">
                     Total: LKR {invoiceForm.items.reduce((s, i) => s + i.amount, 0).toLocaleString()}
                   </div>
                 </div>
@@ -677,7 +677,7 @@ export default function FinanceDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-xl font-bold text-gray-900">Log Expense</h2>
                 <button onClick={() => setShowExpenseModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -686,24 +686,24 @@ export default function FinanceDashboard() {
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Category</label>
                   <select value={expenseForm.category} onChange={e => setExpenseForm(p => ({ ...p, category: e.target.value as any }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500">
                     {EXPENSE_CATS.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Amount (LKR) *</label>
                   <input type="number" required value={expenseForm.amount} onChange={e => setExpenseForm(p => ({ ...p, amount: Number(e.target.value) }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Date</label>
                   <input type="date" value={expenseForm.date} onChange={e => setExpenseForm(p => ({ ...p, date: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Notes</label>
                   <textarea value={expenseForm.notes} onChange={e => setExpenseForm(p => ({ ...p, notes: e.target.value }))} rows={2}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 resize-none" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 resize-none" />
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setShowExpenseModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
@@ -718,5 +718,6 @@ export default function FinanceDashboard() {
     </div>
   );
 }
+
 
 

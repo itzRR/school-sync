@@ -28,7 +28,7 @@ const SOURCES: LeadSource[] = ["Facebook", "Website", "Walk-in", "Referral", "Wh
 const COURSES = ["AutoCAD", "SolidWorks", "3ds Max", "Revit", "CATIA", "BIM (Full Course)", "Navisworks", "Photoshop", "Other"]
 
 const STATUS_COLORS: Record<LeadStatus, string> = {
-  New:        "bg-blue-500/20 text-blue-400 border border-blue-500/20",
+  New:        "bg-blue-500/20 text-blue-600 border border-blue-500/20",
   Contacted:  "bg-yellow-100 text-yellow-700 border border-yellow-200",
   "Follow-up":"bg-purple-100 text-purple-600 border border-purple-200",
   Converted:  "bg-green-100 text-green-700 border border-green-200",
@@ -250,7 +250,7 @@ export default function MarketingDashboard() {
         )}
       </AnimatePresence>
 
-      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="dark-glass-strong p-4 md:p-6 flex items-center justify-between">
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button className="md:hidden text-gray-900" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -259,7 +259,7 @@ export default function MarketingDashboard() {
             <Megaphone className="w-6 h-6 text-gray-900" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-orange-400">Marketing Dashboard</h1>
+            <h1 className="text-xl font-bold text-orange-700">Marketing Dashboard</h1>
             <p className="text-gray-500 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
           </div>
         </div>
@@ -275,7 +275,7 @@ export default function MarketingDashboard() {
 
       <div className="flex">
         <motion.aside initial={{ x: -100 }} animate={{ x: 0 }}
-          className={`dark-glass-strong h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
+          className={`bg-white border-r border-gray-200 h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
           {mobileMenuOpen && <div className="flex justify-end p-3 md:hidden"><button onClick={() => setMobileMenuOpen(false)} className="text-gray-900"><X size={20} /></button></div>}
 
           <div className="px-4 pt-5 pb-4 border-b border-gray-100">
@@ -284,13 +284,13 @@ export default function MarketingDashboard() {
                 {currentUser?.name?.charAt(0).toUpperCase() || 'M'}
               </div>
               <div className="min-w-0">
-                <p className="text-orange-300 text-xs font-semibold">Marketing Dept.</p>
+                <p className="text-orange-700 text-xs font-semibold">Marketing Dept.</p>
                 <p className="text-gray-400 text-[10px] mt-0.5">CCL Taskflow</p>
               </div>
             </div>
             <div className="mt-3 grid grid-cols-2 gap-2">
               <div className="bg-gray-100 rounded-lg p-2 text-center border border-gray-200">
-                <p className="font-bold text-sm text-blue-400">{leads.length}</p>
+                <p className="font-bold text-sm text-blue-600">{leads.length}</p>
                 <p className="text-gray-400 text-[10px]">Total Leads</p>
               </div>
               <div className="bg-gray-100 rounded-lg p-2 text-center border border-gray-200">
@@ -342,7 +342,7 @@ export default function MarketingDashboard() {
                 <div className="flex-1 min-w-[180px] relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search leads…"
-                    className="w-full pl-9 pr-3 py-2 dark-glass-card text-gray-900 placeholder-gray-400 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-500" />
+                    className="w-full pl-9 pr-3 py-2 bg-gray-50 text-gray-900 placeholder-gray-400 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-500" />
                 </div>
                 <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-xl border border-gray-200">
                   <Filter className="w-4 h-4 text-gray-400" />
@@ -366,7 +366,7 @@ export default function MarketingDashboard() {
               <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
                 {stats.map(s => (
                   <div key={s.status} onClick={() => setFilterStatus(filterStatus === s.status ? 'all' : s.status)}
-                    className={`cursor-pointer dark-glass-card p-3 rounded-xl border transition-all text-center ${filterStatus === s.status ? 'border-orange-500/50 bg-gray-100' : 'border-gray-200 hover:border-white/30'}`}>
+                    className={`cursor-pointer bg-white border border-gray-200 p-3 rounded-xl border transition-all text-center ${filterStatus === s.status ? 'border-orange-500/50 bg-gray-100' : 'border-gray-200 hover:border-white/30'}`}>
                     <p className="text-2xl font-black text-gray-900 mb-1">{s.count}</p>
                     <span className={`text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-md ${STATUS_COLORS[s.status as LeadStatus]}`}>{s.status}</span>
                   </div>
@@ -375,11 +375,11 @@ export default function MarketingDashboard() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredLeads.map(lead => (
-                  <div key={lead.id} className="dark-glass-card p-5 rounded-2xl border border-gray-200 space-y-3 relative group hover:border-orange-500/50 transition-colors">
+                  <div key={lead.id} className="bg-white border border-gray-200 p-5 rounded-2xl border border-gray-200 space-y-3 relative group hover:border-orange-500/50 transition-colors">
                     <div className="flex justify-between items-start">
                       <div>
                         <h3 className="font-bold text-gray-900 text-lg">{lead.name}</h3>
-                        <p className="text-orange-400 text-sm font-semibold">{lead.course_interested}</p>
+                        <p className="text-orange-700 text-sm font-semibold">{lead.course_interested}</p>
                       </div>
                       <span className={`text-xs font-bold px-2 py-1 rounded-lg ${STATUS_COLORS[lead.status]}`}>{lead.status}</span>
                     </div>
@@ -393,7 +393,7 @@ export default function MarketingDashboard() {
                         <p className="text-xs font-bold text-gray-400 flex items-center gap-1"><Bell className="w-3 h-3"/> Follow-ups</p>
                         {lead.follow_ups.slice(-2).map((f, i) => (
                           <div key={i} className="flex justify-between items-center text-xs">
-                            <span className={f.done ? 'line-through text-gray-400' : 'text-orange-300'}>{f.method} on {f.due_date}</span>
+                            <span className={f.done ? 'line-through text-gray-400' : 'text-orange-700'}>{f.method} on {f.due_date}</span>
                             <button onClick={() => toggleFollowUpDone(lead, lead.follow_ups.length - 2 + i)} className="text-gray-400 hover:text-gray-900">
                               {f.done ? <CheckCircle className="w-3 h-3 text-green-700"/> : <CheckCircle className="w-3 h-3"/>}
                             </button>
@@ -438,7 +438,7 @@ export default function MarketingDashboard() {
                   const converted = campLeads.filter(l => l.status === 'Converted').length;
                   const cr = campLeads.length ? Math.round((converted / campLeads.length) * 100) : 0;
                   return (
-                    <div key={c.id} className="dark-glass-card p-5 rounded-2xl border border-gray-200 space-y-4">
+                    <div key={c.id} className="bg-white border border-gray-200 p-5 rounded-2xl border border-gray-200 space-y-4">
                       <div className="flex justify-between items-start">
                         <div>
                           <h3 className="font-bold text-gray-900 text-lg">{c.name}</h3>
@@ -449,7 +449,7 @@ export default function MarketingDashboard() {
                       <div className="grid grid-cols-3 gap-2">
                         <div className="bg-gray-100 p-2 rounded-lg text-center">
                           <p className="text-xs text-gray-400 mb-1">Leads</p>
-                          <p className="font-bold text-blue-400">{campLeads.length}</p>
+                          <p className="font-bold text-blue-600">{campLeads.length}</p>
                         </div>
                         <div className="bg-gray-100 p-2 rounded-lg text-center">
                           <p className="text-xs text-gray-400 mb-1">Converted</p>
@@ -457,7 +457,7 @@ export default function MarketingDashboard() {
                         </div>
                         <div className="bg-gray-100 p-2 rounded-lg text-center">
                           <p className="text-xs text-gray-400 mb-1">Conv. Rate</p>
-                          <p className="font-bold text-orange-400">{cr}%</p>
+                          <p className="font-bold text-orange-700">{cr}%</p>
                         </div>
                       </div>
                       <div className="flex justify-between text-xs text-gray-500 border-t border-gray-200 pt-3">
@@ -476,7 +476,7 @@ export default function MarketingDashboard() {
           {activeTab === 'followup' && (
             <div className="space-y-4">
               <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"><Bell className="w-5 h-5 text-orange-500"/> Action Required: Follow-ups</h2>
-              <div className="dark-glass-card rounded-2xl overflow-hidden">
+              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
                 <table className="w-full text-sm text-gray-700">
                   <thead className="bg-gray-100">
                     <tr>{['Lead','Method','Due Date','Notes','Status'].map(h => (
@@ -515,20 +515,20 @@ export default function MarketingDashboard() {
             <div className="space-y-4">
               <h2 className="text-xl font-bold text-gray-900">Marketing Analytics</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="dark-glass-card p-5 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-gray-200">
+                <div className="bg-white border border-gray-200 p-5 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-gray-200">
                   <p className="text-gray-600 text-xs mb-1">Total Leads</p><p className="text-3xl font-bold text-gray-900">{leads.length}</p>
                 </div>
-                <div className="dark-glass-card p-5 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-gray-200">
+                <div className="bg-white border border-gray-200 p-5 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-gray-200">
                   <p className="text-gray-600 text-xs mb-1">Converted</p><p className="text-3xl font-bold text-green-700">{leads.filter(l=>l.status==='Converted').length}</p>
                 </div>
-                <div className="dark-glass-card p-5 rounded-2xl bg-gradient-to-br from-orange-500/10 to-pink-500/10 border border-gray-200">
-                  <p className="text-gray-600 text-xs mb-1">Conversion Rate</p><p className="text-3xl font-bold text-orange-400">{conversionRate}%</p>
+                <div className="bg-white border border-gray-200 p-5 rounded-2xl bg-gradient-to-br from-orange-500/10 to-pink-500/10 border border-gray-200">
+                  <p className="text-gray-600 text-xs mb-1">Conversion Rate</p><p className="text-3xl font-bold text-orange-700">{conversionRate}%</p>
                 </div>
-                <div className="dark-glass-card p-5 rounded-2xl bg-gradient-to-br from-purple-500/10 to-fuchsia-500/10 border border-gray-200">
+                <div className="bg-white border border-gray-200 p-5 rounded-2xl bg-gradient-to-br from-purple-500/10 to-fuchsia-500/10 border border-gray-200">
                   <p className="text-gray-600 text-xs mb-1">Active Campaigns</p><p className="text-3xl font-bold text-purple-600">{campaigns.length}</p>
                 </div>
               </div>
-              <div className="dark-glass-card p-5 rounded-2xl border border-gray-200">
+              <div className="bg-white border border-gray-200 p-5 rounded-2xl border border-gray-200">
                 <h3 className="text-gray-900 font-bold mb-4">Leads by Source</h3>
                 <div className="space-y-3">
                   {SOURCES.map(s => {
@@ -551,7 +551,7 @@ export default function MarketingDashboard() {
 
           {activeTab === 'calendar' && <SriLankaCalendar accentColor="orange" />}
           {activeTab === 'attendance' && (
-            <div className="dark-glass-card p-6 rounded-2xl border border-gray-200">
+            <div className="bg-white border border-gray-200 p-6 rounded-2xl border border-gray-200">
               <h2 className="text-xl font-bold text-gray-900 mb-4">My Attendance</h2>
               <p className="text-gray-500 mb-4">Your personal attendance records.</p>
               <StaffAttendance />
@@ -570,7 +570,7 @@ export default function MarketingDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-xl max-h-[90vh] overflow-y-auto">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-xl max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-xl font-bold text-gray-900">{editingLead ? 'Edit Lead' : 'New Lead'}</h2>
                 <button onClick={() => setShowLeadModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -582,34 +582,34 @@ export default function MarketingDashboard() {
                       <label className="block text-gray-600 text-sm mb-1">{label as string}</label>
                       <input type={type as string} required={req as boolean} value={(leadForm as any)[key as string]}
                         onChange={e => setLeadForm(p => ({ ...p, [key as string]: e.target.value }))}
-                        className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
+                        className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
                     </div>
                   ))}
                   <div>
                     <label className="block text-gray-600 text-sm mb-1">Course Interested</label>
                     <select value={leadForm.course_interested} onChange={e => setLeadForm(p => ({ ...p, course_interested: e.target.value }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
                       {COURSES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-gray-600 text-sm mb-1">Source</label>
                     <select value={leadForm.source} onChange={e => setLeadForm(p => ({ ...p, source: e.target.value as LeadSource }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
                       {SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-gray-600 text-sm mb-1">Status</label>
                     <select value={leadForm.status} onChange={e => setLeadForm(p => ({ ...p, status: e.target.value as LeadStatus }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
                       {STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-gray-600 text-sm mb-1">Campaign</label>
                     <select value={leadForm.campaign_id || ''} onChange={e => setLeadForm(p => ({ ...p, campaign_id: e.target.value || null }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
                       <option value="">None</option>
                       {campaigns.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                     </select>
@@ -617,7 +617,7 @@ export default function MarketingDashboard() {
                   <div className="md:col-span-2">
                     <label className="block text-gray-600 text-sm mb-1">Notes</label>
                     <textarea value={leadForm.notes} onChange={e => setLeadForm(p => ({ ...p, notes: e.target.value }))} rows={2}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400 resize-none" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400 resize-none" />
                   </div>
                 </div>
                 <div className="flex gap-3 pt-2">
@@ -637,7 +637,7 @@ export default function MarketingDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-xl font-bold text-gray-900">New Campaign</h2>
                 <button onClick={() => setShowCampaignModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -646,12 +646,12 @@ export default function MarketingDashboard() {
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Campaign Name *</label>
                   <input required value={campaignForm.name} onChange={e => setCampaignForm(p => ({ ...p, name: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Source Platform</label>
                   <select value={campaignForm.source} onChange={e => setCampaignForm(p => ({ ...p, source: e.target.value as LeadSource }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
                     {SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
@@ -659,23 +659,23 @@ export default function MarketingDashboard() {
                   <div>
                     <label className="block text-gray-600 text-sm mb-1">Start Date</label>
                     <input type="date" value={campaignForm.start_date} onChange={e => setCampaignForm(p => ({ ...p, start_date: e.target.value }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
                   </div>
                   <div>
                     <label className="block text-gray-600 text-sm mb-1">End Date</label>
                     <input type="date" value={campaignForm.end_date} onChange={e => setCampaignForm(p => ({ ...p, end_date: e.target.value }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Budget (LKR)</label>
                   <input type="number" value={campaignForm.budget} onChange={e => setCampaignForm(p => ({ ...p, budget: Number(e.target.value) }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Notes</label>
                   <textarea value={campaignForm.notes} onChange={e => setCampaignForm(p => ({ ...p, notes: e.target.value }))} rows={2}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400 resize-none" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400 resize-none" />
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setShowCampaignModal(false)}
@@ -694,7 +694,7 @@ export default function MarketingDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md">
               <div className="flex items-center justify-between mb-5">
                 <div>
                   <h2 className="text-xl font-bold text-gray-900">Add Follow-up</h2>
@@ -707,7 +707,7 @@ export default function MarketingDashboard() {
                   <label className="block text-gray-600 text-sm mb-1">Method</label>
                   <select value={followUpForm.method}
                     onChange={e => setFollowUpForm(p => ({ ...p, method: e.target.value as any }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400">
                     {['Call', 'WhatsApp', 'Email'].map(m => <option key={m} value={m}>{m}</option>)}
                   </select>
                 </div>
@@ -715,13 +715,13 @@ export default function MarketingDashboard() {
                   <label className="block text-gray-600 text-sm mb-1">Due Date *</label>
                   <input required type="date" value={followUpForm.due_date}
                     onChange={e => setFollowUpForm(p => ({ ...p, due_date: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400" />
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Note</label>
                   <textarea value={followUpForm.note}
                     onChange={e => setFollowUpForm(p => ({ ...p, note: e.target.value }))} rows={2}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400 resize-none" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-orange-400 resize-none" />
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setShowFollowUpModal(false)}
@@ -738,5 +738,6 @@ export default function MarketingDashboard() {
     </div>
   )
 }
+
 
 

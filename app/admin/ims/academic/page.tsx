@@ -313,7 +313,7 @@ export default function AcademicDashboard() {
         )}
       </AnimatePresence>
 
-      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="dark-glass-strong p-4 md:p-6 flex items-center justify-between">
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button className="md:hidden text-gray-900" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -322,7 +322,7 @@ export default function AcademicDashboard() {
             <GraduationCap className="w-6 h-6 text-gray-900" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-emerald-400">Academic Dashboard</h1>
+            <h1 className="text-xl font-bold text-emerald-700">Academic Dashboard</h1>
             <p className="text-gray-500 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
           </div>
         </div>
@@ -338,7 +338,7 @@ export default function AcademicDashboard() {
 
       <div className="flex">
         <motion.aside initial={{ x: -100 }} animate={{ x: 0 }}
-          className={`dark-glass-strong h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
+          className={`bg-white border-r border-gray-200 h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
           {mobileMenuOpen && <div className="flex justify-end p-3 md:hidden"><button onClick={() => setMobileMenuOpen(false)} className="text-gray-900"><X size={20} /></button></div>}
 
           <div className="px-4 pt-5 pb-4 border-b border-gray-100">
@@ -347,15 +347,15 @@ export default function AcademicDashboard() {
                 {currentUser?.name?.charAt(0).toUpperCase() || 'A'}
               </div>
               <div className="min-w-0">
-                <p className="text-emerald-300 text-xs font-semibold">Academic Dept.</p>
+                <p className="text-emerald-700 text-xs font-semibold">Academic Dept.</p>
                 <p className="text-gray-400 text-[10px] mt-0.5">CCL Taskflow</p>
               </div>
             </div>
             <div className="mt-3 grid grid-cols-3 gap-1.5">
               {[
-                { val: students.length, label: 'Students', color: 'text-emerald-400' },
-                { val: students.filter(s => s.status === 'Active').length, label: 'Active', color: 'text-blue-400' },
-                { val: courses.length, label: 'Courses', color: 'text-cyan-400' },
+                { val: students.length, label: 'Students', color: 'text-emerald-700' },
+                { val: students.filter(s => s.status === 'Active').length, label: 'Active', color: 'text-blue-600' },
+                { val: courses.length, label: 'Courses', color: 'text-cyan-700' },
               ].map(s => (
                 <div key={s.label} className="bg-gray-100 rounded-lg p-1.5 text-center">
                   <p className={`font-bold text-base leading-none ${s.color}`}>{s.val}</p>
@@ -404,7 +404,7 @@ export default function AcademicDashboard() {
                 <div className="flex-1 min-w-[180px] relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search students…"
-                    className="w-full pl-9 pr-3 py-2 dark-glass-card text-gray-900 placeholder-gray-400 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
+                    className="w-full pl-9 pr-3 py-2 bg-gray-50 text-gray-900 placeholder-gray-400 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
                 </div>
                 <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                   onClick={() => { setEditingStudent(null); setStudentForm(emptyStudent); setShowStudentModal(true); }}
@@ -412,7 +412,7 @@ export default function AcademicDashboard() {
                   <Plus className="w-4 h-4" /> Register Student
                 </motion.button>
               </div>
-              <div className="dark-glass-card rounded-2xl overflow-hidden">
+              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-gray-700">
                     <thead className="bg-gray-100">
@@ -423,19 +423,19 @@ export default function AcademicDashboard() {
                     <tbody>
                       {filteredStudents.map(s => (
                         <tr key={s.id} className="border-t border-gray-100 hover:bg-gray-100 transition-colors">
-                          <td className="px-4 py-3 font-mono text-xs text-emerald-400">{s.student_id}</td>
+                          <td className="px-4 py-3 font-mono text-xs text-emerald-700">{s.student_id}</td>
                           <td className="px-4 py-3 font-semibold text-gray-900">{s.name}</td>
                           <td className="px-4 py-3">{getCourseName(s.course_id)}</td>
                           <td className="px-4 py-3 text-gray-500">{getBatchName(s.batch_id)}</td>
                           <td className="px-4 py-3">
-                            <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${s.status === 'Active' ? 'bg-green-100 text-green-700' : s.status === 'Completed' ? 'bg-blue-500/20 text-blue-400' : 'bg-red-100 text-red-600'}`}>
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${s.status === 'Active' ? 'bg-green-100 text-green-700' : s.status === 'Completed' ? 'bg-blue-500/20 text-blue-600' : 'bg-red-100 text-red-600'}`}>
                               {s.status}
                             </span>
                           </td>
                           <td className="px-4 py-3">
                             <div className="flex gap-2">
                               <button onClick={() => { setEditingStudent(s); setStudentForm({ name: s.name, email: s.email, contact: s.contact, course_id: s.course_id, batch_id: s.batch_id, enroll_date: s.enroll_date, status: s.status }); setShowStudentModal(true); }}
-                                className="p-1.5 hover:text-emerald-400 text-gray-400 transition-colors"><Edit className="w-4 h-4" /></button>
+                                className="p-1.5 hover:text-emerald-700 text-gray-400 transition-colors"><Edit className="w-4 h-4" /></button>
                               <button onClick={() => generateCertificate(s)}
                                 className="p-1.5 hover:text-yellow-700 text-gray-400 transition-colors" title="Generate Certificate"><Award className="w-4 h-4" /></button>
                               {isHead && (
@@ -469,14 +469,14 @@ export default function AcademicDashboard() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 {courses.map(c => (
-                  <div key={c.id} className="dark-glass-card p-5 rounded-2xl border border-gray-200 hover:border-emerald-500/40 transition-all space-y-3">
+                  <div key={c.id} className="bg-white border border-gray-200 p-5 rounded-2xl border border-gray-200 hover:border-emerald-500/40 transition-all space-y-3">
                     <div className="flex justify-between">
                       <h3 className="text-gray-900 font-bold text-lg">{c.name}</h3>
                       {isHead && <button onClick={() => handleDeleteCourse(c.id)} className="text-gray-400 hover:text-red-600"><Trash2 className="w-4 h-4" /></button>}
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
                       <div><p className="text-xs text-gray-400">Duration</p><p>{c.duration}</p></div>
-                      <div><p className="text-xs text-gray-400">Fee</p><p className="text-emerald-400">LKR {c.fee?.toLocaleString()}</p></div>
+                      <div><p className="text-xs text-gray-400">Fee</p><p className="text-emerald-700">LKR {c.fee?.toLocaleString()}</p></div>
                       <div><p className="text-xs text-gray-400">Instructor</p><p>{c.instructor}</p></div>
                       <div><p className="text-xs text-gray-400">Schedule</p><p>{c.schedule}</p></div>
                     </div>
@@ -508,11 +508,11 @@ export default function AcademicDashboard() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {batches.map(b => (
-                  <div key={b.id} className="dark-glass-card p-5 rounded-2xl border border-gray-200 space-y-3">
+                  <div key={b.id} className="bg-white border border-gray-200 p-5 rounded-2xl border border-gray-200 space-y-3">
                     <div className="flex justify-between">
                       <div>
                         <h3 className="text-gray-900 font-bold">{b.name}</h3>
-                        <p className="text-emerald-400 text-sm">{b.course_name}</p>
+                        <p className="text-emerald-700 text-sm">{b.course_name}</p>
                       </div>
                       <div className="flex gap-2 items-start">
                         <button onClick={() => { setSelectedBatch(b); setAttendancePresent([]); setShowAttendanceModal(true); }}
@@ -528,7 +528,7 @@ export default function AcademicDashboard() {
                     <div className="flex flex-wrap gap-1">
                       {b.student_ids.map(sid => {
                         const st = students.find(s => s.id === sid);
-                        return st ? <span key={sid} className="text-xs px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded-full">{st.name}</span> : null;
+                        return st ? <span key={sid} className="text-xs px-2 py-0.5 bg-emerald-500/20 text-emerald-700 rounded-full">{st.name}</span> : null;
                       })}
                       {b.student_ids.length === 0 && <span className="text-gray-400 text-xs">No students assigned</span>}
                     </div>
@@ -543,7 +543,7 @@ export default function AcademicDashboard() {
           {activeTab === 'attendance' && (
             <div className="space-y-4">
               <h2 className="text-xl font-bold text-gray-900">Attendance Records</h2>
-              <div className="dark-glass-card rounded-2xl overflow-hidden">
+              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
                 <table className="w-full text-sm text-gray-700">
                   <thead className="bg-gray-100">
                     <tr>{['Date','Batch','Present','Absent','Rate'].map(h => (
@@ -583,7 +583,7 @@ export default function AcademicDashboard() {
                   <Plus className="w-4 h-4" /> Add Result
                 </motion.button>
               </div>
-              <div className="dark-glass-card rounded-2xl overflow-hidden">
+              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
                 <table className="w-full text-sm text-gray-700">
                   <thead className="bg-gray-100">
                     <tr>{['Student','Exam','Score','Max','Pass/Fail','Date'].map(h => (
@@ -595,7 +595,7 @@ export default function AcademicDashboard() {
                       <tr key={r.id} className="border-t border-gray-100 hover:bg-gray-100">
                         <td className="px-4 py-3 font-semibold text-gray-900">{r.student_name}</td>
                         <td className="px-4 py-3">{r.exam_name}</td>
-                        <td className="px-4 py-3 text-emerald-400 font-bold">{r.score}</td>
+                        <td className="px-4 py-3 text-emerald-700 font-bold">{r.score}</td>
                         <td className="px-4 py-3 text-gray-500">{r.max_score}</td>
                         <td className="px-4 py-3">
                           <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${r.passed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
@@ -623,13 +623,13 @@ export default function AcademicDashboard() {
                   { label: 'Completed', val: students.filter(s => s.status === 'Completed').length, color: 'from-purple-500 to-pink-500' },
                   { label: 'Pass Rate', val: results.length > 0 ? `${Math.round(results.filter(r => r.passed).length / results.length * 100)}%` : '0%', color: 'from-orange-500 to-pink-500' },
                 ].map(s => (
-                  <div key={s.label} className={`dark-glass-card p-5 rounded-2xl bg-gradient-to-br ${s.color} bg-opacity-10 border border-gray-200`}>
+                  <div key={s.label} className={`bg-white border border-gray-200 p-5 rounded-2xl bg-gradient-to-br ${s.color} bg-opacity-10 border border-gray-200`}>
                     <p className="text-gray-600 text-xs mb-1">{s.label}</p>
                     <p className="text-3xl font-bold text-gray-900">{s.val}</p>
                   </div>
                 ))}
               </div>
-              <div className="dark-glass-card p-5 rounded-2xl border border-gray-200">
+              <div className="bg-white border border-gray-200 p-5 rounded-2xl border border-gray-200">
                 <h3 className="text-gray-900 font-bold mb-4">Enrollment by Course</h3>
                 <div className="space-y-3">
                   {courses.map(c => {
@@ -653,7 +653,7 @@ export default function AcademicDashboard() {
 
           {activeTab === 'calendar' && <SriLankaCalendar accentColor="emerald" />}
           {activeTab === 'my-attendance' && (
-            <div className="dark-glass-card p-6 rounded-2xl border border-gray-200">
+            <div className="bg-white border border-gray-200 p-6 rounded-2xl border border-gray-200">
               <h2 className="text-xl font-bold text-gray-900 mb-4">My Attendance</h2>
               <p className="text-gray-500 mb-4">Your personal attendance records.</p>
               <StaffAttendance />
@@ -672,7 +672,7 @@ export default function AcademicDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-xl font-bold text-gray-900">{editingStudent ? 'Edit Student' : 'Register Student'}</h2>
                 <button onClick={() => { setShowStudentModal(false); setEditingStudent(null); }} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -683,13 +683,13 @@ export default function AcademicDashboard() {
                     <label className="block text-gray-600 text-sm mb-1">{label as string}</label>
                     <input type={type as string} required={req as boolean} value={(studentForm as any)[key as string]}
                       onChange={e => setStudentForm(p => ({ ...p, [key as string]: e.target.value }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
                   </div>
                 ))}
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Course</label>
                   <select value={studentForm.course_id} onChange={e => setStudentForm(p => ({ ...p, course_id: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
                     <option value="">Select Course</option>
                     {courses.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                   </select>
@@ -697,7 +697,7 @@ export default function AcademicDashboard() {
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Batch</label>
                   <select value={studentForm.batch_id} onChange={e => setStudentForm(p => ({ ...p, batch_id: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
                     <option value="">Select Batch</option>
                     {batches.filter(b => !studentForm.course_id || b.course_id === studentForm.course_id).map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
                   </select>
@@ -705,7 +705,7 @@ export default function AcademicDashboard() {
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Status</label>
                   <select value={studentForm.status} onChange={e => setStudentForm(p => ({ ...p, status: e.target.value as 'Active' | 'Completed' | 'Dropped' }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
                     {['Active', 'Completed', 'Dropped'].map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
@@ -727,7 +727,7 @@ export default function AcademicDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-xl font-bold text-gray-900">Add Course</h2>
                 <button onClick={() => setShowCourseModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -736,7 +736,7 @@ export default function AcademicDashboard() {
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Course Name</label>
                   <select value={courseForm.name} onChange={e => setCourseForm(p => ({ ...p, name: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
                     {COURSES_LIST.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
@@ -745,13 +745,13 @@ export default function AcademicDashboard() {
                     <label className="block text-gray-600 text-sm mb-1">{label}</label>
                     <input type={type} value={(courseForm as any)[key]}
                       onChange={e => setCourseForm(p => ({ ...p, [key]: e.target.value }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
                   </div>
                 ))}
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Fee (LKR)</label>
                   <input type="number" value={courseForm.fee} onChange={e => setCourseForm(p => ({ ...p, fee: Number(e.target.value) }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setShowCourseModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
@@ -768,7 +768,7 @@ export default function AcademicDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-xl font-bold text-gray-900">New Batch</h2>
                 <button onClick={() => setShowBatchModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -777,12 +777,12 @@ export default function AcademicDashboard() {
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Batch Name *</label>
                   <input required value={batchForm.name} onChange={e => setBatchForm(p => ({ ...p, name: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" placeholder="e.g. AutoCAD Batch A" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" placeholder="e.g. AutoCAD Batch A" />
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Course</label>
                   <select required value={batchForm.course_id} onChange={e => setBatchForm(p => ({ ...p, course_id: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
                     <option value="">Select Course</option>
                     {courses.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                   </select>
@@ -791,7 +791,7 @@ export default function AcademicDashboard() {
                   <div key={key}>
                     <label className="block text-gray-600 text-sm mb-1">{label}</label>
                     <input type={type} value={(batchForm as any)[key]} onChange={e => setBatchForm(p => ({ ...p, [key]: e.target.value }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
                   </div>
                 ))}
                 <div className="flex gap-3 pt-2">
@@ -809,7 +809,7 @@ export default function AcademicDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-xl font-bold text-gray-900">Mark Attendance</h2>
                 <button onClick={() => setShowAttendanceModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -818,12 +818,12 @@ export default function AcademicDashboard() {
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Date</label>
                   <input type="date" value={attendanceDate} onChange={e => setAttendanceDate(e.target.value)}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Batch</label>
                   <select value={selectedBatch?.id || ''} onChange={e => { const b = batches.find(b => b.id === e.target.value); setSelectedBatch(b || null); setAttendancePresent([]); }}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
                     <option value="">Select Batch</option>
                     {batches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
                   </select>
@@ -839,7 +839,7 @@ export default function AcademicDashboard() {
                         return (
                           <button key={sid} type="button"
                             onClick={() => setAttendancePresent(p => isPresent ? p.filter(id => id !== sid) : [...p, sid])}
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all ${isPresent ? 'border-green-500 bg-green-100 text-green-700' : 'border-gray-200 dark-glass-card text-gray-600'}`}>
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all ${isPresent ? 'border-green-500 bg-green-100 text-green-700' : 'border-gray-200 bg-white border border-gray-200 text-gray-600'}`}>
                             <CheckCircle className={`w-5 h-5 ${isPresent ? 'text-green-700' : 'text-white/20'}`} />
                             {st.name}
                           </button>
@@ -864,7 +864,7 @@ export default function AcademicDashboard() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-              className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
+              className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
                 <h2 className="text-xl font-bold text-gray-900">Add Exam Result</h2>
                 <button onClick={() => setShowResultModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
@@ -873,7 +873,7 @@ export default function AcademicDashboard() {
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Student</label>
                   <select required value={resultForm.student_id} onChange={e => setResultForm(p => ({ ...p, student_id: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500">
                     <option value="">Select Student</option>
                     {students.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                   </select>
@@ -881,24 +881,24 @@ export default function AcademicDashboard() {
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Exam Name *</label>
                   <input required value={resultForm.exam_name} onChange={e => setResultForm(p => ({ ...p, exam_name: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" placeholder="e.g. Final Exam" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" placeholder="e.g. Final Exam" />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-gray-600 text-sm mb-1">Score</label>
                     <input type="number" value={resultForm.score} onChange={e => setResultForm(p => ({ ...p, score: Number(e.target.value) }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
                   </div>
                   <div>
                     <label className="block text-gray-600 text-sm mb-1">Max Score</label>
                     <input type="number" value={resultForm.max_score} onChange={e => setResultForm(p => ({ ...p, max_score: Number(e.target.value) }))}
-                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
+                      className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-gray-600 text-sm mb-1">Date</label>
                   <input type="date" value={resultForm.date} onChange={e => setResultForm(p => ({ ...p, date: e.target.value }))}
-                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
+                    className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-emerald-500" />
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setShowResultModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
@@ -913,5 +913,6 @@ export default function AcademicDashboard() {
     </div>
   )
 }
+
 
 
