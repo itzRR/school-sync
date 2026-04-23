@@ -39,11 +39,11 @@ const ROLE_COLORS: Record<string, string> = {
   academic_staff:   "bg-blue-500/20 text-blue-600 border-blue-500/20",
   finance_officer:  "bg-green-100 text-green-700 border-green-200",
   hr_officer:       "bg-orange-500/20 text-orange-700 border-orange-500/20",
-  staff:            "bg-gray-500/20 text-gray-300 border-gray-500/20",
-  student:          "bg-cyan-500/20 text-cyan-700 border-cyan-500/20",
+  staff:            "bg-gray-100 text-gray-600 border-gray-300",
+  student:          "bg-cyan-100 text-cyan-700 border-cyan-200",
   trainer:          "bg-yellow-100 text-yellow-700 border-yellow-200",
-  academic_manager: "bg-indigo-500/20 text-indigo-700 border-indigo-500/20",
-  coordinator:      "bg-teal-500/20 text-teal-400 border-teal-500/20",
+  academic_manager: "bg-indigo-100 text-indigo-700 border-indigo-200",
+  coordinator:      "bg-teal-100 text-teal-700 border-teal-200",
 }
 
 // ── Permission Checkbox Grid ─────────────────────────────────
@@ -378,7 +378,7 @@ export default function IMSUsersPage() {
                 <th className="px-6 py-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-gray-100">
               {loading ? (
                 <tr><td colSpan={5} className="px-6 py-12 text-center text-gray-400">Loading…</td></tr>
               ) : filteredProfiles.length === 0 ? (

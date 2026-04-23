@@ -337,24 +337,24 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
             <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
               <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2"><Briefcase className="w-4 h-4" /> Account Details</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-blue-500/10 p-4 rounded-xl border border-blue-500/20 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-600"><CalendarIcon className="w-5 h-5" /></div>
-                  <div><p className="text-xs text-blue-600/70">Member Since</p><p className="text-sm font-semibold text-blue-100">{localUser.created_at ? format(new Date(localUser.created_at), 'MMM d, yyyy') : 'Unknown'}</p></div>
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-200 flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"><CalendarIcon className="w-5 h-5" /></div>
+                  <div><p className="text-xs text-blue-500 font-medium">Member Since</p><p className="text-sm font-bold text-blue-800">{localUser.created_at ? format(new Date(localUser.created_at), 'MMM d, yyyy') : 'Unknown'}</p></div>
                 </div>
-                <div className="bg-emerald-500/10 p-4 rounded-xl border border-emerald-500/20 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-700"><Clock className="w-5 h-5" /></div>
-                  <div><p className="text-xs text-emerald-700/70">Last Active</p><p className="text-sm font-semibold text-emerald-100">{localUser.last_active ? format(new Date(localUser.last_active), 'MMM d, yyyy') : 'Recently'}</p></div>
+                <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700"><Clock className="w-5 h-5" /></div>
+                  <div><p className="text-xs text-emerald-600 font-medium">Last Active</p><p className="text-sm font-bold text-emerald-800">{localUser.last_active ? format(new Date(localUser.last_active), 'MMM d, yyyy') : 'Recently'}</p></div>
                 </div>
                 {localUser.department && (
-                  <div className="bg-purple-100 p-4 rounded-xl border border-purple-200 flex items-center gap-4">
+                  <div className="bg-purple-50 p-4 rounded-xl border border-purple-200 flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600"><Building className="w-5 h-5" /></div>
-                    <div><p className="text-xs text-purple-700/70">Department</p><p className="text-sm font-semibold text-purple-100">{localUser.department}</p></div>
+                    <div><p className="text-xs text-purple-500 font-medium">Department</p><p className="text-sm font-bold text-purple-800">{localUser.department}</p></div>
                   </div>
                 )}
                 {localUser.access_level !== undefined && (
-                  <div className="bg-amber-500/10 p-4 rounded-xl border border-amber-500/20 flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400"><Key className="w-5 h-5" /></div>
-                    <div><p className="text-xs text-amber-300/70">Access Level</p><p className="text-sm font-semibold text-amber-100">Level {localUser.access_level}</p></div>
+                  <div className="bg-amber-50 p-4 rounded-xl border border-amber-200 flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600"><Key className="w-5 h-5" /></div>
+                    <div><p className="text-xs text-amber-600 font-medium">Access Level</p><p className="text-sm font-bold text-amber-800">Level {localUser.access_level}</p></div>
                   </div>
                 )}
               </div>
