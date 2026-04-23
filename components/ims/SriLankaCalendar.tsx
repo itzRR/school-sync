@@ -172,18 +172,18 @@ export default function SriLankaCalendar({ accentColor = "blue" }: { accentColor
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <CalendarDays className="h-6 w-6 text-blue-400" /> Calendar
+          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <CalendarDays className="h-6 w-6 text-blue-500" /> Calendar
           </h1>
-          <p className="text-sm text-white/50 mt-1">Sri Lanka — Personal Work Events</p>
+          <p className="text-sm text-gray-500 mt-1">Sri Lanka — Personal Work Events</p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
           {weather && (
-            <div className="flex items-center gap-2 bg-black/20 border border-white/10 px-4 py-2 rounded-xl text-sm shadow-inner">
+            <div className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-xl text-sm shadow-sm">
               <WeatherIcon icon={weather.icon} />
-              <span className="font-bold text-white">{weather.temp}°C</span>
-              <span className="text-white/60 capitalize hidden sm:block">{weather.desc}</span>
-              <span className="text-blue-400 font-medium text-xs hidden md:block">· Kandy</span>
+              <span className="font-bold text-gray-800">{weather.temp}°C</span>
+              <span className="text-gray-500 capitalize hidden sm:block">{weather.desc}</span>
+              <span className="text-blue-500 font-medium text-xs hidden md:block">· Kandy</span>
             </div>
           )}
           <button onClick={() => openAdd()} className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold rounded-xl shadow-lg transition-all">
@@ -194,22 +194,22 @@ export default function SriLankaCalendar({ accentColor = "blue" }: { accentColor
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Calendar Grid */}
-        <div className="lg:col-span-2 bg-black/20 rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
           {/* Month Navigation */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5">
-            <button onClick={() => setCurrentMonth(m => subMonths(m, 1))} className="p-2 hover:bg-white/10 rounded-xl transition-colors text-white/70 hover:text-white">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
+            <button onClick={() => setCurrentMonth(m => subMonths(m, 1))} className="p-2 hover:bg-gray-200 rounded-xl transition-colors text-gray-600 hover:text-gray-900">
               <ChevronLeft className="h-5 w-5" />
             </button>
-            <h2 className="font-bold text-white text-lg">{format(currentMonth, "MMMM yyyy")}</h2>
-            <button onClick={() => setCurrentMonth(m => addMonths(m, 1))} className="p-2 hover:bg-white/10 rounded-xl transition-colors text-white/70 hover:text-white">
+            <h2 className="font-bold text-gray-900 text-lg">{format(currentMonth, "MMMM yyyy")}</h2>
+            <button onClick={() => setCurrentMonth(m => addMonths(m, 1))} className="p-2 hover:bg-gray-200 rounded-xl transition-colors text-gray-600 hover:text-gray-900">
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
 
           {/* Day headers */}
-          <div className="grid grid-cols-7 border-b border-white/10 bg-black/40">
+          <div className="grid grid-cols-7 border-b border-gray-200 bg-gray-800">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(d => (
-              <div key={d} className="text-center text-xs font-bold text-white/40 py-3 uppercase tracking-wider">
+              <div key={d} className="text-center text-xs font-bold text-white py-3 uppercase tracking-wider">
                 {d}
               </div>
             ))}
