@@ -4,9 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
 import { format, parseISO, differenceInMinutes } from "date-fns"
 import { Clock, LogIn, LogOut, CheckCircle, FileText, Download, RefreshCw, User, Calendar, Loader2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { supabase } from "@/lib/supabase"
 import { getMyAttendance, getAllAttendance, clockIn, clockOut, type StaffAttendanceSession } from "@/lib/ims-data"
 import * as XLSX from "xlsx"
@@ -28,14 +26,13 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
   const [allSessions, setAllSessions] = useState<StaffAttendanceSession[]>([])
   const [loading, setLoading] = useState(true)
   const [activeSession, setActiveSession] = useState<StaffAttendanceSession | null>(null)
-  const [userId, setUserId] =useState<string>("")
+  const [userId, setUserId] = useState<string>("")
   const [userName, setUserName] = useState<string>("")
   const [tab, setTab] = useState<"my" | "team">("my")
   const [showReportModal, setShowReportModal] = useState(false)
   const [reportText, setReportText] = useState("")
   const [clockingOut, setClocingOut] = useState(false)
 
-  // Today string
   const today = new Date().toISOString().slice(0, 10)
 
   useEffect(() => {
@@ -54,7 +51,6 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
     try {
       const mine = await getMyAttendance(userId)
       setSessions(mine)
-      // Find active session (today, no time_out)
       const active = mine.find(s => s.date === today && !s.time_out)
       setActiveSession(active || null)
       if (isAdmin) {
@@ -123,95 +119,104 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
 
   return (
     <div className="space-y-6">
+
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <Clock className="h-6 w-6 text-blue-600" /> My Attendance
-          </h1>
-          <p className="text-sm text-white/50">{format(new Date(), "EEEE, MMMM d, yyyy")} · Colombo time</p>
+          <p className="text-sm text-blue-600 font-medium">{format(new Date(), "EEEE, MMMM d, yyyy")}</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={loadData} className="px-3 py-1.5 rounded-lg text-sm font-medium border border-white/10 text-white bg-white/5 hover:bg-white/10 flex items-center transition-colors"><RefreshCw className="h-4 w-4 mr-1" /> Refresh</button>
-          <button onClick={exportMyAttendance} className="px-3 py-1.5 rounded-lg text-sm font-medium border border-white/10 text-white bg-white/5 hover:bg-white/10 flex items-center transition-colors"><Download className="h-4 w-4 mr-1" /> Export</button>
+          <button onClick={loadData} className="px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 flex items-center transition-colors shadow-sm">
+            <RefreshCw className="h-4 w-4 mr-1" /> Refresh
+          </button>
+          <button onClick={exportMyAttendance} className="px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 flex items-center transition-colors shadow-sm">
+            <Download className="h-4 w-4 mr-1" /> Export
+          </button>
         </div>
       </div>
 
       {/* Clock widget */}
-      <Card className={`border ${activeSession ? "border-green-500/50 bg-green-500/10" : "border-white/10 bg-black/20"}`}>
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div>
-              <p className="text-5xl font-mono font-bold text-white" suppressHydrationWarning>
-                {format(new Date(), "hh:mm")}
-                <span className="text-2xl text-white/50 ml-1">{format(new Date(), "a")}</span>
-              </p>
-              <p className="text-sm text-white/50 mt-1">
-                {activeSession ? (
-                  <span className="text-green-400 font-semibold">
-                    ✓ Clocked in at {timeStr(activeSession.time_in)}
-                    {activeSession.session_index > 1 ? ` (Session ${activeSession.session_index})` : ""}
-                  </span>
-                ) : "Not clocked in today" }
-              </p>
-            </div>
-            <div className="flex gap-3">
-              {!activeSession ? (
-                <button onClick={handleClockIn} className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-6 py-2.5 rounded-xl transition-all shadow-lg flex items-center border-0">
-                  <LogIn className="h-4 w-4 mr-2" />
-                  {todaySessions.length > 0 ? `Clock In (Session ${sessionIndex})` : "Clock In"}
-                </button>
-              ) : (
-                <button onClick={handleClockOut} className="px-6 py-2.5 rounded-xl font-semibold bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/50 transition-all shadow-lg flex items-center">
-                  <LogOut className="h-4 w-4 mr-2" /> Clock Out
-                </button>
-              )}
+      <div className={`rounded-2xl border p-6 ${activeSession
+        ? "bg-emerald-50 border-emerald-200"
+        : "bg-gray-100 border-gray-200"
+      }`}>
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <p className="text-5xl font-mono font-bold text-gray-800" suppressHydrationWarning>
+              {format(new Date(), "hh:mm")}
+              <span className="text-2xl text-gray-500 ml-1">{format(new Date(), "a")}</span>
+            </p>
+            <p className="text-sm mt-1">
+              {activeSession ? (
+                <span className="text-emerald-700 font-semibold">
+                  ✓ Clocked in at {timeStr(activeSession.time_in)}
+                  {activeSession.session_index > 1 ? ` (Session ${activeSession.session_index})` : ""}
+                </span>
+              ) : <span className="text-gray-500">Not clocked in today</span>}
+            </p>
+          </div>
+          <div className="flex gap-3">
+            {!activeSession ? (
+              <button onClick={handleClockIn} className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold px-6 py-2.5 rounded-xl transition-all shadow-md flex items-center">
+                <LogIn className="h-4 w-4 mr-2" />
+                {todaySessions.length > 0 ? `Clock In (Session ${sessionIndex})` : "Clock In"}
+              </button>
+            ) : (
+              <button onClick={handleClockOut} className="px-6 py-2.5 rounded-xl font-semibold bg-red-100 text-red-600 hover:bg-red-200 border border-red-200 transition-all shadow-sm flex items-center">
+                <LogOut className="h-4 w-4 mr-2" /> Clock Out
+              </button>
+            )}
+          </div>
+        </div>
+
+        {todaySessions.length > 0 && (
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <p className="text-xs font-semibold text-gray-500 mb-2">Today&apos;s Sessions</p>
+            <div className="flex flex-wrap gap-2">
+              {todaySessions.map(s => (
+                <div key={s.id} className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium border ${
+                  s.time_out ? "bg-white border-gray-200 text-gray-700" : "bg-emerald-100 border-emerald-300 text-emerald-800"
+                }`}>
+                  <span>Session {s.session_index}</span>
+                  <span className="text-gray-500">{timeStr(s.time_in)} → {s.time_out ? timeStr(s.time_out) : "Active"}</span>
+                  <Badge className={s.status === "late" ? "bg-orange-100 text-orange-700 border-none px-1.5 text-[10px]" : "bg-green-100 text-green-700 border-none px-1.5 text-[10px]"}>
+                    {s.status}
+                  </Badge>
+                </div>
+              ))}
             </div>
           </div>
-          {todaySessions.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-white/10">
-              <p className="text-xs font-semibold text-white/50 mb-2">Today's Sessions</p>
-              <div className="flex flex-wrap gap-2">
-                {todaySessions.map(s => (
-                  <div key={s.id} className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium border ${s.time_out ? "bg-white/5 border-white/10 text-white/80" : "bg-green-500/20 border-green-500/30 text-green-400"}`}>
-                    <span>Session {s.session_index}</span>
-                    <span className="text-white/40">{timeStr(s.time_in)} → {s.time_out ? timeStr(s.time_out) : "Active"}</span>
-                    <Badge className={s.status === "late" ? "bg-orange-500/20 text-orange-700 border-none px-1.5 text-[10px]" : "bg-green-500/20 text-green-400 border-none px-1.5 text-[10px]"}>{s.status}</Badge>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+        )}
+      </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: "Present Days", value: presentDays, icon: CheckCircle, color: "text-green-400", bg: "bg-green-500/10 border-green-500/20" },
-          { label: "Total Sessions", value: sessions.filter(s => s.time_out).length, icon: Clock, color: "text-blue-600", bg: "bg-blue-500/10 border-blue-500/20" },
-          { label: "Avg Duration", value: `${Math.floor(avgDuration / 60)}h ${avgDuration % 60}m`, icon: Calendar, color: "text-purple-400", bg: "bg-purple-500/10 border-purple-500/20" },
-          { label: "This Month", value: sessions.filter(s => s.date.startsWith(today.slice(0, 7))).length, icon: User, color: "text-indigo-700", bg: "bg-indigo-500/10 border-indigo-500/20" },
+          { label: "Present Days",    value: presentDays,                                                       icon: CheckCircle, color: "text-green-600",  bg: "bg-green-50 border-green-200" },
+          { label: "Total Sessions",  value: sessions.filter(s => s.time_out).length,                           icon: Clock,       color: "text-blue-600",   bg: "bg-blue-50 border-blue-200" },
+          { label: "Avg Duration",    value: `${Math.floor(avgDuration / 60)}h ${avgDuration % 60}m`,           icon: Calendar,    color: "text-purple-600", bg: "bg-purple-50 border-purple-200" },
+          { label: "This Month",      value: sessions.filter(s => s.date.startsWith(today.slice(0, 7))).length, icon: User,        color: "text-indigo-600", bg: "bg-indigo-50 border-indigo-200" },
         ].map((s, i) => (
-          <Card key={i} className={`border ${s.bg}`}>
-            <CardContent className="p-4 flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-black/20 border border-white/5">
-                <s.icon className={`h-5 w-5 ${s.color}`} />
-              </div>
-              <div>
-                <p className="text-xs text-white/50">{s.label}</p>
-                <p className="text-xl font-bold text-white">{loading ? "…" : s.value}</p>
-              </div>
-            </CardContent>
-          </Card>
+          <div key={i} className={`${s.bg} border rounded-2xl p-4 flex items-center gap-3`}>
+            <div className="p-2 rounded-xl bg-white border border-gray-100 shadow-sm">
+              <s.icon className={`h-5 w-5 ${s.color}`} />
+            </div>
+            <div>
+              <p className="text-xs font-medium text-gray-500">{s.label}</p>
+              <p className="text-xl font-bold text-gray-900">{loading ? "…" : s.value}</p>
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* Tabs — only show Team if admin */}
+      {/* Tabs — only if admin */}
       {isAdmin && (
-        <div className="flex gap-1 border-b border-white/10">
+        <div className="flex gap-1 border-b border-gray-200">
           {(["my", "team"] as const).map(t => (
-            <button key={t} onClick={() => setTab(t)} className={`px-4 py-2 text-sm font-medium capitalize border-b-2 transition-colors ${tab === t ? "border-blue-400 text-blue-600" : "border-transparent text-white/50 hover:text-white/80"}`}>
+            <button key={t} onClick={() => setTab(t)}
+              className={`px-4 py-2 text-sm font-medium capitalize border-b-2 transition-colors ${
+                tab === t ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-800"
+              }`}>
               {t === "my" ? "My Records" : `Team Records (${allSessions.length})`}
             </button>
           ))}
@@ -219,34 +224,43 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
       )}
 
       {/* Records table */}
-      <div className="rounded-xl border border-white/10 bg-black/20 overflow-hidden">
+      <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-white/5 border-b border-white/10">
+          <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
-              {(tab === "team" && isAdmin ? ["Name", "Date", "Time In", "Time Out", "Duration", "Status", "Report"] : ["Date", "Time In", "Time Out", "Duration", "Status", "Report"]).map(h => (
-                <th key={h} className="text-left py-3 px-4 font-medium text-white/60">{h}</th>
+              {(tab === "team" && isAdmin
+                ? ["Name", "Date", "Time In", "Time Out", "Duration", "Status", "Report"]
+                : ["Date", "Time In", "Time Out", "Duration", "Status", "Report"]
+              ).map(h => (
+                <th key={h} className="text-left py-3 px-4 font-semibold text-gray-600 text-xs uppercase tracking-wider">{h}</th>
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-100">
             {loading ? (
-              <tr><td colSpan={7} className="text-center py-8"><Loader2 className="h-5 w-5 animate-spin mx-auto text-white/40" /></td></tr>
+              <tr><td colSpan={7} className="text-center py-8"><Loader2 className="h-5 w-5 animate-spin mx-auto text-gray-400" /></td></tr>
             ) : (tab === "team" && isAdmin ? allSessions : sessions).length === 0 ? (
-              <tr><td colSpan={7} className="text-center py-8 text-white/40">No attendance records yet</td></tr>
+              <tr><td colSpan={7} className="text-center py-8 text-gray-400">No attendance records yet</td></tr>
             ) : (tab === "team" && isAdmin ? allSessions : sessions).map(s => (
-              <tr key={s.id} className={`border-b border-white/5 hover:bg-white/5 ${!s.time_out ? "bg-green-500/10" : ""}`}>
-                {tab === "team" && isAdmin && <td className="py-3 px-4 font-medium text-white">{s.user_name}</td>}
-                <td className="py-3 px-4 text-white/70">{s.date}</td>
-                <td className="py-3 px-4 font-medium text-white">{timeStr(s.time_in)}</td>
-                <td className="py-3 px-4 text-white/70">{s.time_out ? timeStr(s.time_out) : <Badge className="bg-green-500/20 text-green-400 border-none">Active</Badge>}</td>
-                <td className="py-3 px-4 text-white">{durationStr(s.time_in, s.time_out)}</td>
+              <tr key={s.id} className={`hover:bg-gray-50 transition-colors ${!s.time_out ? "bg-emerald-50" : ""}`}>
+                {tab === "team" && isAdmin && <td className="py-3 px-4 font-semibold text-gray-900">{s.user_name}</td>}
+                <td className="py-3 px-4 text-gray-600">{s.date}</td>
+                <td className="py-3 px-4 font-medium text-gray-900">{timeStr(s.time_in)}</td>
+                <td className="py-3 px-4 text-gray-600">
+                  {s.time_out ? timeStr(s.time_out) : (
+                    <Badge className="bg-emerald-100 text-emerald-700 border-none">Active</Badge>
+                  )}
+                </td>
+                <td className="py-3 px-4 text-gray-700 font-medium">{durationStr(s.time_in, s.time_out)}</td>
                 <td className="py-3 px-4">
                   <Badge className={`border-none ${
-                    s.status === "late" ? "bg-orange-500/20 text-orange-700" :
-                    !s.time_out ? "bg-green-500/20 text-green-400" : "bg-blue-500/20 text-blue-600"
-                  }`}>{!s.time_out ? "active" : s.status}</Badge>
+                    s.status === "late" ? "bg-orange-100 text-orange-700" :
+                    !s.time_out ? "bg-emerald-100 text-emerald-700" : "bg-blue-100 text-blue-700"
+                  }`}>
+                    {!s.time_out ? "active" : s.status}
+                  </Badge>
                 </td>
-                <td className="py-3 px-4 text-white/50 text-xs max-w-[150px] truncate" title={s.daily_report || ""}>
+                <td className="py-3 px-4 text-gray-500 text-xs max-w-[150px] truncate" title={s.daily_report || ""}>
                   {s.daily_report ? (
                     <span className="flex items-center gap-1"><FileText className="h-3 w-3" />{s.daily_report}</span>
                   ) : "—"}
@@ -257,17 +271,17 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
         </table>
       </div>
 
-      {/* Clock Out modal with daily report */}
+      {/* Clock Out modal */}
       {showReportModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-xl w-full max-w-md border border-white/10">
-            <div className="p-5 border-b border-white/10">
-              <h2 className="font-semibold text-lg text-white">Daily Report</h2>
-              <p className="text-sm text-white/50 mt-0.5">Write a short summary of what you did today before clocking out.</p>
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-xl w-full max-w-md">
+            <div className="p-5 border-b border-gray-100">
+              <h2 className="font-bold text-lg text-gray-900">Daily Report</h2>
+              <p className="text-sm text-gray-500 mt-0.5">Write a short summary of what you did today before clocking out.</p>
             </div>
             <div className="p-5 space-y-4">
               <textarea
-                className="w-full bg-black/20 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white/30"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
                 rows={5}
                 placeholder="Completed tasks, meetings, progress, blockers..."
                 value={reportText}
@@ -275,10 +289,12 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
                 autoFocus
               />
               <div className="flex gap-3">
-                <button className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm bg-gradient-to-r from-blue-500 to-indigo-500 text-white border-0 hover:from-blue-600 hover:to-indigo-600 flex items-center justify-center transition-all shadow-lg" onClick={submitClockOut}>
-                  <LogOut className="h-4 w-4 mr-2" /> Submit & Clock Out
+                <button className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:from-blue-600 hover:to-indigo-600 flex items-center justify-center transition-all shadow-md" onClick={submitClockOut}>
+                  <LogOut className="h-4 w-4 mr-2" /> Submit &amp; Clock Out
                 </button>
-                <button className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm bg-white/5 text-white/80 hover:bg-white/10 border border-white/10 transition-colors" onClick={() => { setShowReportModal(false); setClocingOut(false) }}>Cancel</button>
+                <button className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200 transition-colors" onClick={() => { setShowReportModal(false); setClocingOut(false) }}>
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
@@ -287,4 +303,3 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
     </div>
   )
 }
-
