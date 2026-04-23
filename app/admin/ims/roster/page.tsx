@@ -13,17 +13,17 @@ const ROSTER_TYPES = ["Shift", "Duty", "On-call", "Other"] as const
 const SHIFTS = ["Morning", "Afternoon", "Evening", "Night", "Full Day"]
 
 const TYPE_COLORS: Record<string, string> = {
-  Shift:      "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  Duty:       "bg-green-500/20 text-green-400 border-green-500/30",
-  "On-call":  "bg-orange-500/20 text-orange-400 border-orange-500/30",
-  Other:      "bg-gray-500/20 text-gray-300 border-gray-500/30",
+  Shift:      "bg-blue-100 text-blue-700 border-blue-200",
+  Duty:       "bg-green-100 text-green-700 border-green-200",
+  "On-call":  "bg-orange-100 text-orange-700 border-orange-200",
+  Other:      "bg-gray-100 text-gray-600 border-gray-200",
 }
 const SHIFT_COLORS: Record<string, string> = {
-  Morning:  "text-yellow-400",
-  Afternoon: "text-orange-400",
-  Evening:  "text-purple-400",
-  Night:    "text-blue-400",
-  "Full Day": "text-cyan-400",
+  Morning:  "text-yellow-600",
+  Afternoon: "text-orange-600",
+  Evening:  "text-purple-600",
+  Night:    "text-blue-600",
+  "Full Day": "text-cyan-700",
 }
 
 export default function IMSRosterPage() {
@@ -86,23 +86,23 @@ export default function IMSRosterPage() {
   }, {} as Record<string, HrRoster[]>)
   const sortedDates = Object.keys(grouped).sort()
 
-  const inputCls = "w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all [color-scheme:dark]"
+  const inputCls = "w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all"
 
   return (
-    <div className="min-h-screen bg-[#050B14] p-4 md:p-8 space-y-6 text-white selection:bg-pink-500/20">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8 space-y-6 text-gray-900 selection:bg-pink-500/20">
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center shadow-lg shadow-pink-500/20">
               <Calendar className="h-5 w-5 text-white" />
             </div>
             Roster Management
           </h1>
-          <p className="text-sm text-white/50 mt-1">Staff duty, shift scheduling & on-call assignments</p>
+          <p className="text-sm text-gray-500 mt-1">Staff duty, shift scheduling &amp; on-call assignments</p>
         </div>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-xl border border-white/10 transition-colors text-sm font-medium" onClick={loadData}>
+          <button className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-xl border border-gray-200 transition-colors text-sm font-medium" onClick={loadData}>
             <RefreshCw className="h-4 w-4" /> Refresh
           </button>
           {canEdit && (
@@ -115,19 +115,19 @@ export default function IMSRosterPage() {
 
       {/* Stats + Month Filter */}
       <div className="flex flex-wrap gap-4 items-center">
-        <div className="flex items-center gap-3 bg-black/20 border border-white/10 rounded-2xl px-5 py-3">
-          <Calendar className="h-4 w-4 text-pink-400" />
-          <label className="text-sm font-bold text-white/60">Month</label>
+        <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-5 py-3">
+          <Calendar className="h-4 w-4 text-pink-500" />
+          <label className="text-sm font-bold text-gray-600">Month</label>
           <input type="month" value={filterMonth} onChange={e => setFilterMonth(e.target.value)}
-            className="bg-transparent text-white font-bold focus:outline-none [color-scheme:dark]" />
+            className="bg-transparent text-gray-900 font-bold focus:outline-none" />
         </div>
         <div className="flex gap-3">
           {[
-            { label: "Total Entries", value: filteredRoster.length, color: "text-white" },
-            { label: "Days Scheduled", value: sortedDates.length, color: "text-pink-400" },
+            { label: "Total Entries", value: filteredRoster.length, color: "text-gray-900" },
+            { label: "Days Scheduled", value: sortedDates.length, color: "text-pink-600" },
           ].map((s, i) => (
-            <div key={i} className="bg-black/20 border border-white/10 rounded-2xl px-5 py-3">
-              <p className="text-xs text-white/50">{s.label}</p>
+            <div key={i} className="bg-white border border-gray-200 rounded-2xl px-5 py-3">
+              <p className="text-xs text-gray-500">{s.label}</p>
               <p className={`text-2xl font-black ${s.color}`}>{s.value}</p>
             </div>
           ))}
@@ -136,12 +136,12 @@ export default function IMSRosterPage() {
 
       {/* Roster Groups */}
       {loading ? (
-        <div className="text-center py-20 text-white/40">
+        <div className="text-center py-20 text-gray-400">
           <Calendar className="h-12 w-12 mx-auto mb-3 opacity-30 animate-pulse" />
           <p>Loading roster...</p>
         </div>
       ) : sortedDates.length === 0 ? (
-        <div className="text-center py-20 text-white/40 bg-black/20 border border-white/10 rounded-2xl">
+        <div className="text-center py-20 text-gray-400 bg-white border border-gray-200 rounded-2xl">
           <Calendar className="h-12 w-12 mx-auto mb-3 opacity-30" />
           <p className="font-medium">No roster entries</p>
           <p className="text-sm mt-1">No shifts scheduled for {filterMonth}</p>
@@ -152,20 +152,20 @@ export default function IMSRosterPage() {
             const isToday = date === format(new Date(), "yyyy-MM-dd")
             return (
               <motion.div key={date} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                className={`bg-black/20 border rounded-2xl overflow-hidden ${isToday ? 'border-pink-500/40 shadow-[0_0_20px_rgba(236,72,153,0.1)]' : 'border-white/10'}`}>
-                <div className={`px-6 py-3 flex items-center justify-between border-b ${isToday ? 'bg-pink-500/10 border-pink-500/20' : 'bg-white/5 border-white/5'}`}>
-                  <p className="font-bold text-white">
+                className={`bg-white border rounded-2xl overflow-hidden ${isToday ? 'border-pink-300 shadow-sm' : 'border-gray-200'}`}>
+                <div className={`px-6 py-3 flex items-center justify-between border-b ${isToday ? 'bg-pink-50 border-pink-200' : 'bg-gray-50 border-gray-100'}`}>
+                  <p className="font-bold text-gray-900">
                     {format(new Date(date + "T00:00:00"), "EEEE, MMMM d, yyyy")}
                   </p>
                   {isToday && (
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-pink-500/20 text-pink-400 border border-pink-500/30">
-                      <span className="w-1.5 h-1.5 bg-pink-400 rounded-full animate-pulse" /> Today
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-pink-100 text-pink-700 border border-pink-200">
+                      <span className="w-1.5 h-1.5 bg-pink-500 rounded-full animate-pulse" /> Today
                     </span>
                   )}
                 </div>
-                <div className="divide-y divide-white/5">
+                <div className="divide-y divide-gray-100">
                   {grouped[date].map((entry, i) => (
-                    <div key={entry.id} className="flex items-center justify-between px-6 py-4 hover:bg-white/5 transition-colors group">
+                    <div key={entry.id} className="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors group">
                       <div className="flex items-center gap-4">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                           {(entry.assigned_name || entry.assignee?.full_name || "?")[0].toUpperCase()}
@@ -181,11 +181,11 @@ export default function IMSRosterPage() {
                               </span>
                             )}
                           </div>
-                          <p className="text-sm font-semibold text-white">
+                          <p className="text-sm font-semibold text-gray-900">
                             {entry.assigned_name || entry.assignee?.full_name || "Unassigned"}
                           </p>
                           {entry.description && (
-                            <p className="text-xs text-white/40 mt-0.5">{entry.description}</p>
+                            <p className="text-xs text-gray-400 mt-0.5">{entry.description}</p>
                           )}
                         </div>
                       </div>
@@ -227,25 +227,25 @@ export default function IMSRosterPage() {
               <div className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/70">Date *</label>
+                    <label className="text-sm font-bold text-gray-600">Date *</label>
                     <input type="date" value={form.date} onChange={e => setForm(p => ({ ...p, date: e.target.value }))}
-                      className={inputCls + " [color-scheme:dark]"} />
+                      className={inputCls} />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/70">Type</label>
+                    <label className="text-sm font-bold text-gray-600">Type</label>
                     <select value={form.type} onChange={e => setForm(p => ({ ...p, type: e.target.value as any }))}
                       className={inputCls}>
-                      {ROSTER_TYPES.map(t => <option key={t} value={t} className="bg-[#0e1628]">{t}</option>)}
+                      {ROSTER_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                     </select>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-white/70">Shift</label>
+                  <label className="text-sm font-bold text-gray-600">Shift</label>
                   <div className="flex flex-wrap gap-2">
                     {["", ...SHIFTS].map(s => (
                       <button key={s} type="button" onClick={() => setForm(p => ({ ...p, shift: s }))}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${form.shift === s ? 'bg-pink-500/20 border-pink-500/50 text-pink-400' : 'bg-black/20 border-white/10 text-white/40 hover:border-white/30'}`}>
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${form.shift === s ? 'bg-pink-50 border-pink-400 text-pink-700' : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-gray-300'}`}>
                         {s || "N/A"}
                       </button>
                     ))}
@@ -253,22 +253,22 @@ export default function IMSRosterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-white/70">Assigned To</label>
+                  <label className="text-sm font-bold text-gray-600">Assigned To</label>
                   <select value={form.assigned_to || ""} onChange={e => setForm(p => ({ ...p, assigned_to: e.target.value || null }))}
                     className={inputCls}>
-                    <option value="" className="bg-[#0e1628]">Unassigned</option>
-                    {users.map(u => <option key={u.id} value={u.id} className="bg-[#0e1628]">{u.full_name || u.email}</option>)}
+                    <option value="">Unassigned</option>
+                    {users.map(u => <option key={u.id} value={u.id}>{u.full_name || u.email}</option>)}
                   </select>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-white/70">Notes</label>
+                  <label className="text-sm font-bold text-gray-600">Notes</label>
                   <input value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))} placeholder="Optional description..."
                     className={inputCls} />
                 </div>
 
-                <div className="flex gap-3 pt-4 border-t border-white/10">
-                  <button onClick={() => setShowModal(false)} className="flex-1 py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl font-bold transition-colors">
+                <div className="flex gap-3 pt-4 border-t border-gray-100">
+                  <button onClick={() => setShowModal(false)} className="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold transition-colors">
                     Cancel
                   </button>
                   <button onClick={handleSubmit} className="flex-1 py-3 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white rounded-xl font-bold shadow-lg transition-all">

@@ -83,21 +83,24 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── STATS MARQUEE ───────────────────────────────────────────── */}
-      <section className="bg-white py-12 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-gray-100">
-          {[
-            { value: "10k+", label: "Successful Alumni", icon: Users },
-            { value: "50+", label: "Expert Instructors", icon: Star },
-            { value: "100%", label: "Job Assistance", icon: CheckCircle },
-            { value: "ISO", label: "Certified Quality", icon: Award },
-          ].map((stat, i) => (
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={stat.label} className="text-center px-4">
-              <stat.icon className="w-8 h-8 mx-auto mb-4 text-blue-600 opacity-80" />
-              <p className="text-4xl font-black text-gray-900 tracking-tight">{stat.value}</p>
-              <p className="text-sm font-semibold text-gray-500 mt-2 uppercase tracking-wider">{stat.label}</p>
-            </motion.div>
-          ))}
+      {/* ── STATS ───────────────────────────────────────────────── */}
+      <section className="bg-white py-16 border-b border-gray-100">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { value: "10k+", label: "Successful Alumni",  icon: Users,       bg: "from-blue-50 to-sky-50",   text: "text-blue-600",   border: "border-blue-100" },
+              { value: "50+",  label: "Expert Instructors", icon: Star,         bg: "from-purple-50 to-pink-50",text: "text-purple-600", border: "border-purple-100" },
+              { value: "100%", label: "Job Assistance",     icon: CheckCircle,  bg: "from-green-50 to-emerald-50",text: "text-green-600", border: "border-green-100" },
+              { value: "ISO",  label: "Certified Quality",  icon: Award,        bg: "from-orange-50 to-yellow-50",text: "text-orange-500", border: "border-orange-100" },
+            ].map((stat, i) => (
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={stat.label}
+                className={`bg-gradient-to-br ${stat.bg} border ${stat.border} rounded-3xl p-6 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300`}>
+                <stat.icon className={`w-7 h-7 mx-auto mb-3 ${stat.text}`} />
+                <p className={`text-4xl font-black tracking-tight ${stat.text}`}>{stat.value}</p>
+                <p className="text-xs font-semibold text-gray-500 mt-2 uppercase tracking-wider">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -202,6 +205,7 @@ export default function HomePage() {
       <section className="py-32 px-4 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
+            <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">How It Works</span>
             <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6">Your Path to Success</h2>
             <p className="text-xl text-gray-500">A structured, proven journey from enrollment to certification.</p>
           </div>

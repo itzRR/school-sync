@@ -375,7 +375,7 @@ export default function FinanceDashboard() {
           </div>
         </motion.aside>
 
-        <main className="flex-1 p-4 md:p-6 min-h-[calc(100vh-80px)] overflow-auto space-y-5 bg-[#0e1628]">
+        <main className="flex-1 p-4 md:p-6 min-h-[calc(100vh-80px)] overflow-auto space-y-5 bg-gray-50">
 
           {/* ── PAYMENTS ── */}
           {activeTab === 'payments' && (

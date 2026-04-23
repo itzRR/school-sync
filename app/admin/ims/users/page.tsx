@@ -315,7 +315,7 @@ export default function IMSUsersPage() {
   }, {} as Record<string, number>)
 
   return (
-    <div className="min-h-screen bg-[#050B14] p-4 md:p-8 space-y-6 text-white selection:bg-blue-500/30">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
@@ -455,7 +455,7 @@ export default function IMSUsersPage() {
       {/* ── CREATE USER MODAL ─────────────────────────── */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-[#0e1628] border border-white/10 rounded-[2rem] p-8 w-full max-w-4xl shadow-2xl my-8">
+          <div className="bg-white border border-white/10 rounded-[2rem] p-8 w-full max-w-4xl shadow-2xl my-8">
             <div className="flex justify-between items-center mb-6 pb-4 border-b border-white/10">
               <div>
                 <h2 className="text-2xl font-bold text-white">Create New Staff User</h2>
@@ -493,15 +493,15 @@ export default function IMSUsersPage() {
                     <label className="text-sm font-semibold text-white/70">System Role *</label>
                     <select value={createForm.role} onChange={e => setCreateForm(p => ({ ...p, role: e.target.value as UserRole }))}
                       className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500">
-                      {IMS_ROLES.map(r => <option key={r} value={r} className="bg-[#0e1628] text-white">{r.replace(/_/g, ' ')}</option>)}
+                      {IMS_ROLES.map(r => <option key={r} value={r} className="bg-white text-white">{r.replace(/_/g, ' ')}</option>)}
                     </select>
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-white/70">Department</label>
                     <select value={createForm.department} onChange={e => setCreateForm(p => ({ ...p, department: e.target.value }))}
                       className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500">
-                      <option value="" className="bg-[#0e1628] text-white">Select Department...</option>
-                      {DEPARTMENTS.map(d => <option key={d} value={d} className="bg-[#0e1628] text-white">{d}</option>)}
+                      <option value="" className="bg-white text-white">Select Department...</option>
+                      {DEPARTMENTS.map(d => <option key={d} value={d} className="bg-white text-white">{d}</option>)}
                     </select>
                   </div>
                   <div className="space-y-2">
@@ -526,9 +526,9 @@ export default function IMSUsersPage() {
       {/* ── EDIT ROLE & PERMISSIONS MODAL ─────────────── */}
       {showEditModal && editingProfile && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-[#0e1628] border border-white/10 rounded-[2rem] w-full max-w-lg shadow-2xl my-8">
+          <div className="bg-white border border-white/10 rounded-[2rem] w-full max-w-lg shadow-2xl my-8">
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/10 sticky top-0 bg-[#0e1628] z-10 rounded-t-[2rem]">
+            <div className="flex items-center justify-between p-6 border-b border-white/10 sticky top-0 bg-white z-10 rounded-t-[2rem]">
               <div>
                 <h2 className="font-bold text-xl text-white flex items-center gap-2">
                   <ShieldPlus className="h-5 w-5 text-cyan-400" />
@@ -548,15 +548,15 @@ export default function IMSUsersPage() {
                   <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Role</label>
                   <select value={editForm.role} onChange={e => setEditForm(p => ({ ...p, role: e.target.value as UserRole, permissions: [] }))}
                     className="w-full bg-black/30 border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-cyan-500 transition-all [color-scheme:dark]">
-                    {IMS_ROLES.map(r => <option key={r} value={r} className="bg-[#0e1628]">{r.replace(/_/g, " ")}</option>)}
+                    {IMS_ROLES.map(r => <option key={r} value={r} className="bg-white">{r.replace(/_/g, " ")}</option>)}
                   </select>
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-white/60 uppercase tracking-wider">Department</label>
                   <select value={editForm.department || "none"} onChange={e => setEditForm(p => ({ ...p, department: e.target.value === "none" ? "" : e.target.value }))}
                     className="w-full bg-black/30 border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-cyan-500 transition-all [color-scheme:dark]">
-                    <option value="none" className="bg-[#0e1628]">None</option>
-                    {DEPARTMENTS.map(d => <option key={d} value={d} className="bg-[#0e1628]">{d}</option>)}
+                    <option value="none" className="bg-white">None</option>
+                    {DEPARTMENTS.map(d => <option key={d} value={d} className="bg-white">{d}</option>)}
                   </select>
                 </div>
                 <div className="space-y-2">

@@ -252,24 +252,24 @@ export default function HRDashboard() {
   ]
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center deep-blue-bg">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
         className="w-16 h-16 border-t-4 border-purple-500 border-solid rounded-full" />
     </div>
   )
 
   return (
-    <div className="min-h-screen deep-blue-bg">
+    <div className="min-h-screen bg-gray-50">
       <AnimatePresence>
         {showLoadingAnimation && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-900/90 backdrop-blur-md">
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/90 backdrop-blur-md">
             <motion.div animate={{ rotate: 360, scale: [1, 1.15, 1] }} transition={{ duration: 3, repeat: Infinity }}
               className="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-6">
               <Users className="w-12 h-12 text-white" />
             </motion.div>
-            <h2 className="text-2xl font-bold text-white mb-2">CADD Centre - HR</h2>
-            <div className="w-64 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">CADD Centre - HR</h2>
+            <div className="w-64 h-1.5 bg-gray-200 rounded-full overflow-hidden">
               <motion.div className="h-full bg-gradient-to-r from-purple-500 to-pink-400"
                 initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 3 }} />
             </div>
@@ -277,24 +277,24 @@ export default function HRDashboard() {
         )}
       </AnimatePresence>
 
-      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="dark-glass-strong p-4 md:p-6 flex items-center justify-between">
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <button className="md:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          <button className="md:hidden text-gray-600" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
             <Users className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-purple-400">HR Dashboard</h1>
-            <p className="text-white/50 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
+            <h1 className="text-xl font-bold text-purple-700">HR Dashboard</h1>
+            <p className="text-gray-500 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/admin/ims')} className="text-white/70 hover:text-white px-3 py-2 border border-white/20 rounded-xl">Back to Admin</button>
+          <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">Back to Admin</button>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 glass-button text-white rounded-xl border border-white/20 hover:bg-red-500/30">
+            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl border border-red-200 hover:bg-red-100 transition-colors font-medium">
             <LogOut className="w-4 h-4" /> Logout
           </motion.button>
         </div>
@@ -302,27 +302,27 @@ export default function HRDashboard() {
 
       <div className="flex">
         <motion.aside initial={{ x: -100 }} animate={{ x: 0 }}
-          className={`dark-glass-strong h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
+          className={`bg-white border-r border-gray-200 h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
           {mobileMenuOpen && <div className="flex justify-end p-3 md:hidden"><button onClick={() => setMobileMenuOpen(false)} className="text-white"><X size={20} /></button></div>}
 
-          <div className="px-4 pt-5 pb-4 border-b border-white/5">
+          <div className="px-4 pt-5 pb-4 border-b border-gray-200">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                 {currentUser?.name?.charAt(0).toUpperCase() || 'H'}
               </div>
               <div className="min-w-0">
-                <p className="text-purple-300 text-xs font-semibold">Human Resources</p>
-                <p className="text-white/40 text-[10px] mt-0.5">CCL Taskflow</p>
+                <p className="text-purple-700 text-xs font-semibold">Human Resources</p>
+                <p className="text-gray-400 text-[10px] mt-0.5">CCL Taskflow</p>
               </div>
             </div>
             <div className="mt-3 grid grid-cols-2 gap-2">
-              <div className="bg-white/5 rounded-lg p-2 text-center border border-white/10">
-                <p className="font-bold text-sm text-green-400">{employees.filter(e => !e.disabled).length}</p>
-                <p className="text-white/40 text-[10px]">Active</p>
+              <div className="bg-gray-100 rounded-lg p-2 text-center border border-gray-200">
+                <p className="font-bold text-sm text-green-600">{employees.filter(e => !e.disabled).length}</p>
+                <p className="text-gray-500 text-[10px]">Active</p>
               </div>
-              <div className="bg-white/5 rounded-lg p-2 text-center border border-white/10">
-                <p className="font-bold text-sm text-yellow-400">{leaves.filter(l => l.status === 'Pending').length}</p>
-                <p className="text-white/40 text-[10px]">Leave Req</p>
+              <div className="bg-gray-100 rounded-lg p-2 text-center border border-gray-200">
+                <p className="font-bold text-sm text-yellow-600">{leaves.filter(l => l.status === 'Pending').length}</p>
+                <p className="text-gray-500 text-[10px]">Leave Req</p>
               </div>
             </div>
           </div>
@@ -330,7 +330,7 @@ export default function HRDashboard() {
           <div className="flex-1 overflow-y-auto py-3 px-3 space-y-4">
             {navSections.map(section => (
               <div key={section.label}>
-                <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest px-2 mb-1.5">{section.label}</p>
+                <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest px-2 mb-1.5">{section.label}</p>
                 <div className="space-y-0.5">
                   {section.items.map(item => (
                     <motion.button
@@ -342,14 +342,14 @@ export default function HRDashboard() {
                         activeTab === item.id
                           ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/20'
                           : item.badge > 0
-                            ? 'text-yellow-300 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/20'
-                            : 'text-white/70 hover:text-white hover:bg-white/8'
+                            ? 'text-yellow-700 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200'
+                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                       }`}
                     >
                       {activeTab === item.id && (
                         <motion.div layoutId="hr-active-pill" className="absolute left-0 top-0 bottom-0 w-0.5 bg-white rounded-full" />
                       )}
-                      <item.icon className={`w-4 h-4 flex-shrink-0 ${activeTab === item.id ? 'text-white' : item.badge > 0 ? 'text-yellow-300' : 'text-white/50'}`} />
+                      <item.icon className={`w-4 h-4 flex-shrink-0 ${activeTab === item.id ? 'text-white' : item.badge > 0 ? 'text-yellow-600' : 'text-gray-400'}`} />
                       <span className="flex-1 text-left font-medium">{item.label}</span>
                       {item.badge > 0 && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-yellow-500/20 text-yellow-400">{item.badge}</span>}
                     </motion.button>
@@ -360,7 +360,7 @@ export default function HRDashboard() {
           </div>
         </motion.aside>
 
-        <main className="flex-1 p-4 md:p-6 min-h-[calc(100vh-80px)] overflow-auto space-y-5 bg-[#0e1628]">
+        <main className="flex-1 p-4 md:p-6 min-h-[calc(100vh-80px)] overflow-auto space-y-5 bg-gray-50">
 
           {/* ── DIRECTORY ── */}
           {activeTab === 'directory' && (

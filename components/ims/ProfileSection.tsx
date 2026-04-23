@@ -95,10 +95,10 @@ const PhotoEditor = ({ uid, currentPhotoURL, name, onClose, onUpdate }: { uid: s
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50" onClick={onClose}>
-      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={e => e.stopPropagation()} className="dark-glass-strong rounded-2xl p-6 w-full max-w-md border border-white/10 shadow-2xl">
+      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={e => e.stopPropagation()} className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md shadow-xl">
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-lg font-bold text-white flex items-center gap-2"><ImageIcon className="w-5 h-5 text-blue-400" /> Update Profile Photo</h3>
-          <button onClick={onClose} className="p-1.5 text-white/40 hover:text-white rounded-lg hover:bg-white/10"><X className="w-5 h-5" /></button>
+          <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2"><ImageIcon className="w-5 h-5 text-blue-500" /> Update Profile Photo</h3>
+          <button onClick={onClose} className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100"><X className="w-5 h-5" /></button>
         </div>
         <div className="flex justify-center mb-5">
           <div className="relative">
@@ -114,10 +114,10 @@ const PhotoEditor = ({ uid, currentPhotoURL, name, onClose, onUpdate }: { uid: s
           </div>
         </div>
         <div className="space-y-3 mb-5">
-          <label className="block text-sm font-medium text-white/70">Image URL or Google Drive share link</label>
+          <label className="block text-sm font-medium text-gray-600">Image URL or Google Drive share link</label>
           <div className="relative">
-            <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-            <input type="url" value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://..." className="w-full pl-9 pr-4 py-2.5 bg-black/20 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+            <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input type="url" value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://..." className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
           </div>
           {isGoogleDriveLink(url) && <p className="text-xs text-blue-400 flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" /> Drive link detected.</p>}
         </div>
@@ -164,34 +164,34 @@ const DocumentEditor = ({ uid, existingDocs = [], onClose, onUpdate }: { uid: st
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50" onClick={onClose}>
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} onClick={e => e.stopPropagation()} className="bg-[#0e1628] border border-white/10 rounded-[2rem] p-8 w-full max-w-md shadow-2xl">
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} onClick={e => e.stopPropagation()} className="bg-white border border-gray-200 rounded-[2rem] p-8 w-full max-w-md shadow-xl">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+            <h3 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
                 <FileText className="w-5 h-5 text-white" />
               </div>
               Add Document
             </h3>
-            <p className="text-white/50 text-sm mt-1">Upload a certificate or important file link</p>
+            <p className="text-gray-500 text-sm mt-1">Upload a certificate or important file link</p>
           </div>
-          <button onClick={onClose} className="p-2 bg-white/5 hover:bg-white/10 text-white rounded-full transition-colors">
+          <button onClick={onClose} className="p-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <div className="space-y-6 mb-8">
           <div className="space-y-2">
-            <label className="text-sm font-bold text-white/70">Document Title</label>
+            <label className="text-sm font-bold text-gray-600">Document Title</label>
             <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g. Degree Certificate" 
-              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-bold text-white/70">Image URL / Drive Link</label>
+            <label className="text-sm font-bold text-gray-600">Image URL / Drive Link</label>
             <div className="relative">
-              <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+              <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input type="url" value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://..." 
-                className="w-full pl-11 pr-4 py-3 bg-black/20 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
+                className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
             </div>
           </div>
           
@@ -214,7 +214,7 @@ const DocumentEditor = ({ uid, existingDocs = [], onClose, onUpdate }: { uid: st
         </div>
 
         <div className="flex gap-3">
-          <button onClick={onClose} className="flex-1 py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl font-bold transition-colors">
+          <button onClick={onClose} className="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold transition-colors">
             Cancel
           </button>
           <button onClick={handleSave} disabled={saving || !title.trim() || !url.trim()} 
@@ -271,11 +271,11 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
         {showDocEditor && <DocumentEditor uid={localUser.id} existingDocs={localUser.documents || []} onClose={() => setShowDocEditor(false)} onUpdate={(docs) => { setLocalUser(p => ({ ...p, documents: docs })); if(onUpdateProfile) onUpdateProfile({ documents: docs }) }} />}
       </AnimatePresence>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="dark-glass-card p-6 border border-white/10 rounded-2xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-100">
           <div>
-            <h2 className="text-xl md:text-2xl text-white font-bold">My Profile</h2>
-            <p className="text-sm text-white/50 mt-1">Manage your account details and settings.</p>
+            <h2 className="text-xl md:text-2xl text-gray-900 font-bold">My Profile</h2>
+            <p className="text-sm text-gray-500 mt-1">Manage your account details and settings.</p>
           </div>
           <div className="flex gap-3">
             {isEditing ? (
@@ -314,28 +314,28 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
           </div>
 
           <div className="flex-1 space-y-6">
-            <div className="bg-black/20 rounded-2xl p-6 border border-white/5">
-              <h3 className="text-sm font-bold text-white/40 uppercase tracking-wider mb-4 flex items-center gap-2"><User className="w-4 h-4" /> Personal Information</h3>
+            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2"><User className="w-4 h-4" /> Personal Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-white/50">Full Name</label>
+                  <label className="text-xs font-medium text-gray-500">Full Name</label>
                   {isEditing ? (
-                    <input type="text" value={editedName} onChange={e => setEditedName(e.target.value)} className="w-full bg-black/30 border border-blue-500/50 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" autoFocus />
+                    <input type="text" value={editedName} onChange={e => setEditedName(e.target.value)} className="w-full bg-white border border-blue-300 rounded-xl px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" autoFocus />
                   ) : (
-                    <p className="text-base font-semibold text-white/90 bg-white/5 px-4 py-2.5 rounded-xl border border-white/5">{localUser.full_name || "—"}</p>
+                    <p className="text-base font-semibold text-gray-800 bg-white px-4 py-2.5 rounded-xl border border-gray-100">{localUser.full_name || "—"}</p>
                   )}
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-white/50">Email Address</label>
-                  <p className="text-base font-semibold text-white/70 bg-white/5 px-4 py-2.5 rounded-xl border border-white/5 flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-white/30" /> <span className="truncate">{localUser.email}</span>
+                  <label className="text-xs font-medium text-gray-500">Email Address</label>
+                  <p className="text-base font-semibold text-gray-600 bg-white px-4 py-2.5 rounded-xl border border-gray-100 flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-gray-400" /> <span className="truncate">{localUser.email}</span>
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-black/20 rounded-2xl p-6 border border-white/5">
-              <h3 className="text-sm font-bold text-white/40 uppercase tracking-wider mb-4 flex items-center gap-2"><Briefcase className="w-4 h-4" /> Account Details</h3>
+            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2"><Briefcase className="w-4 h-4" /> Account Details</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-blue-500/10 p-4 rounded-xl border border-blue-500/20 flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400"><CalendarIcon className="w-5 h-5" /></div>
@@ -363,11 +363,11 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
         </div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="dark-glass-card p-6 rounded-2xl border border-white/10">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-100">
           <div>
-            <h2 className="text-xl font-bold text-white flex items-center gap-2"><FileText className="w-6 h-6 text-blue-400" /> My Documents</h2>
-            <p className="text-sm text-white/50 mt-1">Manage your certificates and important files.</p>
+            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2"><FileText className="w-6 h-6 text-blue-500" /> My Documents</h2>
+            <p className="text-sm text-gray-500 mt-1">Manage your certificates and important files.</p>
           </div>
           <button onClick={() => setShowDocEditor(true)} className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all">
             <Plus className="w-4 h-4" /> New Document
@@ -375,19 +375,19 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
         </div>
 
         {!localUser.documents?.length ? (
-          <div className="text-center py-16 bg-black/20 rounded-[2rem] border border-dashed border-white/10">
-            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-              <FileText className="w-8 h-8 text-white/20" />
+          <div className="text-center py-16 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200">
+            <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+              <FileText className="w-8 h-8 text-gray-300" />
             </div>
-            <p className="text-white/40 font-bold uppercase tracking-widest text-sm">No documents found</p>
-            <p className="text-white/20 text-xs mt-1">Add certificates or files to see them here.</p>
+            <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">No documents found</p>
+            <p className="text-gray-300 text-xs mt-1">Add certificates or files to see them here.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {localUser.documents.map((docItem) => {
               const previewUrl = convertToThumbnail(docItem.url)
               return (
-                <motion.div key={docItem.id} whileHover={{ y: -5 }} className="relative group bg-[#0e1628]/40 backdrop-blur-sm rounded-[1.5rem] overflow-hidden border border-white/10 hover:border-blue-500/50 transition-all shadow-xl shadow-black/20">
+                <motion.div key={docItem.id} whileHover={{ y: -5 }} className="relative group bg-white rounded-[1.5rem] overflow-hidden border border-gray-200 hover:border-blue-300 transition-all shadow-sm hover:shadow-md">
                   <div className="h-44 bg-black/40 overflow-hidden relative">
                     <img src={previewUrl} alt={docItem.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onError={(e) => { (e.target as any).style.display='none' }} />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0e1628] via-transparent to-transparent opacity-60" />
@@ -395,8 +395,8 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
                   <div className="p-5 relative">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <h4 className="font-bold text-white text-[15px] truncate leading-tight mb-1" title={docItem.title}>{docItem.title}</h4>
-                        <div className="flex items-center gap-2 text-[10px] font-bold text-white/30 uppercase tracking-widest">
+                        <h4 className="font-bold text-gray-900 text-[15px] truncate leading-tight mb-1" title={docItem.title}>{docItem.title}</h4>
+                        <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                           <CalendarIcon className="w-3 h-3" />
                           {format(new Date(docItem.addedAt), 'MMM d, yyyy')}
                         </div>

@@ -248,12 +248,12 @@
     @apply bg-[#EBEDF3];
   }
 
-  /* Global fixes for dark mode form elements */
+  /* Fix select options in light theme */
   .dark-glass-card select option,
   .dark-glass-strong select option,
-  [color-scheme="dark"] option {
-    background-color: #1e293b;
-    color: white;
+  select option {
+    background-color: #ffffff;
+    color: #1e293b;
   }
 
   input[type="date"], input[type="time"], input[type="month"] {
