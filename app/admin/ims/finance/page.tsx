@@ -278,9 +278,9 @@ export default function FinanceDashboard() {
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-900/90 backdrop-blur-md">
             <motion.div animate={{ rotate: 360, scale: [1, 1.15, 1] }} transition={{ duration: 3, repeat: Infinity }}
               className="w-24 h-24 bg-gradient-to-r from-blue-500 to-violet-500 rounded-full flex items-center justify-center mb-6">
-              <DollarSign className="w-12 h-12 text-white" />
+              <DollarSign className="w-12 h-12 text-gray-900" />
             </motion.div>
-            <h2 className="text-2xl font-bold text-white mb-2">CADD Centre - Finance</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">CADD Centre - Finance</h2>
             <div className="w-64 h-1.5 bg-gray-700 rounded-full overflow-hidden">
               <motion.div className="h-full bg-gradient-to-r from-blue-500 to-violet-400"
                 initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 3 }} />
@@ -292,22 +292,22 @@ export default function FinanceDashboard() {
       {/* Header */}
       <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="dark-glass-strong p-4 md:p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <button className="md:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          <button className="md:hidden text-gray-900" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-violet-500 rounded-xl flex items-center justify-center">
-            <DollarSign className="w-6 h-6 text-white" />
+            <DollarSign className="w-6 h-6 text-gray-900" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-blue-400">Finance Dashboard</h1>
-            <p className="text-white/50 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
+            <p className="text-gray-500 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/admin/ims')} className="text-white/70 hover:text-white px-3 py-2 border border-white/20 rounded-xl">Back to Admin</button>
+          <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl">Back to Admin</button>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 glass-button text-white rounded-xl border border-white/20 hover:bg-red-500/30">
+            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200 hover:bg-red-500/30">
             <LogOut className="w-4 h-4" /> Logout
           </motion.button>
         </div>
@@ -317,27 +317,27 @@ export default function FinanceDashboard() {
         {/* Sidebar */}
         <motion.aside initial={{ x: -100 }} animate={{ x: 0 }}
           className={`dark-glass-strong h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
-          {mobileMenuOpen && <div className="flex justify-end p-3 md:hidden"><button onClick={() => setMobileMenuOpen(false)} className="text-white"><X size={20} /></button></div>}
+          {mobileMenuOpen && <div className="flex justify-end p-3 md:hidden"><button onClick={() => setMobileMenuOpen(false)} className="text-gray-900"><X size={20} /></button></div>}
 
           {/* Profile Card */}
-          <div className="px-4 pt-5 pb-4 border-b border-white/5">
+          <div className="px-4 pt-5 pb-4 border-b border-gray-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-gray-900 font-bold text-sm flex-shrink-0">
                 {currentUser?.name?.charAt(0).toUpperCase() || 'F'}
               </div>
               <div className="min-w-0">
                 <p className="text-blue-300 text-xs font-semibold">Finance Dept.</p>
-                <p className="text-white/40 text-[10px] mt-0.5">CCL Taskflow</p>
+                <p className="text-gray-400 text-[10px] mt-0.5">CCL Taskflow</p>
               </div>
             </div>
             <div className="mt-3 grid grid-cols-2 gap-2">
-              <div className="bg-white/5 rounded-lg p-2 text-center border border-white/10">
-                <p className="font-bold text-sm text-green-400">LKR {(totalIncome/1000).toFixed(0)}k</p>
-                <p className="text-white/40 text-[10px]">Income</p>
+              <div className="bg-gray-100 rounded-lg p-2 text-center border border-gray-200">
+                <p className="font-bold text-sm text-green-700">LKR {(totalIncome/1000).toFixed(0)}k</p>
+                <p className="text-gray-400 text-[10px]">Income</p>
               </div>
-              <div className="bg-white/5 rounded-lg p-2 text-center border border-white/10">
-                <p className="font-bold text-sm text-red-400">LKR {(totalExpenses/1000).toFixed(0)}k</p>
-                <p className="text-white/40 text-[10px]">Expense</p>
+              <div className="bg-gray-100 rounded-lg p-2 text-center border border-gray-200">
+                <p className="font-bold text-sm text-red-600">LKR {(totalExpenses/1000).toFixed(0)}k</p>
+                <p className="text-gray-400 text-[10px]">Expense</p>
               </div>
             </div>
           </div>
@@ -346,7 +346,7 @@ export default function FinanceDashboard() {
           <div className="flex-1 overflow-y-auto py-3 px-3 space-y-4">
             {navSections.map(section => (
               <div key={section.label}>
-                <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest px-2 mb-1.5">{section.label}</p>
+                <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest px-2 mb-1.5">{section.label}</p>
                 <div className="space-y-0.5">
                   {section.items.map(item => (
                     <motion.button
@@ -356,16 +356,16 @@ export default function FinanceDashboard() {
                       onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
                       className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all text-sm relative ${
                         activeTab === item.id
-                          ? 'bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-lg shadow-blue-500/20'
+                          ? 'bg-gradient-to-r from-blue-600 to-violet-600 text-gray-900 shadow-lg shadow-blue-500/20'
                           : (item as any).urgent
-                            ? 'text-yellow-300 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/20'
-                            : 'text-white/70 hover:text-white hover:bg-white/8'
+                            ? 'text-yellow-300 bg-yellow-500/10 hover:bg-yellow-100 border border-yellow-200'
+                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                       }`}
                     >
                       {activeTab === item.id && (
                         <motion.div layoutId="fin-active-pill" className="absolute left-0 top-0 bottom-0 w-0.5 bg-white rounded-full" />
                       )}
-                      <item.icon className={`w-4 h-4 flex-shrink-0 ${activeTab === item.id ? 'text-white' : (item as any).urgent ? 'text-yellow-300' : 'text-white/50'}`} />
+                      <item.icon className={`w-4 h-4 flex-shrink-0 ${activeTab === item.id ? 'text-gray-900' : (item as any).urgent ? 'text-yellow-300' : 'text-gray-500'}`} />
                       <span className="flex-1 text-left font-medium">{item.label}</span>
                     </motion.button>
                   ))}
@@ -382,47 +382,47 @@ export default function FinanceDashboard() {
             <div className="space-y-4">
               <div className="flex flex-wrap gap-3 items-center">
                 <div className="flex-1 min-w-[180px] relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search payments…"
-                    className="w-full pl-9 pr-3 py-2 dark-glass-card text-white placeholder-white/40 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500" />
+                    className="w-full pl-9 pr-3 py-2 dark-glass-card text-gray-900 placeholder-gray-400 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <motion.button whileHover={{ scale: 1.05 }} onClick={exportFinance}
-                  className="flex items-center gap-2 px-4 py-2 glass-button text-white rounded-xl border border-white/20">
+                  className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">
                   <Download className="w-4 h-4" /> Export
                 </motion.button>
                 <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowPaymentModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-white rounded-xl font-semibold">
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-gray-900 rounded-xl font-semibold">
                   <Plus className="w-4 h-4" /> Record Payment
                 </motion.button>
               </div>
 
               <div className="dark-glass-card rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-white/80">
-                    <thead className="bg-white/5">
+                  <table className="w-full text-sm text-gray-700">
+                    <thead className="bg-gray-100">
                       <tr>{['Date','Student','Course','Amount','Method','Actions'].map(h => (
-                        <th key={h} className="text-left px-4 py-3 text-white/50 text-xs uppercase">{h}</th>
+                        <th key={h} className="text-left px-4 py-3 text-gray-500 text-xs uppercase">{h}</th>
                       ))}</tr>
                     </thead>
                     <tbody>
                       {filteredPayments.map(p => (
-                        <tr key={p.id} className="border-t border-white/5 hover:bg-white/5">
+                        <tr key={p.id} className="border-t border-gray-100 hover:bg-gray-100">
                           <td className="px-4 py-3">{p.date}</td>
-                          <td className="px-4 py-3 font-semibold text-white">{p.student_name} <span className="text-white/40 font-normal block text-xs">{p.student_id}</span></td>
-                          <td className="px-4 py-3 text-white/60">{p.course_id}</td>
-                          <td className="px-4 py-3 font-bold text-green-400">LKR {p.amount.toLocaleString()}</td>
+                          <td className="px-4 py-3 font-semibold text-gray-900">{p.student_name} <span className="text-gray-400 font-normal block text-xs">{p.student_id}</span></td>
+                          <td className="px-4 py-3 text-gray-600">{p.course_id}</td>
+                          <td className="px-4 py-3 font-bold text-green-700">LKR {p.amount.toLocaleString()}</td>
                           <td className="px-4 py-3">
-                            <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-white/10 border border-white/10 text-white/80">{p.method}</span>
+                            <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-100 border border-gray-200 text-gray-700">{p.method}</span>
                           </td>
                           <td className="px-4 py-3">
                             <div className="flex gap-2">
-                              <button onClick={() => generateReceiptPDF(p)} className="p-1.5 hover:text-green-400 text-white/40"><Receipt className="w-4 h-4" /></button>
-                              {isHead && <button onClick={() => handleDeletePayment(p.id, p.invoice_id)} className="p-1.5 hover:text-red-400 text-white/40"><Trash2 className="w-4 h-4" /></button>}
+                              <button onClick={() => generateReceiptPDF(p)} className="p-1.5 hover:text-green-700 text-gray-400"><Receipt className="w-4 h-4" /></button>
+                              {isHead && <button onClick={() => handleDeletePayment(p.id, p.invoice_id)} className="p-1.5 hover:text-red-600 text-gray-400"><Trash2 className="w-4 h-4" /></button>}
                             </div>
                           </td>
                         </tr>
                       ))}
-                      {filteredPayments.length === 0 && <tr><td colSpan={6} className="text-center py-12 text-white/30">No payments found</td></tr>}
+                      {filteredPayments.length === 0 && <tr><td colSpan={6} className="text-center py-12 text-gray-400">No payments found</td></tr>}
                     </tbody>
                   </table>
                 </div>
@@ -434,47 +434,47 @@ export default function FinanceDashboard() {
           {activeTab === 'invoices' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-white">Invoices</h2>
+                <h2 className="text-xl font-bold text-gray-900">Invoices</h2>
                 <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowInvoiceModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-white rounded-xl font-semibold">
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-gray-900 rounded-xl font-semibold">
                   <Plus className="w-4 h-4" /> New Invoice
                 </motion.button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredInvoices.map(inv => (
-                  <div key={inv.id} className="dark-glass-card p-5 rounded-2xl border border-white/10 space-y-3 relative overflow-hidden group hover:border-blue-500/50 transition-colors">
-                    <div className={`absolute top-0 right-0 px-3 py-1 text-xs font-bold rounded-bl-xl ${inv.status === 'Paid' ? 'bg-green-500/20 text-green-400' : inv.status === 'Unpaid' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                  <div key={inv.id} className="dark-glass-card p-5 rounded-2xl border border-gray-200 space-y-3 relative overflow-hidden group hover:border-blue-500/50 transition-colors">
+                    <div className={`absolute top-0 right-0 px-3 py-1 text-xs font-bold rounded-bl-xl ${inv.status === 'Paid' ? 'bg-green-100 text-green-700' : inv.status === 'Unpaid' ? 'bg-red-100 text-red-600' : 'bg-yellow-100 text-yellow-700'}`}>
                       {inv.status}
                     </div>
                     <div>
-                      <h3 className="font-bold text-white text-lg">{inv.student_name}</h3>
-                      <p className="text-white/40 text-xs">ID: {inv.student_id} | Course: {inv.course_name}</p>
+                      <h3 className="font-bold text-gray-900 text-lg">{inv.student_name}</h3>
+                      <p className="text-gray-400 text-xs">ID: {inv.student_id} | Course: {inv.course_name}</p>
                     </div>
                     <div className="text-3xl font-black text-blue-400">LKR {inv.total.toLocaleString()}</div>
-                    <div className="text-xs text-white/60 space-y-1">
-                      <div className="flex justify-between border-b border-white/5 pb-1"><span>Issued:</span> <span>{format(new Date(inv.generated_at), 'dd MMM yyyy')}</span></div>
-                      <div className="flex justify-between"><span>Due:</span> <span className={new Date(inv.due_date || '') < new Date() && inv.status !== 'Paid' ? 'text-red-400 font-bold' : ''}>{inv.due_date}</span></div>
+                    <div className="text-xs text-gray-600 space-y-1">
+                      <div className="flex justify-between border-b border-gray-100 pb-1"><span>Issued:</span> <span>{format(new Date(inv.generated_at), 'dd MMM yyyy')}</span></div>
+                      <div className="flex justify-between"><span>Due:</span> <span className={new Date(inv.due_date || '') < new Date() && inv.status !== 'Paid' ? 'text-red-600 font-bold' : ''}>{inv.due_date}</span></div>
                     </div>
                     <div className="flex gap-2 pt-2">
-                      <button onClick={() => generateInvoicePDF(inv)} className="flex-1 py-1.5 glass-button text-xs font-semibold rounded-lg border border-white/20 flex items-center justify-center gap-1">
+                      <button onClick={() => generateInvoicePDF(inv)} className="flex-1 py-1.5 glass-button text-xs font-semibold rounded-lg border border-gray-200 flex items-center justify-center gap-1">
                         <Download className="w-3 h-3" /> PDF
                       </button>
                       {inv.status !== 'Paid' && (
                         <button onClick={() => { setPaymentForm({ ...emptyPayment, student_name: inv.student_name, student_id: inv.student_id || '', course_id: inv.course_name || '', invoice_id: inv.id, amount: inv.total }); setShowPaymentModal(true); }}
-                          className="flex-1 py-1.5 bg-green-500/20 text-green-400 hover:bg-green-500/30 text-xs font-bold rounded-lg border border-green-500/20 transition-colors">
+                          className="flex-1 py-1.5 bg-green-100 text-green-700 hover:bg-green-500/30 text-xs font-bold rounded-lg border border-green-200 transition-colors">
                           Pay Now
                         </button>
                       )}
                       {isHead && (
-                        <button onClick={() => handleDeleteInvoice(inv.id)} className="px-3 py-1.5 bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg border border-red-500/20">
+                        <button onClick={() => handleDeleteInvoice(inv.id)} className="px-3 py-1.5 bg-red-500/10 text-red-600 hover:bg-red-100 rounded-lg border border-red-200">
                           <Trash2 className="w-3 h-3" />
                         </button>
                       )}
                     </div>
                   </div>
                 ))}
-                {filteredInvoices.length === 0 && <div className="col-span-full text-center py-12 text-white/30">No invoices generated yet.</div>}
+                {filteredInvoices.length === 0 && <div className="col-span-full text-center py-12 text-gray-400">No invoices generated yet.</div>}
               </div>
             </div>
           )}
@@ -483,35 +483,35 @@ export default function FinanceDashboard() {
           {activeTab === 'expenses' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-white">Expenses</h2>
+                <h2 className="text-xl font-bold text-gray-900">Expenses</h2>
                 <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowExpenseModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl font-semibold">
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-orange-500 text-gray-900 rounded-xl font-semibold">
                   <Plus className="w-4 h-4" /> Log Expense
                 </motion.button>
               </div>
 
               <div className="dark-glass-card rounded-2xl overflow-hidden">
-                <table className="w-full text-sm text-white/80">
-                  <thead className="bg-white/5">
+                <table className="w-full text-sm text-gray-700">
+                  <thead className="bg-gray-100">
                     <tr>{['Date','Category','Amount','Notes','Actions'].map(h => (
-                      <th key={h} className="text-left px-4 py-3 text-white/50 text-xs uppercase">{h}</th>
+                      <th key={h} className="text-left px-4 py-3 text-gray-500 text-xs uppercase">{h}</th>
                     ))}</tr>
                   </thead>
                   <tbody>
                     {expenses.map(e => (
-                      <tr key={e.id} className="border-t border-white/5 hover:bg-white/5">
-                        <td className="px-4 py-3 text-white/70">{e.date}</td>
-                        <td className="px-4 py-3 font-semibold text-white">
-                          <span className="px-2 py-1 rounded-md bg-white/10 text-xs border border-white/10">{e.category}</span>
+                      <tr key={e.id} className="border-t border-gray-100 hover:bg-gray-100">
+                        <td className="px-4 py-3 text-gray-600">{e.date}</td>
+                        <td className="px-4 py-3 font-semibold text-gray-900">
+                          <span className="px-2 py-1 rounded-md bg-gray-100 text-xs border border-gray-200">{e.category}</span>
                         </td>
-                        <td className="px-4 py-3 font-bold text-red-400">LKR {e.amount.toLocaleString()}</td>
-                        <td className="px-4 py-3 text-white/50">{e.notes}</td>
+                        <td className="px-4 py-3 font-bold text-red-600">LKR {e.amount.toLocaleString()}</td>
+                        <td className="px-4 py-3 text-gray-500">{e.notes}</td>
                         <td className="px-4 py-3">
-                          {isHead && <button onClick={() => handleDeleteExpense(e.id)} className="p-1.5 hover:text-red-400 text-white/40"><Trash2 className="w-4 h-4" /></button>}
+                          {isHead && <button onClick={() => handleDeleteExpense(e.id)} className="p-1.5 hover:text-red-600 text-gray-400"><Trash2 className="w-4 h-4" /></button>}
                         </td>
                       </tr>
                     ))}
-                    {expenses.length === 0 && <tr><td colSpan={5} className="text-center py-12 text-white/30">No expenses logged yet.</td></tr>}
+                    {expenses.length === 0 && <tr><td colSpan={5} className="text-center py-12 text-gray-400">No expenses logged yet.</td></tr>}
                   </tbody>
                 </table>
               </div>
@@ -521,26 +521,26 @@ export default function FinanceDashboard() {
           {/* ── REPORTS ── */}
           {activeTab === 'reports' && (
             <div className="space-y-4">
-              <h2 className="text-xl font-bold text-white">Profit & Loss Report</h2>
+              <h2 className="text-xl font-bold text-gray-900">Profit & Loss Report</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="dark-glass-card p-6 rounded-2xl border border-green-500/20 bg-green-500/5">
+                <div className="dark-glass-card p-6 rounded-2xl border border-green-200 bg-green-500/5">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-green-500/20 rounded-lg text-green-400"><TrendingUp className="w-5 h-5" /></div>
-                    <p className="text-white/60 font-semibold">Total Revenue</p>
+                    <div className="p-2 bg-green-100 rounded-lg text-green-700"><TrendingUp className="w-5 h-5" /></div>
+                    <p className="text-gray-600 font-semibold">Total Revenue</p>
                   </div>
-                  <h3 className="text-3xl font-black text-green-400">LKR {totalIncome.toLocaleString()}</h3>
+                  <h3 className="text-3xl font-black text-green-700">LKR {totalIncome.toLocaleString()}</h3>
                 </div>
-                <div className="dark-glass-card p-6 rounded-2xl border border-red-500/20 bg-red-500/5">
+                <div className="dark-glass-card p-6 rounded-2xl border border-red-200 bg-red-500/5">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-red-500/20 rounded-lg text-red-400"><TrendingDown className="w-5 h-5" /></div>
-                    <p className="text-white/60 font-semibold">Total Expenses</p>
+                    <div className="p-2 bg-red-100 rounded-lg text-red-600"><TrendingDown className="w-5 h-5" /></div>
+                    <p className="text-gray-600 font-semibold">Total Expenses</p>
                   </div>
-                  <h3 className="text-3xl font-black text-red-400">LKR {totalExpenses.toLocaleString()}</h3>
+                  <h3 className="text-3xl font-black text-red-600">LKR {totalExpenses.toLocaleString()}</h3>
                 </div>
                 <div className={`dark-glass-card p-6 rounded-2xl border ${netProfit >= 0 ? 'border-blue-500/20 bg-blue-500/5' : 'border-orange-500/20 bg-orange-500/5'}`}>
                   <div className="flex items-center gap-3 mb-2">
                     <div className={`p-2 rounded-lg ${netProfit >= 0 ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'}`}><DollarSign className="w-5 h-5" /></div>
-                    <p className="text-white/60 font-semibold">Net Profit</p>
+                    <p className="text-gray-600 font-semibold">Net Profit</p>
                   </div>
                   <h3 className={`text-3xl font-black ${netProfit >= 0 ? 'text-blue-400' : 'text-orange-400'}`}>LKR {netProfit.toLocaleString()}</h3>
                 </div>
@@ -550,9 +550,9 @@ export default function FinanceDashboard() {
 
           {activeTab === 'calendar' && <SriLankaCalendar accentColor="blue" />}
           {activeTab === 'attendance' && (
-            <div className="dark-glass-card p-6 rounded-2xl border border-white/10">
-              <h2 className="text-xl font-bold text-white mb-4">My Attendance</h2>
-              <p className="text-white/50 mb-4">Your personal attendance records.</p>
+            <div className="dark-glass-card p-6 rounded-2xl border border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">My Attendance</h2>
+              <p className="text-gray-500 mb-4">Your personal attendance records.</p>
               <StaffAttendance />
             </div>
           )}
@@ -571,40 +571,40 @@ export default function FinanceDashboard() {
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
-                <h2 className="text-xl font-bold text-white">Record Payment</h2>
-                <button onClick={() => setShowPaymentModal(false)} className="text-white/50 hover:text-white"><X className="w-6 h-6" /></button>
+                <h2 className="text-xl font-bold text-gray-900">Record Payment</h2>
+                <button onClick={() => setShowPaymentModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
               </div>
               <form onSubmit={handleSavePayment} className="space-y-3">
                 {[['Student Name *', 'student_name', 'text', true], ['Student ID', 'student_id', 'text', false], ['Course ID', 'course_id', 'text', false]].map(([label, key, type, req]) => (
                   <div key={key as string}>
-                    <label className="block text-white/70 text-sm mb-1">{label as string}</label>
+                    <label className="block text-gray-600 text-sm mb-1">{label as string}</label>
                     <input type={type as string} required={req as boolean} value={(paymentForm as any)[key as string]}
                       onChange={e => setPaymentForm(p => ({ ...p, [key as string]: e.target.value }))}
-                      className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500" />
+                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                   </div>
                 ))}
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Amount (LKR) *</label>
+                  <label className="block text-gray-600 text-sm mb-1">Amount (LKR) *</label>
                   <input type="number" required value={paymentForm.amount} onChange={e => setPaymentForm(p => ({ ...p, amount: Number(e.target.value) }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500" />
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Method</label>
+                  <label className="block text-gray-600 text-sm mb-1">Method</label>
                   <select value={paymentForm.method} onChange={e => setPaymentForm(p => ({ ...p, method: e.target.value as 'Cash' | 'Bank Transfer' | 'Online' }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500">
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500">
                     {PAYMENT_METHODS.map(m => <option key={m} value={m}>{m}</option>)}
                   </select>
                 </div>
                 {[['Date', 'date', 'date'], ['Notes', 'notes', 'text']].map(([label, key, type]) => (
                   <div key={key}>
-                    <label className="block text-white/70 text-sm mb-1">{label}</label>
+                    <label className="block text-gray-600 text-sm mb-1">{label}</label>
                     <input type={type} value={(paymentForm as any)[key]} onChange={e => setPaymentForm(p => ({ ...p, [key]: e.target.value }))}
-                      className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500" />
+                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                   </div>
                 ))}
                 <div className="flex gap-3 pt-2">
-                  <button type="button" onClick={() => setShowPaymentModal(false)} className="flex-1 py-2 glass-button text-white rounded-xl border border-white/20">Cancel</button>
-                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-white rounded-xl font-semibold">Save</button>
+                  <button type="button" onClick={() => setShowPaymentModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
+                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-gray-900 rounded-xl font-semibold">Save</button>
                 </div>
               </form>
             </motion.div>
@@ -620,26 +620,26 @@ export default function FinanceDashboard() {
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               className="dark-glass-strong rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-5">
-                <h2 className="text-xl font-bold text-white">New Invoice</h2>
-                <button onClick={() => setShowInvoiceModal(false)} className="text-white/50 hover:text-white"><X className="w-6 h-6" /></button>
+                <h2 className="text-xl font-bold text-gray-900">New Invoice</h2>
+                <button onClick={() => setShowInvoiceModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
               </div>
               <form onSubmit={handleSaveInvoice} className="space-y-3">
                 {[['Student Name *', 'student_name', true], ['Student ID', 'student_id', false], ['Course Name', 'course_name', false]].map(([label, key, req]) => (
                   <div key={key as string}>
-                    <label className="block text-white/70 text-sm mb-1">{label as string}</label>
+                    <label className="block text-gray-600 text-sm mb-1">{label as string}</label>
                     <input required={req as boolean} value={(invoiceForm as any)[key as string]}
                       onChange={e => setInvoiceForm(p => ({ ...p, [key as string]: e.target.value }))}
-                      className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500" />
+                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                   </div>
                 ))}
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Due Date</label>
+                  <label className="block text-gray-600 text-sm mb-1">Due Date</label>
                   <input type="date" value={invoiceForm.due_date} onChange={e => setInvoiceForm(p => ({ ...p, due_date: e.target.value }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500" />
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <label className="text-white/70 text-sm">Line Items</label>
+                    <label className="text-gray-600 text-sm">Line Items</label>
                     <button type="button" onClick={() => setInvoiceForm(p => ({ ...p, items: [...p.items, { description: '', amount: 0 }] }))}
                       className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"><Plus className="w-3 h-3" /> Add Item</button>
                   </div>
@@ -647,13 +647,13 @@ export default function FinanceDashboard() {
                     <div key={i} className="flex gap-2 mb-2">
                       <input placeholder="Description" value={item.description}
                         onChange={e => { const items = [...invoiceForm.items]; items[i].description = e.target.value; setInvoiceForm(p => ({ ...p, items })); }}
-                        className="flex-1 dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500 text-sm" />
+                        className="flex-1 dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm" />
                       <input type="number" placeholder="LKR" value={item.amount}
                         onChange={e => { const items = [...invoiceForm.items]; items[i].amount = Number(e.target.value); setInvoiceForm(p => ({ ...p, items })); }}
-                        className="w-28 dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500 text-sm" />
+                        className="w-28 dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm" />
                       {invoiceForm.items.length > 1 && (
                         <button type="button" onClick={() => setInvoiceForm(p => ({ ...p, items: p.items.filter((_, j) => j !== i) }))}
-                          className="text-white/30 hover:text-red-400"><X className="w-4 h-4" /></button>
+                          className="text-gray-400 hover:text-red-600"><X className="w-4 h-4" /></button>
                       )}
                     </div>
                   ))}
@@ -662,8 +662,8 @@ export default function FinanceDashboard() {
                   </div>
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <button type="button" onClick={() => setShowInvoiceModal(false)} className="flex-1 py-2 glass-button text-white rounded-xl border border-white/20">Cancel</button>
-                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-white rounded-xl font-semibold">Create Invoice</button>
+                  <button type="button" onClick={() => setShowInvoiceModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
+                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-gray-900 rounded-xl font-semibold">Create Invoice</button>
                 </div>
               </form>
             </motion.div>
@@ -679,35 +679,35 @@ export default function FinanceDashboard() {
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
-                <h2 className="text-xl font-bold text-white">Log Expense</h2>
-                <button onClick={() => setShowExpenseModal(false)} className="text-white/50 hover:text-white"><X className="w-6 h-6" /></button>
+                <h2 className="text-xl font-bold text-gray-900">Log Expense</h2>
+                <button onClick={() => setShowExpenseModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
               </div>
               <form onSubmit={handleSaveExpense} className="space-y-3">
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Category</label>
+                  <label className="block text-gray-600 text-sm mb-1">Category</label>
                   <select value={expenseForm.category} onChange={e => setExpenseForm(p => ({ ...p, category: e.target.value as any }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500">
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500">
                     {EXPENSE_CATS.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Amount (LKR) *</label>
+                  <label className="block text-gray-600 text-sm mb-1">Amount (LKR) *</label>
                   <input type="number" required value={expenseForm.amount} onChange={e => setExpenseForm(p => ({ ...p, amount: Number(e.target.value) }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500" />
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Date</label>
+                  <label className="block text-gray-600 text-sm mb-1">Date</label>
                   <input type="date" value={expenseForm.date} onChange={e => setExpenseForm(p => ({ ...p, date: e.target.value }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500" />
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Notes</label>
+                  <label className="block text-gray-600 text-sm mb-1">Notes</label>
                   <textarea value={expenseForm.notes} onChange={e => setExpenseForm(p => ({ ...p, notes: e.target.value }))} rows={2}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500 resize-none" />
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 resize-none" />
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <button type="button" onClick={() => setShowExpenseModal(false)} className="flex-1 py-2 glass-button text-white rounded-xl border border-white/20">Cancel</button>
-                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-white rounded-xl font-semibold">Save</button>
+                  <button type="button" onClick={() => setShowExpenseModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
+                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-blue-500 to-violet-600 text-gray-900 rounded-xl font-semibold">Save</button>
                 </div>
               </form>
             </motion.div>
@@ -718,3 +718,5 @@ export default function FinanceDashboard() {
     </div>
   );
 }
+
+

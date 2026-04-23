@@ -122,7 +122,7 @@ const PhotoEditor = ({ uid, currentPhotoURL, name, onClose, onUpdate }: { uid: s
           {isGoogleDriveLink(url) && <p className="text-xs text-blue-400 flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" /> Drive link detected.</p>}
         </div>
         <div className="flex gap-2">
-          {currentPhotoURL && <button onClick={handleRemove} disabled={saving} className="px-3 py-2.5 bg-red-500/20 text-red-400 rounded-xl text-sm font-medium hover:bg-red-500/30 transition-all">Remove</button>}
+          {currentPhotoURL && <button onClick={handleRemove} disabled={saving} className="px-3 py-2.5 bg-red-100 text-red-600 rounded-xl text-sm font-medium hover:bg-red-500/30 transition-all">Remove</button>}
           <button onClick={handleSave} disabled={saving} className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-2.5 rounded-xl text-sm font-medium hover:from-blue-600 hover:to-indigo-600 flex justify-center items-center gap-2">
             {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <><Save className="w-4 h-4" /> Save Photo</>}
           </button>
@@ -280,7 +280,7 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
           <div className="flex gap-3">
             {isEditing ? (
               <>
-                <button onClick={() => setIsEditing(false)} className="px-4 py-2.5 bg-white/5 text-white/80 rounded-xl text-sm font-semibold hover:bg-white/10 transition-colors">Cancel</button>
+                <button onClick={() => setIsEditing(false)} className="px-4 py-2.5 bg-white/5 text-white/80 rounded-xl text-sm font-semibold hover:bg-gray-100 transition-colors">Cancel</button>
                 <button onClick={handleSave} disabled={isLoading} className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all flex items-center gap-2">
                   {isLoading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />} Save
                 </button>
@@ -346,9 +346,9 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
                   <div><p className="text-xs text-emerald-300/70">Last Active</p><p className="text-sm font-semibold text-emerald-100">{localUser.last_active ? format(new Date(localUser.last_active), 'MMM d, yyyy') : 'Recently'}</p></div>
                 </div>
                 {localUser.department && (
-                  <div className="bg-purple-500/10 p-4 rounded-xl border border-purple-500/20 flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400"><Building className="w-5 h-5" /></div>
-                    <div><p className="text-xs text-purple-300/70">Department</p><p className="text-sm font-semibold text-purple-100">{localUser.department}</p></div>
+                  <div className="bg-purple-100 p-4 rounded-xl border border-purple-200 flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600"><Building className="w-5 h-5" /></div>
+                    <div><p className="text-xs text-purple-700/70">Department</p><p className="text-sm font-semibold text-purple-100">{localUser.department}</p></div>
                   </div>
                 )}
                 {localUser.access_level !== undefined && (
@@ -402,10 +402,10 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
                         </div>
                       </div>
                       <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                        <a href={docItem.url} target="_blank" rel="noreferrer" className="w-8 h-8 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all border border-blue-500/20 shadow-lg shadow-blue-500/20" title="Open Link">
+                        <a href={docItem.url} target="_blank" rel="noreferrer" className="w-8 h-8 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center hover:bg-blue-500 hover:text-gray-900 transition-all border border-blue-500/20 shadow-lg shadow-blue-500/20" title="Open Link">
                           <LinkIcon className="w-4 h-4" />
                         </a>
-                        <button onClick={() => handleDeleteDoc(docItem.id)} className="w-8 h-8 bg-red-500/20 text-red-400 rounded-xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all border border-red-500/20 shadow-lg shadow-red-500/20" title="Delete">
+                        <button onClick={() => handleDeleteDoc(docItem.id)} className="w-8 h-8 bg-red-100 text-red-600 rounded-xl flex items-center justify-center hover:bg-red-500 hover:text-gray-900 transition-all border border-red-200 shadow-lg shadow-red-500/20" title="Delete">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
@@ -420,3 +420,4 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
     </div>
   )
 }
+

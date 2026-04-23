@@ -67,7 +67,7 @@ export default function IMSDashboardPage() {
       description: "Payments, invoices & expenses",
       stat: stats ? `LKR ${stats.totalRevenue.toLocaleString()} collected` : "—",
       badge: stats?.pendingPayments ? "Unpaid" : "Clear",
-      badgeColor: stats?.pendingPayments ? "bg-red-500/20 text-red-400 border-red-500/20" : "bg-blue-500/20 text-blue-400 border-blue-500/20",
+      badgeColor: stats?.pendingPayments ? "bg-red-100 text-red-600 border-red-200" : "bg-blue-500/20 text-blue-400 border-blue-500/20",
     },
     {
       title: "Human Resources",
@@ -77,7 +77,7 @@ export default function IMSDashboardPage() {
       description: "Staff, leaves & salary",
       stat: stats ? `${stats.pendingLeaves} pending leaves` : "—",
       badge: stats?.pendingLeaves ? `${stats.pendingLeaves} pending` : "All clear",
-      badgeColor: stats?.pendingLeaves ? "bg-orange-500/20 text-orange-400 border-orange-500/20" : "bg-purple-500/20 text-purple-400 border-purple-500/20",
+      badgeColor: stats?.pendingLeaves ? "bg-orange-500/20 text-orange-400 border-orange-500/20" : "bg-purple-100 text-purple-600 border-purple-200",
     },
     {
       title: "Staff Users",
@@ -97,7 +97,7 @@ export default function IMSDashboardPage() {
       description: "Cross-department shared tasks",
       stat: stats ? `${stats.openTasks} open tasks` : "—",
       badge: stats?.openTasks ? `${stats.openTasks} open` : "All done",
-      badgeColor: stats?.openTasks ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/20" : "bg-yellow-500/20 text-yellow-400 border-yellow-500/20",
+      badgeColor: stats?.openTasks ? "bg-yellow-100 text-yellow-700 border-yellow-200" : "bg-yellow-100 text-yellow-700 border-yellow-200",
     },
     {
       title: "Roster",
@@ -107,7 +107,7 @@ export default function IMSDashboardPage() {
       description: "Duty & shift scheduling",
       stat: "Manage shifts",
       badge: "Roster",
-      badgeColor: "bg-pink-500/20 text-pink-400 border-pink-500/20",
+      badgeColor: "bg-pink-100 text-pink-600 border-pink-200",
     },
     {
       title: "Control Panel",
@@ -117,7 +117,7 @@ export default function IMSDashboardPage() {
       description: "System commands & broadcast",
       stat: "Admin only",
       badge: "System",
-      badgeColor: "bg-red-500/20 text-red-400 border-red-500/20",
+      badgeColor: "bg-red-100 text-red-600 border-red-200",
     },
   ]
 
@@ -174,7 +174,7 @@ export default function IMSDashboardPage() {
               { label: "Total Staff",    value: stats.totalStaff,      icon: Users,      color: "text-blue-400",   gradient: "from-blue-500 to-cyan-500" },
               { label: "Active Leads",   value: stats.activeLeads,     icon: TrendingUp, color: "text-orange-400", gradient: "from-orange-500 to-pink-500" },
               { label: "Revenue (LKR)",  value: stats.totalRevenue.toLocaleString(), icon: DollarSign, color: "text-emerald-400", gradient: "from-emerald-500 to-cyan-500" },
-              { label: "Open Tasks",     value: stats.openTasks,       icon: ListTodo,   color: "text-yellow-400", gradient: "from-yellow-500 to-orange-500" },
+              { label: "Open Tasks",     value: stats.openTasks,       icon: ListTodo,   color: "text-yellow-700", gradient: "from-yellow-500 to-orange-500" },
             ].map((s, i) => (
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} key={i} 
                 className="bg-white border border-gray-200 shadow-sm p-5 rounded-2xl hover:shadow-md transition-all flex items-center gap-4">
@@ -258,3 +258,4 @@ export default function IMSDashboardPage() {
     </div>
   )
 }
+

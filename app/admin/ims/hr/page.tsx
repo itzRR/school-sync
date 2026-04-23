@@ -266,7 +266,7 @@ export default function HRDashboard() {
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/90 backdrop-blur-md">
             <motion.div animate={{ rotate: 360, scale: [1, 1.15, 1] }} transition={{ duration: 3, repeat: Infinity }}
               className="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-6">
-              <Users className="w-12 h-12 text-white" />
+              <Users className="w-12 h-12 text-gray-900" />
             </motion.div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">CADD Centre - HR</h2>
             <div className="w-64 h-1.5 bg-gray-200 rounded-full overflow-hidden">
@@ -283,7 +283,7 @@ export default function HRDashboard() {
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-            <Users className="w-6 h-6 text-white" />
+            <Users className="w-6 h-6 text-gray-900" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-purple-700">HR Dashboard</h1>
@@ -303,11 +303,11 @@ export default function HRDashboard() {
       <div className="flex">
         <motion.aside initial={{ x: -100 }} animate={{ x: 0 }}
           className={`bg-white border-r border-gray-200 h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
-          {mobileMenuOpen && <div className="flex justify-end p-3 md:hidden"><button onClick={() => setMobileMenuOpen(false)} className="text-white"><X size={20} /></button></div>}
+          {mobileMenuOpen && <div className="flex justify-end p-3 md:hidden"><button onClick={() => setMobileMenuOpen(false)} className="text-gray-900"><X size={20} /></button></div>}
 
           <div className="px-4 pt-5 pb-4 border-b border-gray-200">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-gray-900 font-bold text-sm flex-shrink-0">
                 {currentUser?.name?.charAt(0).toUpperCase() || 'H'}
               </div>
               <div className="min-w-0">
@@ -340,7 +340,7 @@ export default function HRDashboard() {
                       onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
                       className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all text-sm relative ${
                         activeTab === item.id
-                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/20'
+                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-gray-900 shadow-lg shadow-purple-500/20'
                           : item.badge > 0
                             ? 'text-yellow-700 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200'
                             : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
@@ -349,9 +349,9 @@ export default function HRDashboard() {
                       {activeTab === item.id && (
                         <motion.div layoutId="hr-active-pill" className="absolute left-0 top-0 bottom-0 w-0.5 bg-white rounded-full" />
                       )}
-                      <item.icon className={`w-4 h-4 flex-shrink-0 ${activeTab === item.id ? 'text-white' : item.badge > 0 ? 'text-yellow-600' : 'text-gray-400'}`} />
+                      <item.icon className={`w-4 h-4 flex-shrink-0 ${activeTab === item.id ? 'text-gray-900' : item.badge > 0 ? 'text-yellow-600' : 'text-gray-400'}`} />
                       <span className="flex-1 text-left font-medium">{item.label}</span>
-                      {item.badge > 0 && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-yellow-500/20 text-yellow-400">{item.badge}</span>}
+                      {item.badge > 0 && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-yellow-100 text-yellow-700">{item.badge}</span>}
                     </motion.button>
                   ))}
                 </div>
@@ -367,14 +367,14 @@ export default function HRDashboard() {
             <div className="space-y-4">
               <div className="flex flex-wrap gap-3 items-center">
                 <div className="flex-1 min-w-[180px] relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search staff…"
-                    className="w-full pl-9 pr-3 py-2 dark-glass-card text-white placeholder-white/40 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                    className="w-full pl-9 pr-3 py-2 dark-glass-card text-gray-900 placeholder-gray-400 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                 </div>
                 {isHead && (
                   <motion.button whileHover={{ scale: 1.05 }}
                     onClick={() => { setEditingEmp(null); setUserForm(emptyUserForm); setShowUserModal(true); }}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-semibold">
+                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-gray-900 rounded-xl font-semibold">
                     <Plus className="w-4 h-4" /> Add Staff
                   </motion.button>
                 )}
@@ -384,7 +384,7 @@ export default function HRDashboard() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left border-separate border-spacing-y-2 px-4">
                     <thead>
-                      <tr className="text-white/30 text-[10px] font-bold uppercase tracking-widest">
+                      <tr className="text-gray-400 text-[10px] font-bold uppercase tracking-widest bg-gray-50">
                         <th className="px-4 py-4">Staff Member</th>
                         <th className="px-4 py-4">Department</th>
                         <th className="px-4 py-4">Role</th>
@@ -394,32 +394,32 @@ export default function HRDashboard() {
                     </thead>
                     <tbody>
                       {filteredEmployees.map(emp => (
-                        <tr key={emp.id} className={`group bg-white/5 hover:bg-white/10 transition-all rounded-2xl ${emp.disabled ? 'opacity-50' : ''}`}>
+                      <tr key={emp.id} className={`group bg-gray-50 hover:bg-purple-50 transition-all rounded-2xl border border-gray-100 ${emp.disabled ? 'opacity-50' : ''}`}>
                           <td className="px-4 py-4 rounded-l-2xl">
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold shadow-inner">
+                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-200 flex items-center justify-center text-purple-600 font-bold shadow-inner">
                                 {emp.full_name?.charAt(0).toUpperCase() || emp.email.charAt(0).toUpperCase()}
                               </div>
                               <div className="min-w-0">
-                                <p className="font-bold text-white text-[15px] truncate">{emp.full_name || emp.email}</p>
-                                <p className="text-white/40 text-xs truncate">{emp.position || 'Staff member'}</p>
+                                <p className="font-bold text-gray-900 text-[15px] truncate">{emp.full_name || emp.email}</p>
+                                <p className="text-gray-400 text-xs truncate">{emp.position || 'Staff member'}</p>
                               </div>
                             </div>
                           </td>
                           <td className="px-4 py-4">
-                            <span className="px-3 py-1 rounded-lg bg-purple-500/10 text-purple-300 text-[11px] font-bold uppercase tracking-wider border border-purple-500/20">
+                            <span className="px-3 py-1 rounded-lg bg-purple-100 text-purple-700 text-[11px] font-bold uppercase tracking-wider border border-purple-200">
                               {emp.department || 'General'}
                             </span>
                           </td>
                           <td className="px-4 py-4">
-                            <div className="text-white/70 font-medium">
+                            <div className="text-gray-700 font-medium">
                               {emp.role.replace(/_/g, ' ')}
                             </div>
-                            <div className="text-[10px] text-white/30 truncate">{emp.email}</div>
+                            <div className="text-[10px] text-gray-400 truncate">{emp.email}</div>
                           </td>
                           <td className="px-4 py-4">
-                            <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-tighter ${emp.disabled ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'}`}>
-                              <div className={`w-1.5 h-1.5 rounded-full ${emp.disabled ? 'bg-red-400' : 'bg-green-400'} animate-pulse`} />
+                            <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-tighter ${emp.disabled ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-700'}`}>
+                              <div className={`w-1.5 h-1.5 rounded-full ${emp.disabled ? 'bg-red-500' : 'bg-green-500'} animate-pulse`} />
                               {emp.disabled ? 'Disabled' : 'Active'}
                             </div>
                           </td>
@@ -434,11 +434,11 @@ export default function HRDashboard() {
                                     work_schedule: emp.work_schedule || [], office_assets: emp.office_assets || [], permissions: emp.permissions || []
                                   });
                                   setShowUserModal(true); 
-                                }} className="p-2 hover:bg-purple-500/20 hover:text-purple-400 text-white/40 rounded-lg transition-all" title="Edit Staff">
+                                }} className="p-2 hover:bg-purple-100 hover:text-purple-600 text-gray-400 rounded-lg transition-all" title="Edit Staff">
                                   <Edit className="w-4 h-4" />
                                 </button>
                                 <button onClick={() => handleToggleDisable(emp)} 
-                                  className={`p-2 rounded-lg transition-all ${emp.disabled ? 'hover:bg-green-500/20 hover:text-green-400' : 'hover:bg-red-500/20 hover:text-red-400'} text-white/40`}
+                                  className={`p-2 rounded-lg transition-all ${emp.disabled ? 'hover:bg-green-100 hover:text-green-700' : 'hover:bg-red-100 hover:text-red-600'} text-gray-400`}
                                   title={emp.disabled ? "Enable" : "Disable"}>
                                   <Power className="w-4 h-4" />
                                 </button>
@@ -458,42 +458,42 @@ export default function HRDashboard() {
           {activeTab === 'leaves' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-white">Leave Requests</h2>
+                <h2 className="text-xl font-bold text-gray-900">Leave Requests</h2>
                 <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowLeaveModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-semibold">
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-gray-900 rounded-xl font-semibold">
                   <Plus className="w-4 h-4" /> Request Leave
                 </motion.button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {leaves.map(l => (
-                  <div key={l.id} className="dark-glass-card p-5 rounded-2xl border border-white/10 space-y-3 relative overflow-hidden group">
-                    <div className={`absolute top-0 right-0 px-3 py-1 text-xs font-bold rounded-bl-xl ${l.status === 'Approved' ? 'bg-green-500/20 text-green-400' : l.status === 'Rejected' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                  <div key={l.id} className="dark-glass-card p-5 rounded-2xl border border-gray-200 space-y-3 relative overflow-hidden group">
+                    <div className={`absolute top-0 right-0 px-3 py-1 text-xs font-bold rounded-bl-xl ${l.status === 'Approved' ? 'bg-green-100 text-green-700' : l.status === 'Rejected' ? 'bg-red-100 text-red-600' : 'bg-yellow-100 text-yellow-700'}`}>
                       {l.status}
                     </div>
                     <div>
-                      <h3 className="font-bold text-white text-lg">{l.employee_name}</h3>
-                      <span className="text-purple-300 text-xs px-2 py-0.5 rounded-full bg-purple-500/20 border border-purple-500/20 inline-block mt-1">{l.type} Leave</span>
+                      <h3 className="font-bold text-gray-900 text-lg">{l.employee_name}</h3>
+                      <span className="text-purple-700 text-xs px-2 py-0.5 rounded-full bg-purple-100 border border-purple-200 inline-block mt-1">{l.type} Leave</span>
                     </div>
-                    <div className="text-sm text-white/60 flex items-center gap-2">
-                      <CalendarDays className="w-4 h-4 text-white/40" />
+                    <div className="text-sm text-gray-600 flex items-center gap-2">
+                      <CalendarDays className="w-4 h-4 text-gray-400" />
                       {l.from_date} to {l.to_date}
                     </div>
-                    <p className="text-sm text-white/50 bg-white/5 p-2 rounded-lg italic">"{l.reason}"</p>
+                    <p className="text-sm text-gray-500 bg-gray-100 p-2 rounded-lg italic">"{l.reason}"</p>
                     {isHead && (
                       <div className="flex gap-2 pt-2">
                         {l.status === 'Pending' && (
                           <>
-                            <button onClick={() => handleLeaveStatusChange(l.id, 'Approved')} className="flex-1 py-1.5 bg-green-500/20 text-green-400 hover:bg-green-500/30 text-xs font-bold rounded-lg border border-green-500/20">Approve</button>
-                            <button onClick={() => handleLeaveStatusChange(l.id, 'Rejected')} className="flex-1 py-1.5 bg-red-500/20 text-red-400 hover:bg-red-500/30 text-xs font-bold rounded-lg border border-red-500/20">Reject</button>
+                            <button onClick={() => handleLeaveStatusChange(l.id, 'Approved')} className="flex-1 py-1.5 bg-green-100 text-green-700 hover:bg-green-500/30 text-xs font-bold rounded-lg border border-green-200">Approve</button>
+                            <button onClick={() => handleLeaveStatusChange(l.id, 'Rejected')} className="flex-1 py-1.5 bg-red-100 text-red-600 hover:bg-red-500/30 text-xs font-bold rounded-lg border border-red-200">Reject</button>
                           </>
                         )}
-                        <button onClick={() => handleDeleteLeave(l.id)} className="px-3 py-1.5 bg-white/5 text-white/40 hover:text-red-400 hover:bg-red-500/10 rounded-lg"><Trash2 className="w-3 h-3" /></button>
+                        <button onClick={() => handleDeleteLeave(l.id)} className="px-3 py-1.5 bg-gray-100 text-gray-400 hover:text-red-600 hover:bg-red-500/10 rounded-lg"><Trash2 className="w-3 h-3" /></button>
                       </div>
                     )}
                   </div>
                 ))}
-                {leaves.length === 0 && <div className="col-span-full text-center py-12 text-white/30">No leave requests.</div>}
+                {leaves.length === 0 && <div className="col-span-full text-center py-12 text-gray-400">No leave requests.</div>}
               </div>
             </div>
           )}
@@ -502,43 +502,43 @@ export default function HRDashboard() {
           {activeTab === 'salary' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-white">Payroll</h2>
+                <h2 className="text-xl font-bold text-gray-900">Payroll</h2>
                 <div className="flex gap-2">
                   <motion.button whileHover={{ scale: 1.05 }} onClick={exportPayroll}
-                    className="flex items-center gap-2 px-4 py-2 glass-button text-white rounded-xl border border-white/20">
+                    className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">
                     <Download className="w-4 h-4" /> Export Excel
                   </motion.button>
                   {isHead && (
                     <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowPayoutModal(true)}
-                      className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-semibold">
+                      className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-gray-900 rounded-xl font-semibold">
                       <Plus className="w-4 h-4" /> Log Payout
                     </motion.button>
                   )}
                 </div>
               </div>
               <div className="dark-glass-card rounded-2xl overflow-hidden">
-                <table className="w-full text-sm text-white/80">
-                  <thead className="bg-white/5">
+                <table className="w-full text-sm text-gray-700">
+                  <thead className="bg-gray-100">
                     <tr>{['Month','Employee','Amount','Paid On','Payslip','Actions'].map(h => (
-                      <th key={h} className="text-left px-4 py-3 text-white/50 text-xs uppercase">{h}</th>
+                      <th key={h} className="text-left px-4 py-3 text-gray-500 text-xs uppercase">{h}</th>
                     ))}</tr>
                   </thead>
                   <tbody>
                     {payouts.map(p => (
-                      <tr key={p.id} className="border-t border-white/5 hover:bg-white/5">
-                        <td className="px-4 py-3 font-semibold text-purple-300">{p.month}</td>
-                        <td className="px-4 py-3 text-white">{p.employee_name}</td>
-                        <td className="px-4 py-3 font-bold text-green-400">LKR {p.amount.toLocaleString()}</td>
-                        <td className="px-4 py-3 text-white/50">{p.paid_on || '—'}</td>
+                      <tr key={p.id} className="border-t border-gray-100 hover:bg-gray-100">
+                        <td className="px-4 py-3 font-semibold text-purple-700">{p.month}</td>
+                        <td className="px-4 py-3 text-gray-900">{p.employee_name}</td>
+                        <td className="px-4 py-3 font-bold text-green-700">LKR {p.amount.toLocaleString()}</td>
+                        <td className="px-4 py-3 text-gray-500">{p.paid_on || '—'}</td>
                         <td className="px-4 py-3">
-                          <button onClick={() => generatePayslipPDF(p)} className="px-3 py-1 glass-button text-xs rounded-lg flex items-center gap-1 border border-white/20"><FileText className="w-3 h-3"/> PDF</button>
+                          <button onClick={() => generatePayslipPDF(p)} className="px-3 py-1 glass-button text-xs rounded-lg flex items-center gap-1 border border-gray-200"><FileText className="w-3 h-3"/> PDF</button>
                         </td>
                         <td className="px-4 py-3">
-                          {isHead && <button onClick={() => handleDeletePayout(p.id)} className="p-1.5 hover:text-red-400 text-white/40"><Trash2 className="w-4 h-4" /></button>}
+                          {isHead && <button onClick={() => handleDeletePayout(p.id)} className="p-1.5 hover:text-red-600 text-gray-400"><Trash2 className="w-4 h-4" /></button>}
                         </td>
                       </tr>
                     ))}
-                    {payouts.length === 0 && <tr><td colSpan={6} className="text-center py-12 text-white/30">No payroll records.</td></tr>}
+                    {payouts.length === 0 && <tr><td colSpan={6} className="text-center py-12 text-gray-400">No payroll records.</td></tr>}
                   </tbody>
                 </table>
               </div>
@@ -549,46 +549,46 @@ export default function HRDashboard() {
           {activeTab === 'performance' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-white">Performance Reviews</h2>
+                <h2 className="text-xl font-bold text-gray-900">Performance Reviews</h2>
                 {isHead && (
                   <motion.button whileHover={{ scale: 1.05 }} onClick={() => setShowReviewModal(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-semibold">
+                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-gray-900 rounded-xl font-semibold">
                     <Plus className="w-4 h-4" /> Add Review
                   </motion.button>
                 )}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {reviews.map(r => (
-                  <div key={r.id} className="dark-glass-card p-5 rounded-2xl border border-white/10 space-y-3">
+                  <div key={r.id} className="dark-glass-card p-5 rounded-2xl border border-gray-200 space-y-3">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-bold text-white text-lg">{r.employee_name}</h3>
-                        <p className="text-white/40 text-xs">{r.quarter}</p>
+                        <h3 className="font-bold text-gray-900 text-lg">{r.employee_name}</h3>
+                        <p className="text-gray-400 text-xs">{r.quarter}</p>
                       </div>
-                      <div className={`px-3 py-1 rounded-lg text-lg font-black ${r.score >= 80 ? 'bg-green-500/20 text-green-400' : r.score >= 60 ? 'bg-yellow-500/20 text-yellow-400' : 'bg-red-500/20 text-red-400'}`}>
+                      <div className={`px-3 py-1 rounded-lg text-lg font-black ${r.score >= 80 ? 'bg-green-100 text-green-700' : r.score >= 60 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-600'}`}>
                         {r.score}/100
                       </div>
                     </div>
-                    <div className="bg-white/5 p-3 rounded-xl border border-white/5 text-sm text-white/70 italic">
+                    <div className="bg-gray-100 p-3 rounded-xl border border-gray-100 text-sm text-gray-600 italic">
                       "{r.notes}"
                     </div>
                     {isHead && (
                       <div className="flex justify-end pt-2">
-                        <button onClick={() => handleDeleteReview(r.id)} className="text-white/30 hover:text-red-400 flex items-center gap-1 text-xs"><Trash2 className="w-3 h-3" /> Delete</button>
+                        <button onClick={() => handleDeleteReview(r.id)} className="text-gray-400 hover:text-red-600 flex items-center gap-1 text-xs"><Trash2 className="w-3 h-3" /> Delete</button>
                       </div>
                     )}
                   </div>
                 ))}
-                {reviews.length === 0 && <div className="col-span-full text-center py-12 text-white/30">No performance reviews yet.</div>}
+                {reviews.length === 0 && <div className="col-span-full text-center py-12 text-gray-400">No performance reviews yet.</div>}
               </div>
             </div>
           )}
 
           {activeTab === 'calendar' && <SriLankaCalendar accentColor="purple" />}
           {activeTab === 'attendance' && (
-            <div className="dark-glass-card p-6 rounded-2xl border border-white/10">
-              <h2 className="text-xl font-bold text-white mb-4">My Attendance</h2>
-              <p className="text-white/50 mb-4">Your personal attendance records.</p>
+            <div className="dark-glass-card p-6 rounded-2xl border border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">My Attendance</h2>
+              <p className="text-gray-500 mb-4">Your personal attendance records.</p>
               <StaffAttendance />
             </div>
           )}
@@ -607,72 +607,72 @@ export default function HRDashboard() {
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               className="dark-glass-strong rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-5">
-                <h2 className="text-xl font-bold text-white">{editingEmp ? 'Edit Staff & Resources' : 'Add New Staff'}</h2>
-                <button type="button" onClick={() => setShowUserModal(false)} className="text-white/50 hover:text-white"><X className="w-6 h-6" /></button>
+                <h2 className="text-xl font-bold text-gray-900">{editingEmp ? 'Edit Staff & Resources' : 'Add New Staff'}</h2>
+                <button type="button" onClick={() => setShowUserModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
               </div>
               
               <form onSubmit={handleSaveUser} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-3">
-                    <h3 className="text-purple-400 font-bold border-b border-white/10 pb-2">Basic Info</h3>
+                    <h3 className="text-purple-600 font-bold border-b border-gray-200 pb-2">Basic Info</h3>
                     <div>
-                      <label className="block text-white/70 text-sm mb-1">Full Name *</label>
+                      <label className="block text-gray-600 text-sm mb-1">Full Name *</label>
                       <input required value={userForm.name} onChange={e => setUserForm(p => ({ ...p, name: e.target.value }))}
-                        className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                        className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                     </div>
                     {!editingEmp && (
                       <>
                         <div>
-                          <label className="block text-white/70 text-sm mb-1">Email *</label>
+                          <label className="block text-gray-600 text-sm mb-1">Email *</label>
                           <input required type="email" value={userForm.email} onChange={e => setUserForm(p => ({ ...p, email: e.target.value }))}
-                            className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                            className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                         </div>
                         <div>
-                          <label className="block text-white/70 text-sm mb-1">Password *</label>
+                          <label className="block text-gray-600 text-sm mb-1">Password *</label>
                           <input required minLength={6} type="password" value={userForm.password} onChange={e => setUserForm(p => ({ ...p, password: e.target.value }))}
-                            className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                            className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                         </div>
                       </>
                     )}
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-white/70 text-sm mb-1">Role</label>
+                        <label className="block text-gray-600 text-sm mb-1">Role</label>
                         <select value={userForm.role} onChange={e => setUserForm(p => ({ ...p, role: e.target.value as UserRole }))}
-                          className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500">
+                          className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500">
                           {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
                         </select>
                       </div>
                       <div>
-                        <label className="block text-white/70 text-sm mb-1">Department</label>
+                        <label className="block text-gray-600 text-sm mb-1">Department</label>
                         <select value={userForm.department} onChange={e => setUserForm(p => ({ ...p, department: e.target.value }))}
-                          className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500">
+                          className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500">
                           {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
                         </select>
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-white/70 text-sm mb-1">Department Role</label>
+                      <label className="block text-gray-600 text-sm mb-1">Department Role</label>
                       <div className="grid grid-cols-2 gap-3">
                         <button type="button" onClick={() => setUserForm(p => ({ ...p, access_level: 1 }))}
-                          className={`px-3 py-2 rounded-xl font-semibold flex justify-center items-center gap-2 border transition-all ${userForm.access_level === 1 ? "bg-blue-500/20 border-blue-500/50 text-blue-400" : "bg-black/20 border-white/10 text-white/50 hover:border-white/30"}`}>
+                          className={`px-3 py-2 rounded-xl font-semibold flex justify-center items-center gap-2 border transition-all ${userForm.access_level === 1 ? "bg-blue-500/20 border-blue-500/50 text-blue-400" : "bg-gray-100 border-gray-200 text-gray-500 hover:border-white/30"}`}>
                           <User className="w-4 h-4" /> Staff
                         </button>
                         <button type="button" onClick={() => setUserForm(p => ({ ...p, access_level: 2 }))}
-                          className={`px-3 py-2 rounded-xl font-semibold flex justify-center items-center gap-2 border transition-all ${userForm.access_level === 2 ? "bg-orange-500/20 border-orange-500/50 text-orange-400" : "bg-black/20 border-white/10 text-white/50 hover:border-white/30"}`}>
+                          className={`px-3 py-2 rounded-xl font-semibold flex justify-center items-center gap-2 border transition-all ${userForm.access_level === 2 ? "bg-orange-500/20 border-orange-500/50 text-orange-400" : "bg-gray-100 border-gray-200 text-gray-500 hover:border-white/30"}`}>
                           <span>👑</span> Dept Head
                         </button>
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-white/70 text-sm mb-1">Job Title</label>
+                      <label className="block text-gray-600 text-sm mb-1">Job Title</label>
                       <input value={userForm.position} onChange={e => setUserForm(p => ({ ...p, position: e.target.value }))}
-                        className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                        className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                     </div>
 
                     <div>
-                      <label className="block text-white/70 text-sm mb-3 mt-4 border-t border-white/10 pt-4">Granular Permissions</label>
+                      <label className="block text-gray-600 text-sm mb-3 mt-4 border-t border-gray-200 pt-4">Granular Permissions</label>
                       <div className="grid grid-cols-2 gap-3 text-sm">
                         {[
                           { id: "task_delete", label: "Can Delete Tasks" },
@@ -682,14 +682,14 @@ export default function HRDashboard() {
                           { id: "ims_finance", label: "Can Manage Payroll" },
                           { id: "ims_overview", label: "Can View Reports" },
                         ].map(perm => (
-                          <label key={perm.id} className="flex items-center gap-2 cursor-pointer text-white/80 hover:text-white">
+                          <label key={perm.id} className="flex items-center gap-2 cursor-pointer text-gray-700 hover:text-gray-900">
                             <input type="checkbox"
                               checked={userForm.permissions.includes(perm.id as Permission)}
                               onChange={(e) => {
                                 if (e.target.checked) setUserForm(p => ({ ...p, permissions: [...p.permissions, perm.id as Permission] }))
                                 else setUserForm(p => ({ ...p, permissions: p.permissions.filter(x => x !== perm.id) }))
                               }}
-                              className="rounded bg-black/20 border-white/20 text-purple-500 focus:ring-purple-500"
+                              className="rounded bg-gray-100 border-gray-200 text-purple-500 focus:ring-purple-500"
                             />
                             {perm.label}
                           </label>
@@ -699,53 +699,53 @@ export default function HRDashboard() {
                   </div>
 
                   <div className="space-y-4">
-                    <h3 className="text-purple-400 font-bold border-b border-white/10 pb-2">HR Resources</h3>
+                    <h3 className="text-purple-600 font-bold border-b border-gray-200 pb-2">HR Resources</h3>
                     
                     {/* Shift Assignments */}
-                    <div className="bg-white/5 p-3 rounded-xl border border-white/10">
-                      <label className="block text-white font-bold text-sm mb-2 flex items-center gap-2"><Clock className="w-4 h-4"/> Shift Assignment</label>
+                    <div className="bg-gray-100 p-3 rounded-xl border border-gray-200">
+                      <label className="block text-gray-900 font-bold text-sm mb-2 flex items-center gap-2"><Clock className="w-4 h-4"/> Shift Assignment</label>
                       <div className="flex gap-2 mb-2">
                         <input type="time" value={tempShiftTime} onChange={e => setTempShiftTime(e.target.value)}
-                          className="flex-1 dark-glass-card text-white px-2 py-1.5 rounded-lg border border-white/10 text-sm" />
+                          className="flex-1 dark-glass-card text-gray-900 px-2 py-1.5 rounded-lg border border-gray-200 text-sm" />
                         <button type="button" onClick={() => {
                           if (tempShiftTime) {
                             setUserForm(p => ({ ...p, work_schedule: [...p.work_schedule, { startTime: tempShiftTime, durationHours: 8 }] }))
                             setTempShiftTime("")
                           }
-                        }} className="px-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm font-bold">Add</button>
+                        }} className="px-3 bg-purple-500 text-gray-900 rounded-lg hover:bg-purple-600 text-sm font-bold">Add</button>
                       </div>
                       <div className="space-y-1">
                         {userForm.work_schedule.map((shift, idx) => (
-                          <div key={idx} className="flex justify-between items-center text-xs bg-black/20 px-2 py-1 rounded">
+                          <div key={idx} className="flex justify-between items-center text-xs bg-gray-100 px-2 py-1 rounded">
                             <span>{shift.startTime} (8 hrs)</span>
-                            <button type="button" onClick={() => setUserForm(p => ({...p, work_schedule: p.work_schedule.filter((_,i)=>i!==idx)}))} className="text-red-400 hover:text-red-300"><X className="w-3 h-3"/></button>
+                            <button type="button" onClick={() => setUserForm(p => ({...p, work_schedule: p.work_schedule.filter((_,i)=>i!==idx)}))} className="text-red-600 hover:text-red-300"><X className="w-3 h-3"/></button>
                           </div>
                         ))}
                       </div>
                     </div>
 
                     {/* Office Assets */}
-                    <div className="bg-white/5 p-3 rounded-xl border border-white/10">
-                      <label className="block text-white font-bold text-sm mb-2 flex items-center gap-2"><Briefcase className="w-4 h-4"/> Assign Assets</label>
+                    <div className="bg-gray-100 p-3 rounded-xl border border-gray-200">
+                      <label className="block text-gray-900 font-bold text-sm mb-2 flex items-center gap-2"><Briefcase className="w-4 h-4"/> Assign Assets</label>
                       <div className="space-y-2 mb-2">
                         <input placeholder="Asset Name (e.g. Laptop)" value={tempAssetItem} onChange={e => setTempAssetItem(e.target.value)}
-                          className="w-full dark-glass-card text-white px-2 py-1.5 rounded-lg border border-white/10 text-sm" />
+                          className="w-full dark-glass-card text-gray-900 px-2 py-1.5 rounded-lg border border-gray-200 text-sm" />
                         <div className="flex gap-2">
                           <input placeholder="Serial No." value={tempAssetSerial} onChange={e => setTempAssetSerial(e.target.value)}
-                            className="flex-1 dark-glass-card text-white px-2 py-1.5 rounded-lg border border-white/10 text-sm" />
+                            className="flex-1 dark-glass-card text-gray-900 px-2 py-1.5 rounded-lg border border-gray-200 text-sm" />
                           <button type="button" onClick={() => {
                             if (tempAssetItem) {
                               setUserForm(p => ({ ...p, office_assets: [...p.office_assets, { item: tempAssetItem, serialNo: tempAssetSerial, issuedDate: format(new Date(), 'yyyy-MM-dd') }] }))
                               setTempAssetItem(""); setTempAssetSerial("");
                             }
-                          }} className="px-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm font-bold">Assign</button>
+                          }} className="px-3 bg-purple-500 text-gray-900 rounded-lg hover:bg-purple-600 text-sm font-bold">Assign</button>
                         </div>
                       </div>
                       <div className="space-y-1">
                         {userForm.office_assets.map((asset, idx) => (
-                          <div key={idx} className="flex justify-between items-center text-xs bg-black/20 px-2 py-1 rounded">
-                            <span>{asset.item} <span className="text-white/40">({asset.serialNo})</span></span>
-                            <button type="button" onClick={() => setUserForm(p => ({...p, office_assets: p.office_assets.filter((_,i)=>i!==idx)}))} className="text-red-400 hover:text-red-300"><X className="w-3 h-3"/></button>
+                          <div key={idx} className="flex justify-between items-center text-xs bg-gray-100 px-2 py-1 rounded">
+                            <span>{asset.item} <span className="text-gray-400">({asset.serialNo})</span></span>
+                            <button type="button" onClick={() => setUserForm(p => ({...p, office_assets: p.office_assets.filter((_,i)=>i!==idx)}))} className="text-red-600 hover:text-red-300"><X className="w-3 h-3"/></button>
                           </div>
                         ))}
                       </div>
@@ -754,9 +754,9 @@ export default function HRDashboard() {
                   </div>
                 </div>
 
-                <div className="flex gap-3 pt-4 border-t border-white/10">
-                  <button type="button" onClick={() => setShowUserModal(false)} className="flex-1 py-2 glass-button text-white rounded-xl border border-white/20">Cancel</button>
-                  <button type="submit" disabled={creatingUser} className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-semibold disabled:opacity-50">
+                <div className="flex gap-3 pt-4 border-t border-gray-200">
+                  <button type="button" onClick={() => setShowUserModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
+                  <button type="submit" disabled={creatingUser} className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-gray-900 rounded-xl font-semibold disabled:opacity-50">
                     {creatingUser ? "Saving..." : editingEmp ? "Update Info" : "Create Staff"}
                   </button>
                 </div>
@@ -773,49 +773,49 @@ export default function HRDashboard() {
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
-                <h2 className="text-xl font-bold text-white">Request Leave</h2>
-                <button onClick={() => setShowLeaveModal(false)} className="text-white/50 hover:text-white"><X className="w-6 h-6" /></button>
+                <h2 className="text-xl font-bold text-gray-900">Request Leave</h2>
+                <button onClick={() => setShowLeaveModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
               </div>
               <form onSubmit={handleLeaveSubmit} className="space-y-3">
                 {isHead && (
                   <div>
-                    <label className="block text-white/70 text-sm mb-1">Employee Name *</label>
+                    <label className="block text-gray-600 text-sm mb-1">Employee Name *</label>
                     <input required value={leaveForm.employee_name} onChange={e => setLeaveForm(p => ({ ...p, employee_name: e.target.value }))}
-                      className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                   </div>
                 )}
                 {!isHead && (
                   <div>
-                    <label className="block text-white/70 text-sm mb-1">Employee Name</label>
+                    <label className="block text-gray-600 text-sm mb-1">Employee Name</label>
                     <input readOnly value={currentUser?.name || ''} 
-                      className="w-full dark-glass-card text-white/50 px-3 py-2 rounded-xl border border-white/10 bg-white/5 cursor-not-allowed" />
+                      className="w-full dark-glass-card text-gray-500 px-3 py-2 rounded-xl border border-gray-200 bg-gray-100 cursor-not-allowed" />
                   </div>
                 )}
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Leave Type</label>
+                  <label className="block text-gray-600 text-sm mb-1">Leave Type</label>
                   <select value={leaveForm.type} onChange={e => setLeaveForm(p => ({ ...p, type: e.target.value as any }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500">
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500">
                     {LEAVE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   {[['From', 'from_date'], ['To', 'to_date']].map(([label, key]) => (
                     <div key={key}>
-                      <label className="block text-white/70 text-sm mb-1">{label}</label>
+                      <label className="block text-gray-600 text-sm mb-1">{label}</label>
                       <input required type="date" value={(leaveForm as any)[key]} onChange={e => setLeaveForm(p => ({ ...p, [key]: e.target.value }))}
-                        className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                        className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                     </div>
                   ))}
                 </div>
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Reason</label>
+                  <label className="block text-gray-600 text-sm mb-1">Reason</label>
                   <textarea value={leaveForm.reason} onChange={e => setLeaveForm(p => ({ ...p, reason: e.target.value }))} rows={2}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500 resize-none" />
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500 resize-none" />
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <button type="button" onClick={() => setShowLeaveModal(false)} className="flex-1 py-2 glass-button text-white rounded-xl border border-white/20">Cancel</button>
+                  <button type="button" onClick={() => setShowLeaveModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
                   <button type="submit" onClick={() => !isHead && setLeaveForm(p => ({ ...p, employee_name: currentUser?.name }))}
-                    className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-semibold">Submit</button>
+                    className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-gray-900 rounded-xl font-semibold">Submit</button>
                 </div>
               </form>
             </motion.div>
@@ -830,34 +830,34 @@ export default function HRDashboard() {
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
-                <h2 className="text-xl font-bold text-white">Record Salary Payout</h2>
-                <button onClick={() => setShowPayoutModal(false)} className="text-white/50 hover:text-white"><X className="w-6 h-6" /></button>
+                <h2 className="text-xl font-bold text-gray-900">Record Salary Payout</h2>
+                <button onClick={() => setShowPayoutModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
               </div>
               <form onSubmit={handlePayoutSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Employee *</label>
+                  <label className="block text-gray-600 text-sm mb-1">Employee *</label>
                   <select required value={payoutForm.employee_name} onChange={e => setPayoutForm(p => ({ ...p, employee_name: e.target.value }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500">
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500">
                     <option value="">Select Employee</option>
                     {employees.map(e => <option key={e.id} value={e.full_name || e.email}>{e.full_name || e.email}</option>)}
                   </select>
                 </div>
                 {[['Month (YYYY-MM)', 'month', 'month', payoutForm.month], ['Amount (LKR)', 'amount', 'number', payoutForm.amount], ['Paid On', 'paid_on', 'date', payoutForm.paid_on]].map(([label, key, type, val]) => (
                   <div key={key as string}>
-                    <label className="block text-white/70 text-sm mb-1">{label as string}</label>
+                    <label className="block text-gray-600 text-sm mb-1">{label as string}</label>
                     <input type={type as string} value={val as any}
                       onChange={e => setPayoutForm(p => ({ ...p, [key as string]: type === 'number' ? Number(e.target.value) : e.target.value }))}
-                      className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                      className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                   </div>
                 ))}
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Notes</label>
+                  <label className="block text-gray-600 text-sm mb-1">Notes</label>
                   <input value={payoutForm.notes} onChange={e => setPayoutForm(p => ({ ...p, notes: e.target.value }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <button type="button" onClick={() => setShowPayoutModal(false)} className="flex-1 py-2 glass-button text-white rounded-xl border border-white/20">Cancel</button>
-                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-semibold">Record</button>
+                  <button type="button" onClick={() => setShowPayoutModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
+                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-gray-900 rounded-xl font-semibold">Record</button>
                 </div>
               </form>
             </motion.div>
@@ -872,38 +872,38 @@ export default function HRDashboard() {
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               className="dark-glass-strong rounded-2xl p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-5">
-                <h2 className="text-xl font-bold text-white">Add Performance Review</h2>
-                <button onClick={() => setShowReviewModal(false)} className="text-white/50 hover:text-white"><X className="w-6 h-6" /></button>
+                <h2 className="text-xl font-bold text-gray-900">Add Performance Review</h2>
+                <button onClick={() => setShowReviewModal(false)} className="text-gray-500 hover:text-gray-900"><X className="w-6 h-6" /></button>
               </div>
               <form onSubmit={handleReviewSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Employee *</label>
+                  <label className="block text-gray-600 text-sm mb-1">Employee *</label>
                   <select required value={reviewForm.employee_name} onChange={e => setReviewForm(p => ({ ...p, employee_name: e.target.value }))}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500">
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500">
                     <option value="">Select Employee</option>
                     {employees.map(e => <option key={e.id} value={e.full_name || e.email}>{e.full_name || e.email}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Quarter</label>
+                  <label className="block text-gray-600 text-sm mb-1">Quarter</label>
                   <input value={reviewForm.quarter} onChange={e => setReviewForm(p => ({ ...p, quarter: e.target.value }))}
                     placeholder="e.g. Q1 2026"
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500" />
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
                 </div>
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Score (0–100): {reviewForm.score}</label>
+                  <label className="block text-gray-600 text-sm mb-1">Score (0–100): {reviewForm.score}</label>
                   <input type="range" min={0} max={100} value={reviewForm.score} onChange={e => setReviewForm(p => ({ ...p, score: Number(e.target.value) }))}
                     className="w-full accent-purple-500" />
-                  <div className="flex justify-between text-xs text-white/40 mt-1"><span>Poor</span><span>Excellent</span></div>
+                  <div className="flex justify-between text-xs text-gray-400 mt-1"><span>Poor</span><span>Excellent</span></div>
                 </div>
                 <div>
-                  <label className="block text-white/70 text-sm mb-1">Notes</label>
+                  <label className="block text-gray-600 text-sm mb-1">Notes</label>
                   <textarea value={reviewForm.notes} onChange={e => setReviewForm(p => ({ ...p, notes: e.target.value }))} rows={2}
-                    className="w-full dark-glass-card text-white px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-purple-500 resize-none" />
+                    className="w-full dark-glass-card text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500 resize-none" />
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <button type="button" onClick={() => setShowReviewModal(false)} className="flex-1 py-2 glass-button text-white rounded-xl border border-white/20">Cancel</button>
-                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-semibold">Save</button>
+                  <button type="button" onClick={() => setShowReviewModal(false)} className="flex-1 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200">Cancel</button>
+                  <button type="submit" className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-gray-900 rounded-xl font-semibold">Save</button>
                 </div>
               </form>
             </motion.div>
@@ -914,3 +914,5 @@ export default function HRDashboard() {
     </div>
   )
 }
+
+
