@@ -53,7 +53,7 @@ export default function ContactPage() {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 border border-blue-200 rounded-3xl shadow-sm">
               <Mail className="h-10 w-10 text-blue-600" />
             </div>
-            <div className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 text-sm px-5 py-2 rounded-full font-semibold">
+            <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-md border border-blue-100 text-blue-700 text-sm font-semibold px-5 py-2 rounded-full shadow-sm">
               <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
               We respond within 24 hours
             </div>

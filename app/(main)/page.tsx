@@ -50,7 +50,7 @@ export default function HomePage() {
 
         <div className="max-w-7xl mx-auto px-4 relative z-10 w-full flex flex-col items-center text-center">
           <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl mx-auto">
-            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 text-sm px-5 py-2 rounded-full mb-8 shadow-sm">
+            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-md border border-blue-100 text-blue-700 text-sm font-semibold px-5 py-2 rounded-full mb-8 shadow-sm">
               <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
               Leading Technology Education in Sri Lanka
             </motion.div>

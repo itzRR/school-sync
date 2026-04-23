@@ -48,7 +48,7 @@ export default function AboutPage() {
             <motion.div variants={fadeIn} className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 border border-blue-200 rounded-3xl mb-8 shadow-sm">
               <GraduationCap className="h-10 w-10 text-blue-600" />
             </motion.div>
-            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 text-sm px-5 py-2 rounded-full mb-6 font-semibold">
+            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-md border border-blue-100 text-blue-700 text-sm font-semibold px-5 py-2 rounded-full mb-6 shadow-sm">
               <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
               Sri Lanka&apos;s Premier Tech Education Platform
             </motion.div>

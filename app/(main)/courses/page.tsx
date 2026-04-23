@@ -43,40 +43,47 @@ export default function CoursesPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
       {/* ── PREMIUM HERO ────────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-20 bg-[#050B14] overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-luminosity" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050B14] via-transparent to-transparent" />
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] pointer-events-none" />
+      <section className="relative pt-32 pb-20 bg-gradient-to-br from-blue-50 via-white to-sky-50 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-[0.03] mix-blend-multiply" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sky-100/50 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-center max-w-3xl mx-auto">
-            <span className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/20 text-blue-400 text-sm font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6">
+            <span className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 text-sm font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6 shadow-sm">
               <BookOpen className="w-4 h-4" /> Academic Catalog
             </span>
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">CADD <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Programmes</span></h1>
-            <p className="text-lg md:text-xl text-blue-100/70 mb-10 leading-relaxed">
+            <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-6 tracking-tight">CADD <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-sky-500">Programmes</span></h1>
+            <p className="text-lg md:text-xl text-gray-500 mb-10 leading-relaxed font-medium">
               Industry-oriented BIM, CAD and Project Management training with practical software-based learning and international certification.
             </p>
             
             <div className="relative max-w-2xl mx-auto group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
-              <div className="relative flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-2 shadow-2xl">
-                <Search className="w-6 h-6 text-white/50 ml-3 mr-2 flex-shrink-0" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-2xl blur opacity-40 group-hover:opacity-70 transition duration-1000 group-hover:duration-200" />
+              <div className="relative flex items-center bg-white border border-gray-200 rounded-2xl p-2 shadow-xl shadow-blue-900/5">
+                <Search className="w-6 h-6 text-blue-500 ml-3 mr-2 flex-shrink-0" />
                 <input
                   type="text"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="What do you want to learn?"
-                  className="w-full bg-transparent text-white placeholder-white/50 text-lg focus:outline-none px-2 py-3"
+                  className="w-full bg-transparent text-gray-900 placeholder-gray-400 text-lg focus:outline-none px-2 py-3"
                 />
                 {search && (
-                  <button onClick={() => setSearch("")} className="p-2 text-white/50 hover:text-white transition-colors">
+                  <button onClick={() => setSearch("")} className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
                     <X className="w-5 h-5" />
                   </button>
                 )}
               </div>
             </div>
           </motion.div>
+        </div>
+        
+        {/* Wave Bottom */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 60" className="w-full h-auto text-[#F8FAFC] fill-current" preserveAspectRatio="none">
+            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
+          </svg>
         </div>
       </section>
 
