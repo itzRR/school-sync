@@ -122,45 +122,45 @@ export default function IMSDashboardPage() {
   ]
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-[#050B14]">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-        className="w-16 h-16 border-t-4 border-emerald-500 border-solid rounded-full" />
+        className="w-16 h-16 border-t-4 border-blue-600 border-solid rounded-full" />
     </div>
   )
 
   return (
-    <div className="min-h-screen bg-[#050B14] text-white selection:bg-blue-500/30">
+    <div className="min-h-screen bg-gray-50 text-gray-900 selection:bg-blue-500/20">
       <AnimatePresence>
         {showLoadingAnimation && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-900/90 backdrop-blur-md">
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/90 backdrop-blur-md">
             <motion.div animate={{ rotate: 360, scale: [1, 1.15, 1] }} transition={{ duration: 3, repeat: Infinity }}
-              className="w-24 h-24 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full flex items-center justify-center mb-6">
+              className="w-24 h-24 bg-gradient-to-r from-blue-500 to-sky-400 rounded-full flex items-center justify-center mb-6">
               <Building2 className="w-12 h-12 text-white" />
             </motion.div>
-            <h2 className="text-2xl font-bold text-white mb-2">Institute Management System</h2>
-            <div className="w-64 h-1.5 bg-gray-700 rounded-full overflow-hidden">
-              <motion.div className="h-full bg-gradient-to-r from-emerald-500 to-cyan-400"
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Institute Management System</h2>
+            <div className="w-64 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <motion.div className="h-full bg-gradient-to-r from-blue-500 to-sky-400"
                 initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 3 }} />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="dark-glass-strong p-4 md:p-6 flex items-center justify-between">
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-400 rounded-xl flex items-center justify-center">
             <Building2 className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-emerald-400">IMS Overview</h1>
-            <p className="text-white/50 text-sm hidden md:block">CADD Centre Lanka — Operations & Management Hub</p>
+            <h1 className="text-xl font-bold text-blue-700">IMS Overview</h1>
+            <p className="text-gray-500 text-sm hidden md:block">CADD Centre Lanka — Operations &amp; Management Hub</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 glass-button text-white rounded-xl border border-white/20 hover:bg-red-500/30">
+            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl border border-red-200 hover:bg-red-100 transition-colors font-medium">
             <LogOut className="w-4 h-4" /> Logout
           </motion.button>
         </div>
@@ -177,13 +177,13 @@ export default function IMSDashboardPage() {
               { label: "Open Tasks",     value: stats.openTasks,       icon: ListTodo,   color: "text-yellow-400", gradient: "from-yellow-500 to-orange-500" },
             ].map((s, i) => (
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} key={i} 
-                className="dark-glass-card p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-all flex items-center gap-4">
-                <div className={`p-3 rounded-xl bg-gradient-to-br ${s.gradient} bg-opacity-20`}>
+                className="bg-white border border-gray-200 shadow-sm p-5 rounded-2xl hover:shadow-md transition-all flex items-center gap-4">
+                <div className={`p-3 rounded-xl bg-gradient-to-br ${s.gradient}`}>
                   <s.icon className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-xs text-white/50">{s.label}</p>
-                  <p className="text-2xl font-black text-white">{loading ? "…" : s.value}</p>
+                  <p className="text-xs text-gray-500">{s.label}</p>
+                  <p className="text-2xl font-black text-gray-900">{loading ? "…" : s.value}</p>
                 </div>
               </motion.div>
             ))}
@@ -192,24 +192,24 @@ export default function IMSDashboardPage() {
 
         {/* Modules Grid */}
         <div>
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Home className="w-5 h-5"/> Departments & Modules</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2"><Home className="w-5 h-5"/> Departments &amp; Modules</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {modules.map((mod, i) => (
               <Link key={mod.href} href={mod.href}>
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }}
-                  className="dark-glass-card h-full p-5 rounded-2xl border border-white/10 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] transition-all group relative overflow-hidden">
-                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${mod.gradient} rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity`}></div>
+                  className="bg-white border border-gray-200 h-full p-5 rounded-2xl hover:border-blue-300 hover:shadow-lg transition-all group relative overflow-hidden">
+                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${mod.gradient} rounded-full blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity`}></div>
                   <div className="flex items-start justify-between mb-4 relative z-10">
                     <div className={`p-3 rounded-xl bg-gradient-to-br ${mod.gradient}`}>
                       <mod.icon className="h-6 w-6 text-white" />
                     </div>
-                    <span className={`text-[10px] font-bold px-2 py-1 rounded-lg border ${mod.badgeColor}`}>{mod.badge}</span>
+                    <span className={`text-[10px] font-bold px-2 py-1 rounded-lg border ${mod.badgeColor.replace('/20', '/10').replace('text-', 'text-').replace('border-', 'border-')}`}>{mod.badge}</span>
                   </div>
-                  <h3 className="font-bold text-white text-lg mb-1 relative z-10">{mod.title}</h3>
-                  <p className="text-xs text-white/50 mb-4 relative z-10">{mod.description}</p>
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5 relative z-10">
-                    <p className="text-xs font-semibold text-white/70">{mod.stat}</p>
-                    <ArrowRight className="w-4 h-4 text-white/30 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all" />
+                  <h3 className="font-bold text-gray-900 text-lg mb-1 relative z-10">{mod.title}</h3>
+                  <p className="text-xs text-gray-500 mb-4 relative z-10">{mod.description}</p>
+                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 relative z-10">
+                    <p className="text-xs font-semibold text-gray-600">{mod.stat}</p>
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
                   </div>
                 </motion.div>
               </Link>
@@ -219,36 +219,36 @@ export default function IMSDashboardPage() {
 
         {/* Alerts */}
         {stats && (stats.pendingLeaves > 0 || stats.openTasks > 0 || stats.convertedLeads > 0) && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="dark-glass-strong rounded-2xl p-6 border border-white/10">
-            <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-orange-400" /> Attention Required
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="bg-white border border-orange-200 rounded-2xl p-6">
+            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 text-orange-500" /> Attention Required
             </h2>
             <div className="space-y-3">
               {stats.pendingLeaves > 0 && (
-                <div className="flex items-center justify-between p-4 bg-orange-500/10 rounded-xl border border-orange-500/20">
+                <div className="flex items-center justify-between p-4 bg-orange-50 rounded-xl border border-orange-200">
                   <div className="flex items-center gap-3">
-                    <UserCog className="h-5 w-5 text-orange-400" />
-                    <span className="text-sm font-semibold text-orange-200">{stats.pendingLeaves} leave request{stats.pendingLeaves > 1 ? 's' : ''} awaiting approval</span>
+                    <UserCog className="h-5 w-5 text-orange-500" />
+                    <span className="text-sm font-semibold text-orange-800">{stats.pendingLeaves} leave request{stats.pendingLeaves > 1 ? 's' : ''} awaiting approval</span>
                   </div>
-                  <Link href="/admin/ims/hr" className="px-4 py-2 bg-orange-500/20 text-orange-400 hover:bg-orange-500/30 text-xs font-bold rounded-lg transition-colors">Review</Link>
+                  <Link href="/admin/ims/hr" className="px-4 py-2 bg-orange-100 text-orange-700 hover:bg-orange-200 text-xs font-bold rounded-lg transition-colors">Review</Link>
                 </div>
               )}
               {stats.openTasks > 0 && (
-                <div className="flex items-center justify-between p-4 bg-yellow-500/10 rounded-xl border border-yellow-500/20">
+                <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-xl border border-yellow-200">
                   <div className="flex items-center gap-3">
-                    <ListTodo className="h-5 w-5 text-yellow-400" />
-                    <span className="text-sm font-semibold text-yellow-200">{stats.openTasks} task{stats.openTasks > 1 ? 's' : ''} pending completion</span>
+                    <ListTodo className="h-5 w-5 text-yellow-600" />
+                    <span className="text-sm font-semibold text-yellow-800">{stats.openTasks} task{stats.openTasks > 1 ? 's' : ''} pending completion</span>
                   </div>
-                  <Link href="/admin/ims/tasks" className="px-4 py-2 bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30 text-xs font-bold rounded-lg transition-colors">View Tasks</Link>
+                  <Link href="/admin/ims/tasks" className="px-4 py-2 bg-yellow-100 text-yellow-700 hover:bg-yellow-200 text-xs font-bold rounded-lg transition-colors">View Tasks</Link>
                 </div>
               )}
               {stats.convertedLeads > 0 && (
-                <div className="flex items-center justify-between p-4 bg-green-500/10 rounded-xl border border-green-500/20">
+                <div className="flex items-center justify-between p-4 bg-green-50 rounded-xl border border-green-200">
                   <div className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-400" />
-                    <span className="text-sm font-semibold text-green-200">{stats.convertedLeads} lead{stats.convertedLeads > 1 ? 's' : ''} converted to enrollment</span>
+                    <CheckCircle className="h-5 w-5 text-green-600" />
+                    <span className="text-sm font-semibold text-green-800">{stats.convertedLeads} lead{stats.convertedLeads > 1 ? 's' : ''} converted to enrollment</span>
                   </div>
-                  <Link href="/admin/ims/marketing" className="px-4 py-2 bg-green-500/20 text-green-400 hover:bg-green-500/30 text-xs font-bold rounded-lg transition-colors">View Leads</Link>
+                  <Link href="/admin/ims/marketing" className="px-4 py-2 bg-green-100 text-green-700 hover:bg-green-200 text-xs font-bold rounded-lg transition-colors">View Leads</Link>
                 </div>
               )}
             </div>

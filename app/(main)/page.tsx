@@ -43,34 +43,32 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white selection:bg-blue-500/30">
-      {/* ── PREMIUM HERO ────────────────────────────────────────────── */}
-      <section className="relative min-h-[90vh] flex items-center bg-[#050B14] overflow-hidden pt-20">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1A2F]/95 via-[#0D2340]/80 to-transparent" />
-        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-blue-500/20 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[600px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full pointer-events-none" />
+      {/* ── HERO ────────────────────────────────────────────── */}
+      <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-blue-50 via-white to-sky-50 overflow-hidden pt-20">
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-blue-100 blur-[120px] rounded-full pointer-events-none opacity-60" />
+        <div className="absolute bottom-0 left-1/4 w-[600px] h-[400px] bg-sky-100 blur-[150px] rounded-full pointer-events-none opacity-40" />
 
         <div className="max-w-7xl mx-auto px-4 relative z-10 w-full flex flex-col items-center text-center">
           <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl mx-auto">
-            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-md text-blue-300 text-sm px-5 py-2 rounded-full mb-8 shadow-2xl">
-              <span className="flex h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
+            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 text-sm px-5 py-2 rounded-full mb-8 shadow-sm">
+              <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
               Leading Technology Education in Sri Lanka
             </motion.div>
             
-            <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 tracking-tight leading-[1.1]">
-              Master <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500">Your Future</span><br />
+            <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-6 tracking-tight leading-[1.1]">
+              Master <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500">Your Future</span><br />
               In Design & Tech
             </motion.h1>
             
-            <motion.p variants={fadeIn} className="text-lg md:text-xl text-blue-100/70 max-w-2xl mx-auto mb-10 font-medium leading-relaxed">
+            <motion.p variants={fadeIn} className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10 font-medium leading-relaxed">
               Award-winning training in BIM, CAD, and Project Management. Turn your architectural and engineering ambitions into certified reality.
             </motion.p>
             
             <motion.div variants={fadeIn} className="flex flex-wrap items-center justify-center gap-4">
-              <Button asChild size="lg" className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white shadow-xl shadow-blue-900/50 rounded-full px-8 h-14 text-base font-bold transition-all hover:scale-105 border-0">
+              <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg rounded-full px-8 h-14 text-base font-bold transition-all hover:scale-105 border-0">
                 <Link href="/courses">Explore Programmes <ArrowRight className="ml-2 h-5 w-5" /></Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="bg-white/5 hover:bg-white/10 border-white/20 text-white backdrop-blur-md rounded-full px-8 h-14 text-base font-bold transition-all hover:scale-105">
+              <Button asChild size="lg" variant="outline" className="border-blue-200 text-blue-700 hover:bg-blue-50 rounded-full px-8 h-14 text-base font-bold transition-all hover:scale-105">
                 <Link href="/auth/register"><Play className="mr-2 h-4 w-4 fill-current" /> Student Portal</Link>
               </Button>
             </motion.div>
@@ -158,38 +156,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── IMMERSIVE PROGRAMMES ──────────────────────────────────────── */}
-      <section className="py-32 px-4 bg-[#0A1A2F] text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+      {/* ── PROGRAMMES ──────────────────────────────────────────── */}
+      <section className="py-32 px-4 bg-gray-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-100 rounded-full blur-[100px] pointer-events-none opacity-50" />
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <span className="text-cyan-400 font-bold uppercase tracking-widest text-sm mb-4 block">Curriculum</span>
-            <h2 className="text-4xl md:text-5xl font-black mb-6">Industry-Aligned Programmes</h2>
-            <p className="text-blue-200/80 max-w-2xl mx-auto text-lg">Master the tools that build the modern world. Our curriculum is constantly updated to match global industry standards.</p>
+            <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">Curriculum</span>
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6">Industry-Aligned Programmes</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto text-lg">Master the tools that build the modern world. Our curriculum is constantly updated to match global industry standards.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {PROGRAMS.map((prog, i) => (
-              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={prog.category} className="group relative rounded-[2.5rem] bg-white/5 border border-white/10 overflow-hidden hover:bg-white/10 transition-colors duration-500">
-                <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${prog.color} opacity-20 blur-[60px] group-hover:opacity-40 transition-opacity duration-500`} />
+              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={prog.category} className="group relative rounded-[2.5rem] bg-white border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-500">
+                <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-br ${prog.color} opacity-10 blur-[40px] group-hover:opacity-20 transition-opacity duration-500`} />
                 <div className="p-10 relative z-10">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center mb-8">
-                    <Layers className="w-8 h-8 text-cyan-300" />
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-100 flex items-center justify-center mb-8">
+                    <Layers className="w-8 h-8 text-blue-600" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">{prog.title}</h3>
-                  <p className="text-blue-100/60 mb-8 leading-relaxed">{prog.desc}</p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{prog.title}</h3>
+                  <p className="text-gray-500 mb-8 leading-relaxed">{prog.desc}</p>
                   
                   <div className="space-y-4 mb-10">
                     {prog.modules.map((m) => (
                       <div key={m} className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-cyan-400" />
-                        <span className="text-sm font-medium text-blue-50">{m}</span>
+                        <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                        <span className="text-sm font-medium text-gray-700">{m}</span>
                       </div>
                     ))}
                   </div>
                   
-                  <div className="flex items-center justify-between border-t border-white/10 pt-6">
-                    <div className="flex items-center gap-2 text-cyan-300 font-semibold">
+                  <div className="flex items-center justify-between border-t border-gray-100 pt-6">
+                    <div className="flex items-center gap-2 text-blue-600 font-semibold">
                       <Clock className="w-5 h-5" /> {prog.hours}h Duration
                     </div>
                   </div>

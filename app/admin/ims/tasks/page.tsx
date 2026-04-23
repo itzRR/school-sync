@@ -12,11 +12,11 @@ import * as XLSX from "xlsx"
 
 const DEPARTMENTS = ["Academic", "Marketing", "Finance", "HR", "IT", "Operations"]
 const PRIORITY_COLORS = {
-  low:    "bg-green-500/20 text-green-400 border-green-500/30",
-  medium: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  high:   "bg-red-500/20 text-red-400 border-red-500/30"
+  low:    "bg-green-100 text-green-700 border-green-300",
+  medium: "bg-yellow-100 text-yellow-700 border-yellow-300",
+  high:   "bg-red-100 text-red-700 border-red-300"
 }
-const PRIORITY_DOT = { low: "bg-green-400", medium: "bg-yellow-400", high: "bg-red-400" }
+const PRIORITY_DOT = { low: "bg-green-500", medium: "bg-yellow-500", high: "bg-red-500" }
 
 export default function IMSTasksPage() {
   const [tasks, setTasks] = useState<OpsTask[]>([])
@@ -126,26 +126,26 @@ export default function IMSTasksPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#050B14] p-4 md:p-8 space-y-6 text-white selection:bg-yellow-500/20">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8 space-y-6 text-gray-900 selection:bg-blue-500/20">
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center shadow-lg shadow-yellow-500/20">
+          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center shadow-md">
               <ListTodo className="h-5 w-5 text-white" />
             </div>
             Shared Tasks
           </h1>
-          <p className="text-sm text-white/50 mt-1">Cross-department task management & real-time tracking</p>
+          <p className="text-sm text-gray-500 mt-1">Cross-department task management &amp; real-time tracking</p>
         </div>
         <div className="flex gap-3 flex-wrap">
-          <button className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-xl border border-white/10 transition-colors text-sm font-medium" onClick={loadData}>
+          <button className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-xl border border-gray-200 transition-colors text-sm font-medium" onClick={loadData}>
             <RefreshCw className="h-4 w-4" /> Refresh
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-xl border border-white/10 transition-colors text-sm font-medium" onClick={exportTasks}>
+          <button className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-xl border border-gray-200 transition-colors text-sm font-medium" onClick={exportTasks}>
             <Download className="h-4 w-4" /> Export
           </button>
-          <button className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-bold rounded-xl shadow-lg shadow-yellow-500/20 transition-all text-sm" onClick={() => setShowModal(true)}>
+          <button className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-bold rounded-xl shadow-md transition-all text-sm" onClick={() => setShowModal(true)}>
             <Plus className="h-4 w-4" /> New Task
           </button>
         </div>
@@ -154,13 +154,13 @@ export default function IMSTasksPage() {
       {/* Stats Bar */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: "Total Tasks", value: counts.all, color: "text-white", glow: "" },
-          { label: "Pending", value: counts.pending, color: "text-yellow-400", glow: "shadow-yellow-500/10" },
-          { label: "Completed", value: counts.completed, color: "text-green-400", glow: "shadow-green-500/10" },
-          { label: "Assigned to Me", value: counts.mine, color: "text-purple-400", glow: "shadow-purple-500/10" },
+          { label: "Total Tasks", value: counts.all, color: "text-gray-900", glow: "" },
+          { label: "Pending", value: counts.pending, color: "text-yellow-600", glow: "" },
+          { label: "Completed", value: counts.completed, color: "text-green-600", glow: "" },
+          { label: "Assigned to Me", value: counts.mine, color: "text-blue-600", glow: "" },
         ].map((s, i) => (
-          <div key={i} className={`bg-black/20 border border-white/10 rounded-2xl p-5 shadow-lg ${s.glow}`}>
-            <p className="text-xs text-white/50 mb-1">{s.label}</p>
+          <div key={i} className={`bg-white border border-gray-200 rounded-2xl p-5 shadow-sm ${s.glow}`}>
+            <p className="text-xs text-gray-500 mb-1">{s.label}</p>
             <p className={`text-3xl font-black ${s.color}`}>{s.value}</p>
           </div>
         ))}
@@ -174,8 +174,8 @@ export default function IMSTasksPage() {
             onClick={() => setFilter(f.id)}
             className={`px-4 py-2 rounded-xl text-sm font-bold transition-all border ${
               filter === f.id
-                ? `bg-gradient-to-r ${f.color} text-white border-transparent shadow-lg`
-                : "bg-black/20 text-white/50 border-white/10 hover:border-white/30 hover:text-white hover:bg-white/5"
+                ? `bg-gradient-to-r ${f.color} text-white border-transparent shadow-md`
+                : "bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-gray-700"
             }`}
           >
             {f.label} <span className="ml-1 opacity-70">({counts[f.id]})</span>
@@ -186,12 +186,12 @@ export default function IMSTasksPage() {
       {/* Task List */}
       <div className="space-y-3">
         {loading ? (
-          <div className="text-center py-16 text-white/40">
+          <div className="text-center py-16 text-gray-400">
             <ListTodo className="h-12 w-12 mx-auto mb-3 opacity-30 animate-pulse" />
             <p>Loading tasks...</p>
           </div>
         ) : filteredTasks.length === 0 ? (
-          <div className="text-center py-16 text-white/40 bg-black/20 border border-white/10 rounded-2xl">
+          <div className="text-center py-16 text-gray-400 bg-white border border-gray-200 rounded-2xl">
             <CheckCircle className="h-12 w-12 mx-auto mb-3 opacity-30" />
             <p className="font-medium">No tasks found</p>
             <p className="text-sm mt-1">All clear in this view!</p>
@@ -212,11 +212,11 @@ export default function IMSTasksPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ delay: i * 0.03 }}
-                  className={`group relative bg-black/20 border rounded-2xl p-5 transition-all hover:bg-black/30 ${
-                    overdue ? "border-red-500/30 shadow-[0_0_20px_rgba(239,68,68,0.08)]"
-                    : dueSoon ? "border-yellow-500/30 shadow-[0_0_20px_rgba(234,179,8,0.08)]"
-                    : task.status === "completed" ? "border-white/5 opacity-70"
-                    : "border-white/10 hover:border-white/20"
+                  className={`group relative bg-white border rounded-2xl p-5 transition-all hover:shadow-md ${
+                    overdue ? "border-red-300 shadow-sm"
+                    : dueSoon ? "border-yellow-300 shadow-sm"
+                    : task.status === "completed" ? "border-gray-100 opacity-70"
+                    : "border-gray-200"
                   }`}
                 >
                   {/* Priority accent bar */}
@@ -230,7 +230,7 @@ export default function IMSTasksPage() {
                       className={`mt-0.5 w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${
                         task.status === "completed"
                           ? "bg-green-500 border-green-500"
-                          : "border-white/30 hover:border-green-400 hover:bg-green-400/10"
+                          : "border-gray-300 hover:border-green-500 hover:bg-green-50"
                       }`}
                     >
                       {task.status === "completed" && <CheckCircle className="h-4 w-4 text-white" />}
@@ -238,7 +238,7 @@ export default function IMSTasksPage() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-2">
-                        <p className={`font-semibold text-base ${task.status === "completed" ? "line-through text-white/40" : "text-white"}`}>
+                        <p className={`font-semibold text-base ${task.status === "completed" ? "line-through text-gray-400" : "text-gray-900"}`}>
                           {task.title}
                         </p>
                         <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold border ${PRIORITY_COLORS[task.priority]}`}>
@@ -262,16 +262,16 @@ export default function IMSTasksPage() {
                       </div>
 
                       {task.description && (
-                        <p className="text-sm text-white/50 mb-3 leading-relaxed">{task.description}</p>
+                        <p className="text-sm text-gray-500 mb-3 leading-relaxed">{task.description}</p>
                       )}
 
-                      <div className="flex items-center gap-4 text-xs text-white/40 flex-wrap">
+                      <div className="flex items-center gap-4 text-xs text-gray-400 flex-wrap">
                         <span className="flex items-center gap-1.5">
                           <Clock className="h-3 w-3" />
-                          Due <span className={overdue ? "text-red-400 font-bold" : "text-white/60"}>{task.due_date}</span>
+                          Due <span className={overdue ? "text-red-500 font-bold" : "text-gray-600"}>{task.due_date}</span>
                         </span>
                         {task.assigned_department && (
-                          <span className="px-2 py-0.5 bg-white/5 rounded-md border border-white/10">
+                          <span className="px-2 py-0.5 bg-gray-100 rounded-md border border-gray-200">
                             {task.assigned_department}
                           </span>
                         )}
@@ -303,67 +303,67 @@ export default function IMSTasksPage() {
       {/* CREATE TASK MODAL */}
       <AnimatePresence>
         {showModal && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-[#0e1628] border border-white/10 rounded-[2rem] p-8 w-full max-w-lg shadow-2xl my-8"
+              className="bg-white border border-gray-200 rounded-[2rem] p-8 w-full max-w-lg shadow-2xl my-8"
             >
               <div className="flex justify-between items-center mb-8">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">Create New Task</h2>
-                  <p className="text-white/50 text-sm mt-1">Assign tasks to staff or departments</p>
+                  <h2 className="text-2xl font-bold text-gray-900">Create New Task</h2>
+                  <p className="text-gray-500 text-sm mt-1">Assign tasks to staff or departments</p>
                 </div>
-                <button onClick={() => setShowModal(false)} className="p-2 bg-white/5 hover:bg-white/10 text-white rounded-full transition-colors">
+                <button onClick={() => setShowModal(false)} className="p-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full transition-colors">
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
               <div className="space-y-5">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-white/70">Task Title *</label>
+                  <label className="text-sm font-bold text-gray-600">Task Title *</label>
                   <input value={taskForm.title} onChange={e => setTaskForm(p => ({ ...p, title: e.target.value }))} placeholder="e.g. Update student records"
-                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all" />
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all" />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-white/70">Description</label>
+                  <label className="text-sm font-bold text-gray-600">Description</label>
                   <textarea rows={2} value={taskForm.description} onChange={e => setTaskForm(p => ({ ...p, description: e.target.value }))} placeholder="Optional details..."
-                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all resize-none" />
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all resize-none" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/70">Start Date</label>
+                    <label className="text-sm font-bold text-gray-600">Start Date</label>
                     <input type="date" value={taskForm.start_date} onChange={e => setTaskForm(p => ({ ...p, start_date: e.target.value }))}
-                      className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-yellow-500 transition-all [color-scheme:dark]" />
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 focus:outline-none focus:border-yellow-500 transition-all" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/70">Due Date *</label>
+                    <label className="text-sm font-bold text-gray-600">Due Date *</label>
                     <input type="date" value={taskForm.due_date} onChange={e => setTaskForm(p => ({ ...p, due_date: e.target.value }))}
-                      className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-yellow-500 transition-all [color-scheme:dark]" />
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 focus:outline-none focus:border-yellow-500 transition-all" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/70">Priority</label>
+                    <label className="text-sm font-bold text-gray-600">Priority</label>
                     <div className="flex gap-2">
                       {(["low", "medium", "high"] as const).map(p => (
                         <button key={p} type="button" onClick={() => setTaskForm(prev => ({ ...prev, priority: p }))}
-                          className={`flex-1 py-2 rounded-xl text-xs font-bold border capitalize transition-all ${taskForm.priority === p ? PRIORITY_COLORS[p] : 'bg-black/20 border-white/10 text-white/40 hover:border-white/30'}`}>
+                          className={`flex-1 py-2 rounded-xl text-xs font-bold border capitalize transition-all ${taskForm.priority === p ? PRIORITY_COLORS[p] : 'bg-gray-50 border-gray-200 text-gray-400 hover:border-gray-300'}`}>
                           {p}
                         </button>
                       ))}
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/70">Assign To</label>
+                    <label className="text-sm font-bold text-gray-600">Assign To</label>
                     <div className="flex gap-2">
                       {(["users", "department"] as const).map(t => (
                         <button key={t} type="button" onClick={() => setAssignType(t)}
-                          className={`flex-1 py-2 rounded-xl text-xs font-bold border capitalize transition-all ${assignType === t ? 'bg-yellow-500/20 border-yellow-500/50 text-yellow-400' : 'bg-black/20 border-white/10 text-white/40 hover:border-white/30'}`}>
+                          className={`flex-1 py-2 rounded-xl text-xs font-bold border capitalize transition-all ${assignType === t ? 'bg-yellow-50 border-yellow-400 text-yellow-600' : 'bg-gray-50 border-gray-200 text-gray-400 hover:border-gray-300'}`}>
                           {t === "users" ? "Users" : "Dept"}
                         </button>
                       ))}
@@ -373,20 +373,20 @@ export default function IMSTasksPage() {
 
                 {assignType === "department" ? (
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/70">Department</label>
+                    <label className="text-sm font-bold text-gray-600">Department</label>
                     <select value={taskForm.assigned_department || ""} onChange={e => setTaskForm(p => ({ ...p, assigned_department: e.target.value }))}
-                      className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-yellow-500 transition-all">
-                      <option value="" className="bg-[#0e1628]">Select department...</option>
-                      {DEPARTMENTS.map(d => <option key={d} value={d} className="bg-[#0e1628]">{d}</option>)}
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-yellow-500 transition-all">
+                      <option value="">Select department...</option>
+                      {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
                     </select>
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-white/70">Select Users</label>
-                    <div className="bg-black/30 border border-white/10 rounded-xl p-3 max-h-40 overflow-y-auto space-y-1">
+                    <label className="text-sm font-bold text-gray-600">Select Users</label>
+                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 max-h-40 overflow-y-auto space-y-1">
                       {users.map(u => (
-                        <label key={u.id} className="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/5 rounded-xl transition-colors">
-                          <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${taskForm.assigned_to.includes(u.id) ? 'bg-yellow-500 border-yellow-500' : 'border-white/30'}`}>
+                        <label key={u.id} className="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-100 rounded-xl transition-colors">
+                          <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${taskForm.assigned_to.includes(u.id) ? 'bg-yellow-500 border-yellow-500' : 'border-gray-300'}`}>
                             {taskForm.assigned_to.includes(u.id) && <CheckCircle className="h-3 w-3 text-white" />}
                           </div>
                           <input type="checkbox" checked={taskForm.assigned_to.includes(u.id)} className="hidden"
@@ -394,19 +394,19 @@ export default function IMSTasksPage() {
                               ...p,
                               assigned_to: e.target.checked ? [...p.assigned_to, u.id] : p.assigned_to.filter(id => id !== u.id)
                             }))} />
-                          <span className="text-sm text-white/80 font-medium">{u.full_name || u.email}</span>
-                          <span className="text-xs text-white/30 ml-auto capitalize">{u.role.replace(/_/g," ")}</span>
+                          <span className="text-sm text-gray-700 font-medium">{u.full_name || u.email}</span>
+                          <span className="text-xs text-gray-400 ml-auto capitalize">{u.role.replace(/_/g," ")}</span>
                         </label>
                       ))}
                     </div>
                   </div>
                 )}
 
-                <div className="flex gap-3 pt-4 border-t border-white/10">
-                  <button onClick={() => setShowModal(false)} className="flex-1 py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl font-bold transition-colors">
+                <div className="flex gap-3 pt-4 border-t border-gray-100">
+                  <button onClick={() => setShowModal(false)} className="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold transition-colors">
                     Cancel
                   </button>
-                  <button onClick={handleCreate} className="flex-1 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white rounded-xl font-bold shadow-lg transition-all">
+                  <button onClick={handleCreate} className="flex-1 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white rounded-xl font-bold shadow-md transition-all">
                     Create Task
                   </button>
                 </div>

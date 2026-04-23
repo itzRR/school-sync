@@ -182,52 +182,52 @@
     @apply bg-background text-foreground;
   }
 
-  /* Legacy IMS Dashboard Classes */
+  /* Legacy IMS Dashboard Classes — Light Educational Theme */
   .glass-card {
-    @apply bg-white border border-[#BDBDBD] rounded-2xl shadow-sm;
+    @apply bg-white border border-gray-200 rounded-2xl shadow-sm;
   }
 
   .glass-button {
-    @apply bg-[#5b89b7] text-white rounded-xl px-4 py-2 transition;
+    @apply bg-blue-600 text-white rounded-xl px-4 py-2 transition;
   }
 
   .glass-button:hover {
-    background-color: #93b7db;
+    background-color: #1d4ed8;
   }
 
   .glass-strong {
-    @apply bg-[#003B6D] text-white;
+    @apply bg-blue-700 text-white;
   }
 
+  /* Converted to light theme */
   .dark-dept-bg {
-    background-color: #0f172a;
+    background-color: #f8fafc;
     min-height: 100vh;
-    color: white;
+    color: #1e293b;
   }
 
   .dark-glass-card {
-    background-color: rgba(30, 41, 59, 0.7);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 1rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-    color: white;
-    color-scheme: dark;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+    color: #1e293b;
+    color-scheme: light;
   }
 
   .dark-glass-strong {
-    background-color: #003B6D;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
-    color-scheme: dark;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e293b;
+    color-scheme: light;
   }
 
   .neon-glow {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
   }
 
   .neon-glow:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .hover-lift {
@@ -257,7 +257,7 @@
   }
 
   input[type="date"], input[type="time"], input[type="month"] {
-    color-scheme: dark;
+    color-scheme: light;
   }
 }
 

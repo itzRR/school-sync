@@ -47,11 +47,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const isFullPageIms = pathname.match(/^\/admin\/ims(\/(finance|hr|academic|marketing))?$/)
 
   if (isFullPageIms) {
-    return <div className="bg-[#050B14] min-h-screen">{children}</div>
+    return <div className="bg-gray-50 min-h-screen">{children}</div>
   }
 
   return (
-    <div className={`flex h-screen overflow-hidden ${isImsPage ? 'bg-[#050B14]' : 'bg-gray-100'}`}>
+    <div className={`flex h-screen overflow-hidden ${isImsPage ? 'bg-gray-50' : 'bg-gray-100'}`}>
       <AdminSidebar currentUser={user} />
       <main className="flex-1 overflow-y-auto">
         {isImsPage ? (
