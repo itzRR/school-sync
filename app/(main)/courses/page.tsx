@@ -79,8 +79,12 @@ export default function CoursesPage() {
         <div className="absolute bottom-[10%] right-[5%] w-[500px] h-[500px] bg-cyan-300/30 blur-[150px] rounded-full pointer-events-none mix-blend-multiply animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }} />
         
         {/* Floating blurred shapes */}
-        <motion.div animate={{ y: [0, -30, 0], rotate: [0, 45, 0] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} className="absolute top-20 right-20 w-32 h-32 bg-white/40 backdrop-blur-3xl rounded-[2rem] border border-white/60 shadow-xl rotate-12 hidden lg:block" />
-        <motion.div animate={{ y: [0, 40, 0], rotate: [0, -30, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "linear" }} className="absolute bottom-10 left-10 w-24 h-24 bg-white/40 backdrop-blur-3xl rounded-full border border-white/60 shadow-xl hidden md:block" />
+        <motion.div animate={{ y: [0, -30, 0], rotate: [0, 45, 0] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} className="absolute top-20 right-20 w-32 h-32 bg-white/40 backdrop-blur-3xl rounded-[2rem] border border-white/60 shadow-xl hidden lg:flex items-center justify-center">
+           <Hexagon className="w-12 h-12 text-blue-500/40" />
+        </motion.div>
+        <motion.div animate={{ y: [0, 40, 0], rotate: [0, -30, 0] }} transition={{ duration: 12, repeat: Infinity, ease: "linear" }} className="absolute bottom-10 left-10 w-24 h-24 bg-white/40 backdrop-blur-3xl rounded-full border border-white/60 shadow-xl hidden md:flex items-center justify-center">
+           <Layers className="w-10 h-10 text-cyan-500/40" />
+        </motion.div>
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} className="text-center max-w-4xl mx-auto">
