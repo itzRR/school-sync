@@ -386,9 +386,12 @@ ALTER TABLE public.ims_system_commands ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "login_history_ims" ON public.ims_login_history;
 DROP POLICY IF EXISTS "sys_commands_admin" ON public.ims_system_commands;
+DROP POLICY IF EXISTS "sys_commands_admin_all" ON public.ims_system_commands;
+DROP POLICY IF EXISTS "sys_commands_read_all" ON public.ims_system_commands;
 
 CREATE POLICY "login_history_ims"  ON public.ims_login_history   FOR ALL TO authenticated USING (public.is_ims_staff());
-CREATE POLICY "sys_commands_admin" ON public.ims_system_commands FOR ALL TO authenticated USING (public.is_admin());
+CREATE POLICY "sys_commands_admin_all" ON public.ims_system_commands FOR ALL TO authenticated USING (public.is_admin());
+CREATE POLICY "sys_commands_read_all" ON public.ims_system_commands FOR SELECT TO authenticated USING (true);
 
 -- ═══════════════════════════════════════════════════════════
 -- STEP 8: IMS — Academic ops tables (simplified, IMS-side)
