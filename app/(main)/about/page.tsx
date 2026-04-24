@@ -1,230 +1,256 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { GraduationCap, Users, Award, BookOpen, Target, Heart, ArrowRight, CheckCircle } from "lucide-react"
-import Link from "next/link"
+import { useEffect, useState, useRef } from "react"
+import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { Building2, Users, Award, BookOpen, Target, Heart, Shield, Lightbulb, ChevronRight, CheckCircle, Linkedin, Twitter } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
-const fadeIn = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }
+const fadeIn = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } }
 
-export default function AboutPage() {
-  const stats = [
-    { value: "500+", label: "Students Trained" },
-    { value: "50+",  label: "Courses Offered" },
-    { value: "20+",  label: "Expert Instructors" },
-    { value: "95%",  label: "Satisfaction Rate" },
-  ]
+// Reusable Counter component
+function AnimatedCounter({ value, label, prefix = "", suffix = "" }: { value: number, label: string, prefix?: string, suffix?: string }) {
+  const [count, setCount] = useState(0)
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
 
-  const team = [
-    { name: "Mr. Imamdeen",       role: "Lead Web Development Instructor", bio: "Full-stack developer with 10+ years experience in React, Node.js, and cloud architecture." },
-    { name: "Ms. Hiruni Piyumika", role: "Data Science Lead",               bio: "Data scientist and ML engineer with expertise in Python, TensorFlow, and enterprise analytics." },
-    { name: "Ms. Amaya Silva",     role: "UI/UX Design Instructor",         bio: "Product designer who has worked with leading tech companies across South Asia." },
-  ]
-
-  const values = [
-    { icon: Target,   title: "Excellence",        desc: "We set the highest standards in curriculum design and teaching quality." },
-    { icon: Heart,    title: "Student-First",      desc: "Every decision we make puts our students' growth and success at the center." },
-    { icon: Users,    title: "Community",          desc: "Learning is better together — we foster a collaborative, inclusive environment." },
-    { icon: Award,    title: "Industry-Relevant",  desc: "Our curriculum evolves with the industry to ensure you learn what employers need." },
-  ]
-
-  const milestones = [
-    { year: "2015", text: "Founded with a vision to democratise tech education in Sri Lanka." },
-    { year: "2018", text: "Launched BIM & CAD programmes, partnering with industry leaders." },
-    { year: "2021", text: "Reached 500+ alumni milestone across 10+ corporate batch programmes." },
-    { year: "2024", text: "Launched digital student portal — Scholar Sync — for seamless learning." },
-  ]
+  useEffect(() => {
+    if (isInView) {
+      let start = 0
+      const duration = 2000 // 2s
+      const increment = value / (duration / 16) // 60fps
+      
+      const timer = setInterval(() => {
+        start += increment
+        if (start >= value) {
+          setCount(value)
+          clearInterval(timer)
+        } else {
+          setCount(Math.floor(start))
+        }
+      }, 16)
+      return () => clearInterval(timer)
+    }
+  }, [value, isInView])
 
   return (
-    <div className="min-h-screen bg-white selection:bg-blue-500/20">
+    <div ref={ref} className="text-center">
+      <div className="text-4xl md:text-5xl font-black text-[#0F172A] mb-2 font-mono tracking-tighter">
+        {prefix}{count}{suffix}
+      </div>
+      <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">{label}</div>
+    </div>
+  )
+}
 
-      {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section className="relative pt-28 pb-20 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-sky-50">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100 blur-[120px] rounded-full pointer-events-none opacity-50" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sky-100 blur-[100px] rounded-full pointer-events-none opacity-40" />
+export default function AboutPage() {
+  const { scrollYProgress } = useScroll()
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -200])
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 200])
 
-        <div className="max-w-5xl mx-auto px-4 relative z-10 text-center">
-          <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-3xl mx-auto">
-            <motion.div variants={fadeIn} className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 border border-blue-200 rounded-3xl mb-8 shadow-sm">
-              <GraduationCap className="h-10 w-10 text-blue-600" />
+  return (
+    <div className="min-h-screen bg-white overflow-hidden">
+      {/* ── PREMIUM HERO ────────────────────────────────────────────── */}
+      <section className="relative pt-32 pb-24 bg-[#F8FAFC] border-b border-gray-100 overflow-hidden min-h-[90vh] flex items-center">
+        {/* Animated Shapes */}
+        <motion.div animate={{ rotate: 360 }} transition={{ duration: 50, repeat: Infinity, ease: "linear" }} className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-blue-200/40 to-cyan-200/40 blur-[120px] rounded-full pointer-events-none" />
+        <motion.div animate={{ rotate: -360 }} transition={{ duration: 60, repeat: Infinity, ease: "linear" }} className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-300/30 to-purple-200/30 blur-[100px] rounded-full pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 relative z-10 w-full flex flex-col lg:flex-row items-center gap-16">
+          <motion.div initial="hidden" animate="visible" variants={stagger} className="flex-1">
+            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md border border-blue-100 text-blue-700 text-sm font-bold tracking-widest uppercase px-5 py-2 rounded-full mb-8 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" /> Our Story
             </motion.div>
-            <motion.div variants={fadeIn} className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-md border border-blue-100 text-blue-700 text-sm font-semibold px-5 py-2 rounded-full mb-6 shadow-sm">
-              <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
-              Sri Lanka&apos;s Premier Tech Education Platform
-            </motion.div>
-            <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl font-black text-gray-900 mb-6 tracking-tight leading-tight">
-              About <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-sky-500">Scholar Sync</span>
+            <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl lg:text-[5.5rem] font-black text-[#0F172A] mb-8 tracking-tight leading-[1.05]">
+              Empowering <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Minds</span> Since 2005.
             </motion.h1>
-            <motion.p variants={fadeIn} className="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto leading-relaxed font-medium">
-              We are dedicated to transforming careers through world-class training, mentorship, and a thriving community of learners.
+            <motion.p variants={fadeIn} className="text-lg md:text-xl text-[#475569] mb-10 leading-relaxed font-medium max-w-xl">
+              We are Sri Lanka's leading institute for technical software training, dedicated to transforming ambitions into industry-recognized expertise.
             </motion.p>
           </motion.div>
-        </div>
-
-        {/* Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 60" className="w-full h-auto text-white fill-current" preserveAspectRatio="none">
-            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
-          </svg>
-        </div>
-      </section>
-
-      {/* ── STATS ────────────────────────────────────────────────── */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map(({ value, label }, i) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-100 rounded-3xl p-8 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-              >
-                <p className="text-4xl md:text-5xl font-black text-blue-600 mb-2">{value}</p>
-                <p className="text-gray-500 font-semibold uppercase tracking-wider text-xs">{label}</p>
-              </motion.div>
-            ))}
-          </div>
+          
+          <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }} className="flex-1 relative">
+             <div className="relative w-full aspect-[4/3] rounded-[3rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.1)] border-8 border-white/50 backdrop-blur-sm">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071" alt="Students collaborating" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+             </div>
+             
+             <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute -bottom-10 -left-10 bg-white/90 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white flex items-center gap-4">
+                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center"><Building2 className="w-7 h-7 text-blue-600" /></div>
+                <div><h4 className="text-2xl font-black text-[#0F172A]">18+</h4><p className="text-sm font-bold text-gray-500 uppercase tracking-wider">Years of Excellence</p></div>
+             </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── MISSION & VISION ─────────────────────────────────────── */}
-      <section className="py-24 px-4 bg-gray-50">
+      {/* ── ANIMATED STATS ────────────────────────────────────────── */}
+      <section className="py-24 px-4 bg-white relative z-20 -mt-10">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <span className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 text-sm font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6">
-                Our Mission
-              </span>
-              <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
-                Empowering the Next Generation of Tech Leaders
-              </h2>
-              <p className="text-lg text-gray-500 leading-relaxed mb-5">
-                Founded with the vision of democratising quality technology education in Sri Lanka, Scholar Sync bridges the gap between academic learning and real industry demands.
-              </p>
-              <p className="text-lg text-gray-500 leading-relaxed">
-                Our programmes are designed alongside industry partners to ensure every graduate is job-ready from day one.
-              </p>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <div className="bg-white border border-blue-100 rounded-[2.5rem] p-10 shadow-xl shadow-blue-900/5 hover:shadow-2xl transition-shadow duration-500">
-                <div className="w-16 h-16 bg-blue-50 border border-blue-200 rounded-2xl flex items-center justify-center mb-8">
-                  <BookOpen className="h-8 w-8 text-blue-600" />
-                </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">Our Vision</h3>
-                <p className="text-xl text-gray-500 leading-relaxed">
-                  To become South Asia&apos;s most trusted technology education platform, producing graduates who lead innovation in global companies and local startups alike.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── MILESTONES ───────────────────────────────────────────── */}
-      <section className="py-24 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">Our Journey</span>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900">Key Milestones</h2>
-          </div>
-          <div className="relative">
-            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-blue-100 hidden md:block" />
-            <div className="space-y-10">
-              {milestones.map(({ year, text }, i) => (
-                <motion.div
-                  key={year}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                  className={`flex flex-col md:flex-row items-center gap-6 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
-                >
-                  <div className={`flex-1 ${i % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                    <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow inline-block text-left">
-                      <p className="text-gray-600 leading-relaxed">{text}</p>
-                    </div>
-                  </div>
-                  <div className="flex-shrink-0 w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-black text-sm z-10 shadow-lg shadow-blue-600/30">
-                    {year}
-                  </div>
-                  <div className="flex-1" />
-                </motion.div>
-              ))}
+          <div className="bg-white/80 backdrop-blur-2xl rounded-[3rem] p-10 md:p-16 border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.04)]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x-0 md:divide-x divide-gray-100">
+               <AnimatedCounter value={10000} label="Graduates" prefix="+" />
+               <AnimatedCounter value={50} label="Expert Trainers" prefix="+" />
+               <AnimatedCounter value={15} label="Branch Network" />
+               <AnimatedCounter value={98} label="Success Rate" suffix="%" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── CORE VALUES ──────────────────────────────────────────── */}
-      <section className="py-24 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">What Drives Us</span>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Our Core Values</h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto">The principles that guide everything we do</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map(({ icon: Icon, title, desc }, i) => (
-              <motion.div
-                key={title}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="bg-white border border-gray-100 p-8 rounded-3xl hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group"
-              >
-                <div className="w-14 h-14 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:border-blue-600 transition-all duration-300">
-                  <Icon className="h-7 w-7 text-blue-600 group-hover:text-white transition-colors" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
-                <p className="text-gray-500 leading-relaxed">{desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── TEAM ─────────────────────────────────────────────────── */}
-      <section className="py-24 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">The People Behind It</span>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Meet Our Instructors</h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto">Industry professionals committed to your growth</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {team.map(({ name, role, bio }, i) => (
-              <motion.div
-                key={name}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="bg-white border border-gray-100 rounded-[2.5rem] p-8 text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group"
-              >
-                <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-sky-400 rounded-[2rem] flex items-center justify-center text-white text-3xl font-black mx-auto mb-6 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform duration-300 rotate-3 group-hover:rotate-0">
-                  {name.split(" ").pop()?.charAt(0)}
-                </div>
-                <h3 className="font-bold text-gray-900 text-xl mb-1">{name}</h3>
-                <p className="text-blue-600 font-semibold text-sm mb-4">{role}</p>
-                <p className="text-gray-500 leading-relaxed text-sm">{bio}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="py-24 px-4 bg-gray-50">
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-sky-600 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl shadow-blue-900/20">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
-            <div className="relative z-10 max-w-3xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">Ready to Start Your Journey?</h2>
-              <p className="text-xl text-blue-100 mb-10 font-medium">Join hundreds of students transforming their careers with Scholar Sync</p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Link href="/courses" className="inline-flex items-center justify-center bg-white text-blue-700 hover:bg-gray-50 rounded-full px-10 h-14 text-base font-bold transition-transform hover:scale-105 shadow-xl">
-                  Browse Courses <ArrowRight className="ml-2 w-5 h-5" />
-                </Link>
-                <Link href="/contact" className="inline-flex items-center justify-center border-2 border-white/40 text-white hover:bg-white/10 rounded-full px-10 h-14 text-base font-bold transition-transform hover:scale-105">
-                  Contact Us
-                </Link>
+      {/* ── STORY PARALLAX ───────────────────────────────────────── */}
+      <section className="py-32 px-4 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+           <div className="flex flex-col lg:flex-row items-center gap-20">
+              <div className="flex-1 relative">
+                 <motion.div style={{ y: y1 }} className="absolute -top-20 -left-20 w-72 h-72 bg-blue-100 rounded-full blur-[80px] -z-10" />
+                 <div className="relative rounded-[2rem] overflow-hidden h-[600px] shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070" alt="Office environment" className="w-full h-full object-cover" />
+                 </div>
+                 {/* Floating offset image */}
+                 <motion.div style={{ y: y2 }} className="absolute -bottom-16 -right-16 w-64 h-64 rounded-3xl overflow-hidden border-8 border-white shadow-xl hidden md:block">
+                    <img src="https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=2070" alt="Team meeting" className="w-full h-full object-cover" />
+                 </motion.div>
               </div>
-            </div>
-          </div>
+              
+              <div className="flex-1">
+                 <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">The Genesis</span>
+                 <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] mb-8 leading-tight">Bridging the gap between academia and industry.</h2>
+                 
+                 <div className="space-y-6 text-[#475569] text-lg leading-relaxed">
+                    <p>Founded in 2005, CADD Centre Lanka began with a simple mission: to provide world-class technical software training that directly translates into real-world career success.</p>
+                    <p>We saw a disconnect between theoretical university education and the practical, software-driven demands of the modern engineering and architectural workplace. We built our curriculum specifically to bridge that gap.</p>
+                    <p>Today, we are proud to be the premier training institution for BIM, CAD, and Project Management, holding ISO certification and maintaining a network of successful alumni across the globe.</p>
+                 </div>
+                 
+                 <div className="mt-10 flex gap-4">
+                    <div className="flex items-center gap-2 text-[#0F172A] font-bold"><CheckCircle className="w-5 h-5 text-green-500" /> ISO 9001:2015</div>
+                    <div className="flex items-center gap-2 text-[#0F172A] font-bold"><CheckCircle className="w-5 h-5 text-blue-500" /> Global Partners</div>
+                 </div>
+              </div>
+           </div>
         </div>
+      </section>
+
+      {/* ── VISION & MISSION ──────────────────────────────────────── */}
+      <section className="py-32 px-4 bg-[#F8FAFC]">
+         <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="group bg-white p-12 rounded-[3rem] border border-gray-100 hover:border-blue-200 shadow-sm hover:shadow-[0_20px_50px_rgba(37,99,235,0.05)] transition-all duration-500 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full blur-[40px] group-hover:scale-150 transition-transform duration-700" />
+                  <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+                     <Target className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h3 className="text-3xl font-black text-[#0F172A] mb-4">Our Mission</h3>
+                  <p className="text-[#475569] text-lg leading-relaxed relative z-10">To provide high-quality, industry-relevant training and certification that empowers individuals to excel in design, engineering, and management fields globally.</p>
+               </motion.div>
+               
+               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="group bg-white p-12 rounded-[3rem] border border-gray-100 hover:border-cyan-200 shadow-sm hover:shadow-[0_20px_50px_rgba(6,182,212,0.05)] transition-all duration-500 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-50 rounded-full blur-[40px] group-hover:scale-150 transition-transform duration-700" />
+                  <div className="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+                     <Lightbulb className="w-8 h-8 text-cyan-600" />
+                  </div>
+                  <h3 className="text-3xl font-black text-[#0F172A] mb-4">Our Vision</h3>
+                  <p className="text-[#475569] text-lg leading-relaxed relative z-10">To be the most trusted and universally recognized institution for technical skill development, setting the benchmark for professional education in Sri Lanka.</p>
+               </motion.div>
+            </div>
+         </div>
+      </section>
+
+      {/* ── CORE VALUES ───────────────────────────────────────────── */}
+      <section className="py-32 px-4 bg-white">
+         <div className="max-w-7xl mx-auto text-center">
+            <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">Our Principles</span>
+            <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] mb-16">Core Values</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               {[
+                  { icon: Award, title: "Excellence", desc: "We strive for the highest standards in everything we do, from curriculum design to student support." },
+                  { icon: Users, title: "Student Success", desc: "Our ultimate measure of success is the career progression and achievements of our alumni." },
+                  { icon: Shield, title: "Integrity", desc: "We conduct our business and educational practices with absolute honesty and transparency." }
+               ].map((v, i) => (
+                  <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={i} className="bg-[#F8FAFC] p-10 rounded-[2.5rem] text-center group hover:bg-white border border-transparent hover:border-gray-100 hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-2">
+                     <div className="w-20 h-20 mx-auto bg-white rounded-[1.5rem] shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <v.icon className="w-8 h-8 text-blue-600" />
+                     </div>
+                     <h4 className="text-xl font-black text-[#0F172A] mb-4">{v.title}</h4>
+                     <p className="text-[#475569] leading-relaxed">{v.desc}</p>
+                  </motion.div>
+               ))}
+            </div>
+         </div>
+      </section>
+
+      {/* ── TIMELINE ──────────────────────────────────────────────── */}
+      <section className="py-32 px-4 bg-[#0F172A] text-white relative overflow-hidden">
+         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
+         <div className="max-w-4xl mx-auto relative z-10">
+            <div className="text-center mb-20">
+               <span className="text-blue-400 font-bold uppercase tracking-widest text-sm mb-4 block">Our Journey</span>
+               <h2 className="text-4xl md:text-5xl font-black mb-6">Milestones</h2>
+            </div>
+            
+            <div className="relative border-l-2 border-white/10 ml-6 md:ml-0 md:pl-0 md:mx-auto md:w-full md:flex md:flex-col items-center">
+               {[
+                  { year: "2005", title: "Foundation", desc: "Established the first training center in Colombo with a focus on AutoCAD." },
+                  { year: "2010", title: "Expansion", desc: "Opened 5 new branches and introduced Project Management courses." },
+                  { year: "2015", title: "ISO Certification", desc: "Awarded ISO 9001:2015 for quality management in education." },
+                  { year: "2020", title: "Digital Shift", desc: "Launched online learning portal to support hybrid education models." },
+                  { year: "2025", title: "Global Reach", desc: "Introduced internationally accredited BIM Master Programs." }
+               ].map((item, i) => (
+                  <motion.div initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }} key={i} className={`relative pl-8 md:pl-0 mb-12 md:w-1/2 ${i % 2 === 0 ? 'md:pr-16 md:self-start md:text-right' : 'md:pl-16 md:self-end md:text-left'}`}>
+                     <div className={`absolute top-0 md:top-2 w-5 h-5 rounded-full bg-blue-500 border-4 border-[#0F172A] shadow-[0_0_0_4px_rgba(59,130,246,0.2)] ${i % 2 === 0 ? '-left-[11px] md:-right-[11px] md:left-auto' : '-left-[11px]'}`}>
+                        <div className="w-full h-full bg-blue-400 rounded-full animate-ping opacity-50" />
+                     </div>
+                     <h3 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 mb-2">{item.year}</h3>
+                     <h4 className="text-xl font-bold mb-3">{item.title}</h4>
+                     <p className="text-gray-400 leading-relaxed">{item.desc}</p>
+                  </motion.div>
+               ))}
+               {/* Center line for desktop */}
+               <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-0.5 bg-white/10 -z-10" />
+            </div>
+         </div>
+      </section>
+
+      {/* ── INSTRUCTORS ───────────────────────────────────────────── */}
+      <section className="py-32 px-4 bg-white">
+         <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-20">
+               <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">Our Experts</span>
+               <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] mb-6">Learn from Industry Leaders</h2>
+               <p className="text-[#475569] max-w-2xl mx-auto text-lg">Our instructors are active professionals who bring real-world project experience directly into the classroom.</p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+               {[
+                  { name: "Dr. Amanda Perera", role: "Head of BIM", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80", cred: "Ph.D. in Architecture" },
+                  { name: "Rajith Silva", role: "Senior CAD Instructor", img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80", cred: "Autodesk Certified Professional" },
+                  { name: "Sarah Fernando", role: "Project Management Lead", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80", cred: "PMP Certified" },
+                  { name: "Kevin Costa", role: "MEP Specialist", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80", cred: "M.Sc. Engineering" }
+               ].map((inst, i) => (
+                  <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={i} className="group relative rounded-[2rem] overflow-hidden bg-[#F8FAFC] border border-gray-100">
+                     <div className="aspect-[4/5] overflow-hidden relative">
+                        <img src={inst.img} alt={inst.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/90 via-[#0F172A]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                        
+                        {/* Hover Reveal Content */}
+                        <div className="absolute inset-0 p-6 flex flex-col justify-end translate-y-8 group-hover:translate-y-0 transition-transform duration-300">
+                           <h4 className="text-2xl font-black text-white mb-1">{inst.name}</h4>
+                           <p className="text-blue-300 font-bold text-sm mb-3">{inst.role}</p>
+                           
+                           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                              <p className="text-gray-300 text-sm mb-4">{inst.cred}</p>
+                              <div className="flex gap-3">
+                                 <a href="#" className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-blue-600 transition-colors"><Linkedin className="w-4 h-4" /></a>
+                                 <a href="#" className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-blue-400 transition-colors"><Twitter className="w-4 h-4" /></a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </motion.div>
+               ))}
+            </div>
+         </div>
       </section>
     </div>
   )
