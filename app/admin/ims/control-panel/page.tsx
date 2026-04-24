@@ -212,7 +212,15 @@ export default function IMSControlPanelPage() {
               <label className="text-sm font-bold text-gray-600">Command Type</label>
               <div className="grid grid-cols-2 gap-2">
                 {(Object.entries(CMD_META) as [CmdType, typeof CMD_META[CmdType]][]).map(([key, meta]) => (
-                  <button key={key} type="button" onClick={() => setCmdType(key)} disabled={!isSuperAdmin}
+                  <button key={key} type="button" onClick={() => {
+                    setCmdType(key)
+                    // force_logout and disable_user cannot target 'all', reset to first user
+                    if (key === "force_logout" || key === "disable_user") {
+                      setCmdTarget(users[0]?.id || "")
+                    } else if (key === "broadcast") {
+                      setCmdTarget("all")
+                    }
+                  }} disabled={!isSuperAdmin}
                     className={`flex items-center gap-2 p-3 rounded-xl border text-sm font-bold transition-all disabled:opacity-50 ${
                       cmdType === key
                         ? `bg-red-50 border-red-300 ${meta.color}`
@@ -227,20 +235,26 @@ export default function IMSControlPanelPage() {
 
             {/* Target */}
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-600">Target User / Group</label>
+              <label className="text-sm font-bold text-gray-600">
+                {cmdType === "force_logout" || cmdType === "disable_user" ? "Target User (required)" : "Target User / Group"}
+              </label>
               <select value={cmdTarget} onChange={e => setCmdTarget(e.target.value)} disabled={!isSuperAdmin}
                 className={inputCls + " disabled:opacity-50"}>
-                {cmdType === "broadcast" && <option value="all">All Users</option>}
-                
+
+                {/* Only show 'All Users' for broadcast */}
+                {cmdType === "broadcast" && <option value="all">🌐 All Users</option>}
+
+                {/* Department targeting for popup/broadcast only */}
                 {(cmdType === "popup" || cmdType === "broadcast") && uniqueDepartments.length > 0 && (
-                  <optgroup label="Departments">
+                  <optgroup label="By Department">
                     {uniqueDepartments.map(dept => (
-                      <option key={dept} value={`dept:${dept}`}>Department: {dept}</option>
+                      <option key={dept} value={`dept:${dept}`}>🏢 Department: {dept}</option>
                     ))}
                   </optgroup>
                 )}
 
-                <optgroup label="Specific Users">
+                {/* Specific users always available */}
+                <optgroup label={cmdType === "force_logout" || cmdType === "disable_user" ? "Select a User" : "Specific User"}>
                   {users.map(u => (
                     <option key={u.id} value={u.id}>
                       {u.full_name} ({u.role.replace(/_/g, " ")})
@@ -248,6 +262,9 @@ export default function IMSControlPanelPage() {
                   ))}
                 </optgroup>
               </select>
+              {(cmdType === "force_logout" || cmdType === "disable_user") && (
+                <p className="text-xs text-orange-500 font-medium">⚠ Must target a specific user — cannot apply to all at once.</p>
+              )}
             </div>
 
             {/* Message */}
