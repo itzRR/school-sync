@@ -214,8 +214,6 @@ export default function CoursesPage() {
                        exit={{ opacity: 0, scale: 0.95 }} 
                        transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }} 
                        key={course.id}
-                       // Staggered effect via pseudo-masonry mt
-                       className={`${i % 2 !== 0 ? 'md:mt-12' : ''}`}
                     >
                       <Link href={`/courses/${course.slug}`} className="group block bg-white rounded-[2rem] border border-gray-100 p-3 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 h-full flex flex-col relative overflow-hidden">
                         <div className="h-64 rounded-[1.5rem] overflow-hidden relative mb-5 flex-shrink-0">

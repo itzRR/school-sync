@@ -176,7 +176,7 @@ export default function ContactPage() {
                <div className="absolute inset-0 bg-blue-600/5 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
                {/* Replace with actual map embed, using a styled iframe placeholder */}
                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m3!1m2!1s0x3ae259239ebac0db%3A0x6968ce12a8335520!2sColombo%2003!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk" 
+                  src="https://maps.google.com/maps?q=Colombo%2003,%20Sri%20Lanka&t=&z=13&ie=UTF8&iwloc=&output=embed" 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0, filter: 'contrast(1.1) opacity(0.9) grayscale(0.2)' }} 
