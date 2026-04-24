@@ -164,7 +164,7 @@ export default function IMSControlPanelPage() {
         {[
           { label: "Active Staff",   value: users.length,                                        icon: Users,    color: "text-blue-600",   bg: "bg-blue-50 border-blue-100" },
           { label: "Commands Sent",  value: commands.length,                                     icon: Terminal, color: "text-purple-600", bg: "bg-purple-50 border-purple-100" },
-          { label: "Pending Cmds",   value: commands.filter(c => c.status === "pending").length, icon: Clock,    color: "text-yellow-600", bg: "bg-yellow-50 border-yellow-100" },
+          { label: "Active Commands",value: commands.filter(c => c.status === "pending").length, icon: Clock,    color: "text-yellow-600", bg: "bg-yellow-50 border-yellow-100" },
           { label: "Login Events",   value: loginLogs.length,                                    icon: Shield,   color: "text-green-600",  bg: "bg-green-50 border-green-100" },
         ].map((s, i) => (
           <div key={i} className={`${s.bg} border rounded-2xl p-5 shadow-sm`}>
