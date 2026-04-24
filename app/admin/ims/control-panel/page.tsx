@@ -71,12 +71,26 @@ export default function IMSControlPanelPage() {
     }
     setSending(true)
     try {
-      const targetProfile = cmdTarget !== "all" ? users.find(u => u.id === cmdTarget) : null
+      let finalTargetId = null;
+      let finalTargetName = null;
+      let targetProfile = null;
+
+      if (cmdTarget === "all") {
+        finalTargetName = "All Users";
+      } else if (cmdTarget.startsWith("dept:")) {
+        finalTargetId = cmdTarget;
+        finalTargetName = `Dept: ${cmdTarget.replace("dept:", "")}`;
+      } else {
+        targetProfile = users.find(u => u.id === cmdTarget);
+        finalTargetId = targetProfile?.id || null;
+        finalTargetName = targetProfile?.full_name || null;
+      }
+
       const cmd = await createSystemCommand({
         type: cmdType,
         message: cmdMessage || null,
-        target_user_id: targetProfile?.id || null,
-        target_user_name: targetProfile?.full_name || (cmdTarget === "all" ? "All Users" : null),
+        target_user_id: finalTargetId,
+        target_user_name: finalTargetName,
         sent_by_id: currentUser?.id,
         sent_by_name: currentUser?.name,
         status: "pending",
@@ -110,6 +124,8 @@ export default function IMSControlPanelPage() {
     { id: "login_history" as const, label: "Login History", icon: <Activity className="h-4 w-4" /> },
     { id: "active_users" as const,  label: "Active Staff",  icon: <Users className="h-4 w-4" /> },
   ]
+
+  const uniqueDepartments = Array.from(new Set(users.map(u => u.department).filter(Boolean))) as string[];
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8 space-y-6 text-gray-900">
@@ -211,15 +227,26 @@ export default function IMSControlPanelPage() {
 
             {/* Target */}
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-600">Target User</label>
+              <label className="text-sm font-bold text-gray-600">Target User / Group</label>
               <select value={cmdTarget} onChange={e => setCmdTarget(e.target.value)} disabled={!isSuperAdmin}
                 className={inputCls + " disabled:opacity-50"}>
                 {cmdType === "broadcast" && <option value="all">All Users</option>}
-                {users.map(u => (
-                  <option key={u.id} value={u.id}>
-                    {u.full_name} ({u.role.replace(/_/g, " ")})
-                  </option>
-                ))}
+                
+                {(cmdType === "popup" || cmdType === "broadcast") && uniqueDepartments.length > 0 && (
+                  <optgroup label="Departments">
+                    {uniqueDepartments.map(dept => (
+                      <option key={dept} value={`dept:${dept}`}>Department: {dept}</option>
+                    ))}
+                  </optgroup>
+                )}
+
+                <optgroup label="Specific Users">
+                  {users.map(u => (
+                    <option key={u.id} value={u.id}>
+                      {u.full_name} ({u.role.replace(/_/g, " ")})
+                    </option>
+                  ))}
+                </optgroup>
               </select>
             </div>
 
@@ -253,42 +280,81 @@ export default function IMSControlPanelPage() {
           </div>
 
           {/* Command History */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-            <div className="flex items-center gap-2 mb-5">
-              <Clock className="h-5 w-5 text-purple-500" />
-              <h3 className="text-lg font-bold text-gray-900">Command History</h3>
-            </div>
-            <div className="space-y-3 max-h-[450px] overflow-y-auto pr-1">
-              {commands.length === 0 ? (
-                <div className="text-center py-12 text-gray-400">
-                  <Terminal className="h-10 w-10 mx-auto mb-2 opacity-30" />
-                  <p>No commands sent yet</p>
+          <div className="space-y-6">
+            {/* Active Commands */}
+            {commands.filter(c => c.status === "pending").length > 0 && (
+              <div className="bg-red-50 border border-red-200 rounded-2xl p-6 shadow-sm relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10">
+                  <AlertTriangle className="h-24 w-24 text-red-600" />
                 </div>
-              ) : commands.map(cmd => (
-                <div key={cmd.id} className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 border border-gray-200 hover:border-gray-300 transition-colors group">
-                  <div className={`mt-0.5 flex-shrink-0 ${CMD_META[cmd.type]?.color || "text-gray-400"}`}>
-                    {CMD_META[cmd.type]?.icon}
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Activity className="h-5 w-5 text-red-600" />
+                    <h3 className="text-lg font-black text-red-900">Active System Commands</h3>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="text-xs font-bold text-gray-800">{CMD_META[cmd.type]?.label}</span>
-                      <span className={`inline-flex px-2 py-0.5 rounded-md text-[10px] font-bold border ${STATUS_COLORS[cmd.status] || STATUS_COLORS.cancelled}`}>
-                        {cmd.status}
-                      </span>
+                  <div className="space-y-3">
+                    {commands.filter(c => c.status === "pending").map(cmd => (
+                      <div key={cmd.id} className="flex items-start gap-3 p-4 rounded-xl bg-white border border-red-200 shadow-sm">
+                        <div className={`mt-0.5 flex-shrink-0 ${CMD_META[cmd.type]?.color || "text-gray-400"}`}>
+                          {CMD_META[cmd.type]?.icon}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap mb-1">
+                            <span className="text-xs font-bold text-gray-800">{CMD_META[cmd.type]?.label}</span>
+                            <span className="inline-flex px-2 py-0.5 rounded-md text-[10px] font-bold border bg-yellow-100 text-yellow-700 border-yellow-200">
+                              Active / Pending
+                            </span>
+                          </div>
+                          {cmd.message && <p className="text-sm font-medium text-gray-800 mb-1">&ldquo;{cmd.message}&rdquo;</p>}
+                          <p className="text-[10px] text-gray-500">
+                            Target: <span className="font-bold">{cmd.target_user_name || "All Users"}</span> · Sent: {format(new Date(cmd.sent_at), "HH:mm")}
+                          </p>
+                        </div>
+                        {isSuperAdmin && (
+                          <button onClick={() => handleCancelCommand(cmd.id)}
+                            className="px-3 py-1.5 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-bold rounded-lg transition-all flex-shrink-0 border border-red-200">
+                            Cancel
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Past History */}
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-5">
+                <Clock className="h-5 w-5 text-purple-500" />
+                <h3 className="text-lg font-bold text-gray-900">Past Command History</h3>
+              </div>
+              <div className="space-y-3 max-h-[350px] overflow-y-auto pr-1">
+                {commands.filter(c => c.status !== "pending").length === 0 ? (
+                  <div className="text-center py-12 text-gray-400">
+                    <Terminal className="h-10 w-10 mx-auto mb-2 opacity-30" />
+                    <p>No past commands</p>
+                  </div>
+                ) : commands.filter(c => c.status !== "pending").map(cmd => (
+                  <div key={cmd.id} className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 border border-gray-200 opacity-75">
+                    <div className={`mt-0.5 flex-shrink-0 ${CMD_META[cmd.type]?.color || "text-gray-400"}`}>
+                      {CMD_META[cmd.type]?.icon}
                     </div>
-                    {cmd.message && <p className="text-xs text-gray-500 truncate mb-1">&ldquo;{cmd.message}&rdquo;</p>}
-                    <p className="text-[10px] text-gray-400">
-                      → {cmd.target_user_name || "All"} · by {cmd.sent_by_name} · {format(new Date(cmd.sent_at), "MMM d, HH:mm")}
-                    </p>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <span className="text-xs font-bold text-gray-800">{CMD_META[cmd.type]?.label}</span>
+                        <span className={`inline-flex px-2 py-0.5 rounded-md text-[10px] font-bold border ${STATUS_COLORS[cmd.status] || STATUS_COLORS.cancelled}`}>
+                          {cmd.status}
+                        </span>
+                      </div>
+                      {cmd.message && <p className="text-xs text-gray-500 truncate mb-1">&ldquo;{cmd.message}&rdquo;</p>}
+                      <p className="text-[10px] text-gray-400">
+                        → {cmd.target_user_name || "All"} · by {cmd.sent_by_name} · {format(new Date(cmd.sent_at), "MMM d, HH:mm")}
+                      </p>
+                    </div>
                   </div>
-                  {cmd.status === "pending" && isSuperAdmin && (
-                    <button onClick={() => handleCancelCommand(cmd.id)}
-                      className="opacity-0 group-hover:opacity-100 p-1.5 bg-red-50 hover:bg-red-100 text-red-500 rounded-lg transition-all flex-shrink-0">
-                      <X className="h-3.5 w-3.5" />
-                    </button>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

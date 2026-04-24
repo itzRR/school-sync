@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
+import { SystemCommandListener } from "@/components/layout/system-command-listener";
 
 export const metadata: Metadata = {
   title: "CADD Centre Lanka",
@@ -24,6 +25,7 @@ export default function RootLayout({
       >
         {children}
         <Toaster position="top-center" richColors />
+        <SystemCommandListener />
       </body>
     </html>
   );

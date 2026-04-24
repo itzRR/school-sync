@@ -43,7 +43,7 @@ export const PERMISSION_DEFS: PermissionDef[] = [
 
 // Base permissions each role automatically has (no need to grant them)
 export const ROLE_BASE_PERMISSIONS: Record<UserRole, Permission[]> = {
-  admin:            ['ims_overview','ims_marketing','ims_academic','ims_finance','ims_hr','ims_users','ims_tasks','ims_roster','ims_control_panel','asms_full','task_delete'],
+  admin:            ['ims_overview','ims_marketing','ims_academic','ims_finance','ims_hr','ims_users','ims_tasks','ims_roster','asms_full','task_delete'],
   super_admin:      ['ims_overview','ims_marketing','ims_academic','ims_finance','ims_hr','ims_users','ims_tasks','ims_roster','ims_control_panel','asms_full','task_delete'],
   branch_manager:   ['ims_overview','ims_marketing','ims_academic','ims_finance','ims_hr','ims_users','ims_tasks','ims_roster','asms_full'],
   academic_manager: ['asms_full'],
