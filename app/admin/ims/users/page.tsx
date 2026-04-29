@@ -14,12 +14,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { FieldError } from "@/components/ui/field-error"
 import { getAllProfiles, createStaffUser, updateProfileRole, disableUser } from "@/lib/ims-data"
 import { getCurrentUser } from "@/lib/auth"
 import {
   PERMISSION_DEFS, ROLE_BASE_PERMISSIONS, getExtraPermissions,
   hasPermission
 } from "@/lib/permissions"
+import { sanitizeName, isValidName, isValidEmail } from "@/lib/validation"
 import type { Permission } from "@/lib/permissions"
 import type { Profile, UserRole } from "@/types"
 import * as XLSX from "xlsx"
@@ -175,6 +177,7 @@ export default function IMSUsersPage() {
   }
   const [createForm, setCreateForm] = useState(emptyForm)
   const [creating, setCreating] = useState(false)
+  const [createTouched, setCreateTouched] = useState<Record<string, boolean>>({})
 
   const [tempShiftTime, setTempShiftTime] = useState("")
   const [tempAssetItem, setTempAssetItem] = useState("")
@@ -208,10 +211,32 @@ export default function IMSUsersPage() {
   const isAdmin = currentUser?.role === "admin" || currentUser?.role === "super_admin" || currentUser?.role === "hr_officer" || currentUser?.permissions?.includes("ims_users")
   const canGrantPermissions = currentUser?.role === "admin" || currentUser?.role === "super_admin" || currentUser?.role === "branch_manager"
 
+  // Create form validation errors
+  const createErrors: Record<string, string> = {}
+  if (createTouched.name && !createForm.name.trim()) {
+    createErrors.name = "Name is required"
+  } else if (createTouched.name && createForm.name.trim() && !isValidName(createForm.name)) {
+    createErrors.name = "Name can only contain letters, spaces, and hyphens"
+  }
+  if (createTouched.email && !createForm.email.trim()) {
+    createErrors.email = "Email is required"
+  } else if (createTouched.email && createForm.email.trim() && !isValidEmail(createForm.email)) {
+    createErrors.email = "Please enter a valid email (e.g. name@example.com)"
+  }
+  if (createTouched.password && createForm.password && createForm.password.length < 6) {
+    createErrors.password = "Password must be at least 6 characters"
+  }
+
+  const handleCreateBlur = (field: string) => setCreateTouched(prev => ({ ...prev, [field]: true }))
+
   const handleCreateUser = async () => {
-    if (!createForm.email || !createForm.password || !createForm.name)
-      return toast.error("Email, password & name required")
-    if (createForm.password.length < 6) return toast.error("Password must be at least 6 characters")
+    setCreateTouched({ name: true, email: true, password: true })
+    if (!createForm.name.trim() || !isValidName(createForm.name))
+      return toast.error("Please enter a valid name (letters only)")
+    if (!createForm.email.trim() || !isValidEmail(createForm.email))
+      return toast.error("Please enter a valid email address")
+    if (!createForm.password || createForm.password.length < 6)
+      return toast.error("Password must be at least 6 characters")
     setCreating(true)
     try {
       await createStaffUser({
@@ -227,7 +252,7 @@ export default function IMSUsersPage() {
       })
       // After creation, update permissions if any extras were set
       toast.success("User created — they can now log in with their credentials")
-      setShowCreateModal(false); setCreateForm(emptyForm)
+      setShowCreateModal(false); setCreateForm(emptyForm); setCreateTouched({})
       await loadData()
     } catch (e: any) { toast.error(e.message) }
     finally { setCreating(false) }
@@ -470,18 +495,21 @@ export default function IMSUsersPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-600">Full Name *</label>
-                    <input value={createForm.name} onChange={e => setCreateForm(p => ({ ...p, name: e.target.value }))} placeholder="John Doe" required
-                      className="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-cyan-500" />
+                    <input value={createForm.name} onChange={e => setCreateForm(p => ({ ...p, name: sanitizeName(e.target.value) }))} onBlur={() => handleCreateBlur("name")} placeholder="Letters only" required
+                      className={`w-full bg-gray-100 border rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-cyan-500 ${createErrors.name ? 'border-red-400' : 'border-gray-200'}`} />
+                    <FieldError message={createErrors.name} />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-600">Email *</label>
-                    <input type="email" value={createForm.email} onChange={e => setCreateForm(p => ({ ...p, email: e.target.value }))} placeholder="john@example.com" required
-                      className="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-cyan-500" />
+                    <input type="email" value={createForm.email} onChange={e => setCreateForm(p => ({ ...p, email: e.target.value }))} onBlur={() => handleCreateBlur("email")} placeholder="john@example.com" required
+                      className={`w-full bg-gray-100 border rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-cyan-500 ${createErrors.email ? 'border-red-400' : 'border-gray-200'}`} />
+                    <FieldError message={createErrors.email} />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-600">Password *</label>
-                    <input type="password" value={createForm.password} onChange={e => setCreateForm(p => ({ ...p, password: e.target.value }))} placeholder="••••••••" required
-                      className="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-cyan-500" />
+                    <input type="password" value={createForm.password} onChange={e => setCreateForm(p => ({ ...p, password: e.target.value }))} onBlur={() => handleCreateBlur("password")} placeholder="Min 6 characters" required
+                      className={`w-full bg-gray-100 border rounded-xl px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-cyan-500 ${createErrors.password ? 'border-red-400' : 'border-gray-200'}`} />
+                    <FieldError message={createErrors.password} />
                   </div>
                 </div>
               </div>

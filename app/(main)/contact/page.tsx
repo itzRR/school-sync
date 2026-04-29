@@ -4,6 +4,8 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Mail, Phone, MapPin, Send, CheckCircle2, MessageCircle, Clock, ChevronDown, PhoneCall } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { FieldError } from "@/components/ui/field-error"
+import { sanitizeName, isValidName, isValidEmail } from "@/lib/validation"
 
 const fadeIn = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } }
@@ -20,21 +22,61 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [activeFaq, setActiveFaq] = useState<number | null>(null)
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
   
   // Active day calculation for Office Hours
   const today = new Date().getDay()
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
+  // Real-time validation
+  const fieldErrors: Record<string, string> = {}
+  if (touched.name && !formState.name.trim()) {
+    fieldErrors.name = "Name is required"
+  } else if (touched.name && formState.name.trim() && !isValidName(formState.name)) {
+    fieldErrors.name = "Name can only contain letters, spaces, and hyphens"
+  }
+  if (touched.email && !formState.email.trim()) {
+    fieldErrors.email = "Email is required"
+  } else if (touched.email && formState.email.trim() && !isValidEmail(formState.email)) {
+    fieldErrors.email = "Please enter a valid email (e.g. name@example.com)"
+  }
+  if (touched.subject && !formState.subject.trim()) {
+    fieldErrors.subject = "Subject is required"
+  }
+  if (touched.message && !formState.message.trim()) {
+    fieldErrors.message = "Message is required"
+  }
+
+  const handleBlur = (field: string) => setTouched(prev => ({ ...prev, [field]: true }))
+
+  const handleNameChange = (value: string) => {
+    setFormState({ ...formState, name: sanitizeName(value) })
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
+    // Mark all touched
+    setTouched({ name: true, email: true, subject: true, message: true })
+
+    // Final validation
+    if (!formState.name.trim() || !isValidName(formState.name)) return
+    if (!formState.email.trim() || !isValidEmail(formState.email)) return
+    if (!formState.subject.trim() || !formState.message.trim()) return
+
     setIsSubmitting(true)
     setTimeout(() => {
       setIsSubmitting(false)
       setIsSuccess(true)
       setTimeout(() => setIsSuccess(false), 5000)
       setFormState({ name: "", email: "", subject: "", message: "" })
+      setTouched({})
     }, 1500)
   }
+
+  const inputBaseClass = "w-full bg-[#F8FAFC] border rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-[#0F172A]"
+  const errorInputClass = "border-red-400 focus:ring-red-400/20 focus:border-red-400"
+  const normalInputClass = "border-gray-200"
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] pb-20">
@@ -82,20 +124,56 @@ export default function ContactPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <label className="text-sm font-bold text-gray-700 ml-1">Full Name</label>
-                        <input required type="text" value={formState.name} onChange={e => setFormState({...formState, name: e.target.value})} className="w-full bg-[#F8FAFC] border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-[#0F172A]" placeholder="John Doe" />
+                        <input
+                          required
+                          type="text"
+                          value={formState.name}
+                          onChange={e => handleNameChange(e.target.value)}
+                          onBlur={() => handleBlur("name")}
+                          className={`${inputBaseClass} ${fieldErrors.name ? errorInputClass : normalInputClass}`}
+                          placeholder="John Doe"
+                        />
+                        <FieldError message={fieldErrors.name} />
                       </div>
                       <div className="space-y-2">
                         <label className="text-sm font-bold text-gray-700 ml-1">Email Address</label>
-                        <input required type="email" value={formState.email} onChange={e => setFormState({...formState, email: e.target.value})} className="w-full bg-[#F8FAFC] border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-[#0F172A]" placeholder="john@example.com" />
+                        <input
+                          required
+                          type="email"
+                          value={formState.email}
+                          onChange={e => setFormState({...formState, email: e.target.value})}
+                          onBlur={() => handleBlur("email")}
+                          className={`${inputBaseClass} ${fieldErrors.email ? errorInputClass : normalInputClass}`}
+                          placeholder="john@example.com"
+                        />
+                        <FieldError message={fieldErrors.email} />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-gray-700 ml-1">Subject</label>
-                      <input required type="text" value={formState.subject} onChange={e => setFormState({...formState, subject: e.target.value})} className="w-full bg-[#F8FAFC] border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-[#0F172A]" placeholder="How can we help?" />
+                      <input
+                        required
+                        type="text"
+                        value={formState.subject}
+                        onChange={e => setFormState({...formState, subject: e.target.value})}
+                        onBlur={() => handleBlur("subject")}
+                        className={`${inputBaseClass} ${fieldErrors.subject ? errorInputClass : normalInputClass}`}
+                        placeholder="How can we help?"
+                      />
+                      <FieldError message={fieldErrors.subject} />
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-gray-700 ml-1">Message</label>
-                      <textarea required rows={5} value={formState.message} onChange={e => setFormState({...formState, message: e.target.value})} className="w-full bg-[#F8FAFC] border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-[#0F172A] resize-none" placeholder="Tell us more about your inquiry..." />
+                      <textarea
+                        required
+                        rows={5}
+                        value={formState.message}
+                        onChange={e => setFormState({...formState, message: e.target.value})}
+                        onBlur={() => handleBlur("message")}
+                        className={`${inputBaseClass} resize-none ${fieldErrors.message ? errorInputClass : normalInputClass}`}
+                        placeholder="Tell us more about your inquiry..."
+                      />
+                      <FieldError message={fieldErrors.message} />
                     </div>
                     <Button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg shadow-[0_10px_30px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.4)] transition-all duration-300 group">
                       {isSubmitting ? (

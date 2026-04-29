@@ -21,6 +21,8 @@ import {
   getHrPerformanceReviews, createHrPerformanceReview, deleteHrPerformanceReview,
 } from "@/lib/ims-data"
 import { getCurrentUser, signOut } from "@/lib/auth"
+import { sanitizeName, isValidName, isValidEmail } from "@/lib/validation"
+import { FieldError } from "@/components/ui/field-error"
 import type { Profile, HrLeaveRequest, HrSalaryPayout, HrPerformanceReview, HrRoster, UserRole, Permission } from "@/types"
 import SriLankaCalendar from "@/components/ims/SriLankaCalendar"
 import StaffAttendance from "@/components/ims/StaffAttendance"
@@ -76,6 +78,7 @@ export default function HRDashboard() {
   const [tempShiftTime, setTempShiftTime] = useState("")
   const [tempAssetItem, setTempAssetItem] = useState("")
   const [tempAssetSerial, setTempAssetSerial] = useState("")
+  const [userFormTouched, setUserFormTouched] = useState<Record<string, boolean>>({})
 
   const loadData = useCallback(async () => {
     setLoading(true)
@@ -167,10 +170,29 @@ export default function HRDashboard() {
     } catch (e: any) { toast.error(e.message) }
   }
 
+  // User form validation errors
+  const userFormErrors: Record<string, string> = {}
+  if (userFormTouched.name && !userForm.name.trim()) {
+    userFormErrors.name = "Name is required"
+  } else if (userFormTouched.name && userForm.name.trim() && !isValidName(userForm.name)) {
+    userFormErrors.name = "Name can only contain letters, spaces, and hyphens"
+  }
+  if (!editingEmp && userFormTouched.email && !userForm.email.trim()) {
+    userFormErrors.email = "Email is required"
+  } else if (!editingEmp && userFormTouched.email && userForm.email.trim() && !isValidEmail(userForm.email)) {
+    userFormErrors.email = "Please enter a valid email (e.g. name@example.com)"
+  }
+  if (!editingEmp && userFormTouched.password && userForm.password && userForm.password.length < 6) {
+    userFormErrors.password = "Password must be at least 6 characters"
+  }
+
+  const handleUserFormBlur = (field: string) => setUserFormTouched(prev => ({ ...prev, [field]: true }))
+
   const handleSaveUser = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!userForm.name) return toast.error("Name is required")
-    if (!editingEmp && (!userForm.email || !userForm.password)) return toast.error("Email and password required for new staff")
+    setUserFormTouched({ name: true, email: true, password: true })
+    if (!userForm.name.trim() || !isValidName(userForm.name)) return toast.error("Please enter a valid name (letters only)")
+    if (!editingEmp && (!userForm.email.trim() || !isValidEmail(userForm.email))) return toast.error("Please enter a valid email address")
     if (!editingEmp && userForm.password.length < 6) return toast.error("Password must be at least 6 chars")
     
     setCreatingUser(true)
@@ -194,7 +216,7 @@ export default function HRDashboard() {
         toast.success("Staff member added successfully")
         await loadData()
       }
-      setShowUserModal(false); setUserForm(emptyUserForm); setEditingEmp(null)
+      setShowUserModal(false); setUserForm(emptyUserForm); setEditingEmp(null); setUserFormTouched({})
     } catch (e: any) { toast.error(e.message) }
     finally { setCreatingUser(false) }
   }
@@ -617,20 +639,26 @@ export default function HRDashboard() {
                     <h3 className="text-purple-600 font-bold border-b border-gray-200 pb-2">Basic Info</h3>
                     <div>
                       <label className="block text-gray-600 text-sm mb-1">Full Name *</label>
-                      <input required value={userForm.name} onChange={e => setUserForm(p => ({ ...p, name: e.target.value }))}
-                        className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
+                      <input required value={userForm.name} onChange={e => setUserForm(p => ({ ...p, name: sanitizeName(e.target.value) }))}
+                        onBlur={() => handleUserFormBlur("name")}
+                        className={`w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border focus:outline-none focus:border-purple-500 ${userFormErrors.name ? 'border-red-400' : 'border-gray-200'}`} />
+                      <FieldError message={userFormErrors.name} />
                     </div>
                     {!editingEmp && (
                       <>
                         <div>
                           <label className="block text-gray-600 text-sm mb-1">Email *</label>
                           <input required type="email" value={userForm.email} onChange={e => setUserForm(p => ({ ...p, email: e.target.value }))}
-                            className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
+                            onBlur={() => handleUserFormBlur("email")}
+                            className={`w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border focus:outline-none focus:border-purple-500 ${userFormErrors.email ? 'border-red-400' : 'border-gray-200'}`} />
+                          <FieldError message={userFormErrors.email} />
                         </div>
                         <div>
                           <label className="block text-gray-600 text-sm mb-1">Password *</label>
                           <input required minLength={6} type="password" value={userForm.password} onChange={e => setUserForm(p => ({ ...p, password: e.target.value }))}
-                            className="w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-500" />
+                            onBlur={() => handleUserFormBlur("password")}
+                            className={`w-full bg-gray-50 text-gray-900 px-3 py-2 rounded-xl border focus:outline-none focus:border-purple-500 ${userFormErrors.password ? 'border-red-400' : 'border-gray-200'}`} />
+                          <FieldError message={userFormErrors.password} />
                         </div>
                       </>
                     )}
