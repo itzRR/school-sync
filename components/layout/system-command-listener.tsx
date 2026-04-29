@@ -78,6 +78,17 @@ export function SystemCommandListener() {
 
     init()
 
+    // ── Heartbeat: update last_active every 2 minutes so presence works ──
+    const heartbeat = setInterval(async () => {
+      const user = await getCurrentUser()
+      if (user) {
+        supabase.from('profiles')
+          .update({ last_active: new Date().toISOString() })
+          .eq('id', user.id)
+          .then(() => {})
+      }
+    }, 2 * 60 * 1000) // every 2 minutes
+
     const channel = supabase
       .channel('system_commands_global')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'ims_system_commands' }, () => {
@@ -97,6 +108,7 @@ export function SystemCommandListener() {
 
     return () => {
       mounted = false
+      clearInterval(heartbeat)
       supabase.removeChannel(channel)
     }
   }, [processCommands, currentUser?.id]) // intentionally depending on currentUser?.id to trigger re-subscribe if user changes
