@@ -97,10 +97,21 @@ export async function signIn(
     // Log login history for IMS users (fire and forget)
     const imsRoles = ['admin','super_admin','branch_manager','marketing_staff','academic_staff','finance_officer','hr_officer','staff']
     if (profile && imsRoles.includes(profile.role)) {
+      // Fetch public IP address
+      let ipAddress: string | null = null
+      try {
+        const ipRes = await fetch('https://api.ipify.org?format=json', { signal: AbortSignal.timeout(3000) })
+        if (ipRes.ok) {
+          const ipData = await ipRes.json()
+          ipAddress = ipData.ip || null
+        }
+      } catch { /* IP lookup failed, continue without it */ }
+
       supabase.from('ims_login_history').insert({
         user_id: data.user.id,
         user_name: profile.full_name,
         email: data.user.email,
+        ip_address: ipAddress,
         device_info: typeof navigator !== 'undefined' ? navigator.userAgent : null,
       }).then(res => { if (res.error) console.error(res.error) })
     }

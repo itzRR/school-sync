@@ -352,7 +352,7 @@ export default function IMSControlPanelPage() {
                     <Terminal className="h-10 w-10 mx-auto mb-2 opacity-30" />
                     <p>No past commands</p>
                   </div>
-                ) : commands.filter(c => c.status !== "pending").map(cmd => (
+                ) : commands.filter(c => c.status !== "pending").slice(0, 5).map(cmd => (
                   <div key={cmd.id} className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 border border-gray-200 opacity-75">
                     <div className={`mt-0.5 flex-shrink-0 ${CMD_META[cmd.type]?.color || "text-gray-400"}`}>
                       {CMD_META[cmd.type]?.icon}
