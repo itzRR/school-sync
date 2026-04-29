@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { FieldError } from "@/components/ui/field-error"
 import { createStudentLead, getStudentLeads, updateStudentLead } from "@/lib/data"
+import { createMarketingLead } from "@/lib/ims-data"
 import { PhoneCall, Plus, Search } from "lucide-react"
 import { sanitizeName, isValidName, isValidEmail, isValidSriLankanPhone, formatSriLankanPhone } from "@/lib/validation"
 
@@ -69,6 +70,22 @@ export default function LeadsPage() {
     try {
       const created = await createStudentLead(form as any)
       setLeads(prev => [created, ...prev])
+      // Also sync to IMS Marketing Leads so it shows in the marketing section
+      try {
+        await createMarketingLead({
+          name: form.full_name,
+          contact: form.phone || null,
+          email: form.email || null,
+          dob: null, nic: null, occupation: null,
+          course_interested: form.interested_course || null,
+          source: 'Website' as const,
+          status: 'New' as const,
+          assigned_to: null,
+          campaign_id: null,
+          follow_ups: [],
+          notes: form.notes || null,
+        })
+      } catch { /* marketing sync is best-effort */ }
       setForm({ full_name: '', email: '', phone: '', interested_course: '', preferred_level: 'Proficient Certificate', notes: '' })
       setTouched({})
       setShowForm(false)
