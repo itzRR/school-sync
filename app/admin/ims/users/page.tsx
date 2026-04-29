@@ -163,6 +163,8 @@ export default function IMSUsersPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState("")
   const [filterRole, setFilterRole] = useState("all")
+  const [filterDept, setFilterDept] = useState("all")
+  const [filterStatus, setFilterStatus] = useState("all")
   const [currentUser, setCurrentUser] = useState<any>(null)
 
   // Create user modal
@@ -330,9 +332,17 @@ export default function IMSUsersPage() {
       (p.full_name || "").toLowerCase().includes(search.toLowerCase()) ||
       p.email.toLowerCase().includes(search.toLowerCase()) ||
       (p.department || "").toLowerCase().includes(search.toLowerCase())
-    const matchRole = filterRole === "all" || p.role === filterRole
-    return matchSearch && matchRole
+    const matchRole = filterRole === "all" || p.role === filterRole ||
+      (filterRole === "admin" && ["admin", "super_admin", "branch_manager"].includes(p.role))
+    const matchDept = filterDept === "all" || p.department === filterDept
+    const matchStatus = filterStatus === "all" ||
+      (filterStatus === "active" && !p.disabled) ||
+      (filterStatus === "disabled" && p.disabled) ||
+      (filterStatus === "online" && p.last_active && (Date.now() - new Date(p.last_active).getTime()) < 5 * 60 * 1000)
+    return matchSearch && matchRole && matchDept && matchStatus
   })
+
+  const isOnline = (p: Profile) => p.last_active && (Date.now() - new Date(p.last_active).getTime()) < 5 * 60 * 1000
 
   const roleGroups = IMS_ROLES.reduce((acc, r) => {
     acc[r] = profiles.filter(p => p.role === r).length
@@ -381,14 +391,35 @@ export default function IMSUsersPage() {
       {/* Users Table */}
       <div className="bg-gray-100 border border-gray-200 rounded-2xl overflow-hidden shadow-2xl">
         <div className="p-4 border-b border-gray-200 bg-gray-100">
-          <div className="relative max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <input
-              placeholder="Search users..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-gray-100 border border-gray-200 rounded-xl pl-9 pr-4 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
-            />
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="relative flex-1 min-w-[200px] max-w-sm">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                placeholder="Search users..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full bg-gray-100 border border-gray-200 rounded-xl pl-9 pr-4 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+              />
+            </div>
+            <select value={filterDept} onChange={e => setFilterDept(e.target.value)}
+              className="bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-cyan-500">
+              <option value="all">All Departments</option>
+              {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
+            </select>
+            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}
+              className="bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-cyan-500">
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="disabled">Disabled</option>
+              <option value="online">Online Now</option>
+            </select>
+            {(filterDept !== "all" || filterStatus !== "all" || filterRole !== "all" || search) && (
+              <button onClick={() => { setFilterDept("all"); setFilterStatus("all"); setFilterRole("all"); setSearch("") }}
+                className="text-xs text-cyan-700 hover:text-cyan-900 font-semibold px-2 py-1 hover:bg-cyan-50 rounded-lg transition-colors">
+                Clear all filters
+              </button>
+            )}
+            <span className="text-xs text-gray-400 ml-auto">{filteredProfiles.length} of {profiles.length} users</span>
           </div>
         </div>
 
@@ -419,8 +450,16 @@ export default function IMSUsersPage() {
                     <tr key={p.id} className={`hover:bg-gray-100 transition-colors ${p.disabled ? 'opacity-60 bg-red-900/5' : ''}`}>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-gray-900 font-bold shadow-lg">
-                            {p.full_name?.charAt(0) || p.email.charAt(0).toUpperCase()}
+                          <div className="relative">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-gray-900 font-bold shadow-lg">
+                              {p.full_name?.charAt(0) || p.email.charAt(0).toUpperCase()}
+                            </div>
+                            {isOnline(p) && (
+                              <span className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-green-500 border-2 border-white" />
+                              </span>
+                            )}
                           </div>
                           <div>
                             <p className="font-semibold text-gray-900">{p.full_name || '—'}</p>
