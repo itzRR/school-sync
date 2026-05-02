@@ -102,8 +102,9 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
 
   const submitClockOut = async () => {
     if (!activeSession) return
+    if (!reportText.trim()) return toast.error("Please enter your daily report before clocking out.")
     try {
-      const updated = await clockOut(activeSession.id, reportText)
+      const updated = await clockOut(activeSession.id, reportText.trim())
       setSessions(prev => prev.map(s => s.id === activeSession.id ? updated : s))
       setActiveSession(null)
       setShowReportModal(false)

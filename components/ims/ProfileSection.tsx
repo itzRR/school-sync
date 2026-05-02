@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import {
   User, Mail, Calendar as CalendarIcon, Crown, Star, Shield, Clock,
   Edit, Save, X, Lock, Key, ImageIcon, Link as LinkIcon, CheckCircle,
-  AlertCircle, FileText, Plus, Building, Briefcase, Trash2
+  AlertCircle, FileText, Plus, Building, Briefcase, Trash2, Upload
 } from "lucide-react"
 
 import type { Profile } from "@/types"
@@ -57,6 +57,19 @@ const PhotoEditor = ({ uid, currentPhotoURL, name, onClose, onUpdate }: { uid: s
   const [preview, setPreview] = useState(currentPhotoURL ? convertToThumbnail(currentPhotoURL) : "")
   const [previewError, setPreviewError] = useState(false)
   const [saving, setSaving] = useState(false)
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      const base64String = reader.result as string
+      setUrl(base64String)
+      setPreview(base64String)
+      setPreviewError(false)
+    }
+    reader.readAsDataURL(file)
+  }
 
   const handleUrlChange = (val: string) => {
     setUrl(val)
@@ -113,13 +126,30 @@ const PhotoEditor = ({ uid, currentPhotoURL, name, onClose, onUpdate }: { uid: s
             </div>
           </div>
         </div>
-        <div className="space-y-3 mb-5">
-          <label className="block text-sm font-medium text-gray-600">Image URL or Google Drive share link</label>
-          <div className="relative">
-            <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input type="url" value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://..." className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+        <div className="space-y-4 mb-5">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-600">Upload Image File</label>
+            <label className="flex items-center justify-center gap-2 w-full py-2.5 px-4 border border-dashed border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors text-sm text-gray-700 font-medium">
+              <Upload className="w-4 h-4 text-gray-500" />
+              <span>Click to select file...</span>
+              <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
+            </label>
           </div>
-          {isGoogleDriveLink(url) && <p className="text-xs text-blue-600 flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" /> Drive link detected.</p>}
+          
+          <div className="relative flex items-center py-2">
+            <div className="flex-grow border-t border-gray-200"></div>
+            <span className="flex-shrink-0 mx-4 text-xs font-medium text-gray-400">OR</span>
+            <div className="flex-grow border-t border-gray-200"></div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-600">Image URL or Google Drive share link</label>
+            <div className="relative">
+              <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input type="url" value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://..." className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+            </div>
+            {isGoogleDriveLink(url) && <p className="text-xs text-blue-600 flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" /> Drive link detected.</p>}
+          </div>
         </div>
         <div className="flex gap-2">
           {currentPhotoURL && <button onClick={handleRemove} disabled={saving} className="px-3 py-2.5 bg-red-100 text-red-600 rounded-xl text-sm font-medium hover:bg-red-500/30 transition-all">Remove</button>}
@@ -138,6 +168,19 @@ const DocumentEditor = ({ uid, existingDocs = [], onClose, onUpdate }: { uid: st
   const [preview, setPreview] = useState("")
   const [previewError, setPreviewError] = useState(false)
   const [saving, setSaving] = useState(false)
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      const base64String = reader.result as string
+      setUrl(base64String)
+      setPreview(base64String)
+      setPreviewError(false)
+    }
+    reader.readAsDataURL(file)
+  }
 
   const handleUrlChange = (val: string) => {
     setUrl(val)
