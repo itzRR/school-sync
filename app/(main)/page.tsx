@@ -283,13 +283,13 @@ export default function HomePage() {
                   { name: "David Chen", role: "Senior Architect", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&q=80", text: "Incredible instructors who actually work in the industry. The insights I gained here went far beyond what I learned in my university degree." },
                   { name: "Priya Sharma", role: "Project Manager", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&q=80", text: "The Primavera P6 training was rigorous but entirely worth it. I was promoted to Lead Project Planner within 6 months of completing my certification." }
                ].map((t, i) => (
-                  <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={i} className="bg-[#F8FAFC] p-10 rounded-[2rem] text-left relative group hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-2">
+                  <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={i} className="bg-[#F8FAFC] p-10 rounded-[2rem] text-left relative group hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
                      <MessageSquareQuote className="absolute top-10 right-10 w-12 h-12 text-blue-100 group-hover:text-blue-200 transition-colors" />
                      <div className="flex items-center gap-1 text-amber-400 mb-6">
                         {[...Array(5)].map((_,j) => <Star key={j} className="w-5 h-5 fill-current" />)}
                      </div>
-                     <p className="text-[#475569] text-lg mb-8 leading-relaxed">"{t.text}"</p>
-                     <div className="flex items-center gap-4">
+                     <p className="text-[#475569] text-lg mb-8 leading-relaxed flex-1">"{t.text}"</p>
+                     <div className="flex items-center gap-4 mt-auto">
                         <img src={t.img} alt={t.name} className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md" />
                         <div>
                            <h4 className="font-bold text-[#0F172A]">{t.name}</h4>
