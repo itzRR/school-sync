@@ -224,9 +224,9 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                {[
                   { name: "Hiruni Piumika", role: "Head of BIM", img: "/hiruni.webp", cred: "Ph.D. in Architecture" },
-                  { name: "Rajith Silva", role: "Senior CAD Instructor", img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80", cred: "Autodesk Certified Professional" },
+                  { name: "Albus Dumbledore", role: "Senior CAD Instructor", img: "/albus.webp", cred: "Autodesk Certified Professional" },
                   { name: "Sanduni Gunathilake", role: "Project Management Lead", img: "/sanduni.webp", cred: "PMP Certified" },
-                  { name: "Kevin Costa", role: "MEP Specialist", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80", cred: "M.Sc. Engineering" }
+                  { name: "Harry Potter", role: "MEP Specialist", img: "/harry.webp", cred: "M.Sc. Engineering" }
                ].map((inst, i) => (
                   <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={i} className="group relative rounded-[2rem] overflow-hidden bg-[#F8FAFC] border border-gray-100">
                      <div className="aspect-[4/5] overflow-hidden relative">
