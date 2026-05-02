@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { Building2, Users, Award, BookOpen, Target, Heart, Shield, Lightbulb, ChevronRight, CheckCircle, Linkedin, Twitter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const fadeIn = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }
+const fadeIn = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } } }
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } }
 
 // Reusable Counter component

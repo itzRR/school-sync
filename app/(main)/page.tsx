@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 import {
-  ArrowRight, BookOpen, Users, Award, CheckCircle,
-  GraduationCap, Layers, Clock, Play, Star, TrendingUp,
-  Shield, Zap, LayoutDashboard, ChevronRight, MessageSquareQuote
+  ArrowRight, BookOpen, Users, Award,
+  Clock, Play, Star, TrendingUp,
+  LayoutDashboard, MessageSquareQuote
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -20,8 +20,7 @@ const stagger = { visible: { transition: { staggerChildren: 0.1 } } }
 export default function HomePage() {
   const [courses, setCourses] = useState<Course[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const { scrollYProgress } = useScroll()
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100])
+
 
   useEffect(() => {
     getFeaturedCourses().then(setCourses).finally(() => setIsLoading(false))
@@ -275,7 +274,7 @@ export default function HomePage() {
       <section className="py-32 px-4 bg-white relative">
          <div className="max-w-7xl mx-auto text-center">
             <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">Success Stories</span>
-            <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] mb-16">Don't Just Take Our Word For It</h2>
+            <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] mb-16">Don&apos;t Just Take Our Word For It</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {[
@@ -288,7 +287,7 @@ export default function HomePage() {
                      <div className="flex items-center gap-1 text-amber-400 mb-6">
                         {[...Array(5)].map((_,j) => <Star key={j} className="w-5 h-5 fill-current" />)}
                      </div>
-                     <p className="text-[#475569] text-lg mb-8 leading-relaxed flex-1">"{t.text}"</p>
+                     <p className="text-[#475569] text-lg mb-8 leading-relaxed flex-1">&quot;{t.text}&quot;</p>
                      <div className="flex items-center gap-4 mt-auto">
                         <img src={t.img} alt={t.name} className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md" />
                         <div>
