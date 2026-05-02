@@ -68,23 +68,20 @@ export function SystemCommandListener() {
         }
 
         if (cmd.type === "broadcast" || cmd.type === "popup") {
-          // Task assigned notification
-          if (cmd.type === "popup" && cmd.message?.startsWith("TASK_ASSIGNED|")) {
+          // Normal popups (non-task)
+          if (cmd.type === "popup" && !cmd.message?.startsWith("TASK_ASSIGNED|")) {
             const deliveredKey = `delivered_cmds_${user.id}`
             try {
               const delivered = JSON.parse(localStorage.getItem(deliveredKey) || "[]")
               if (delivered.includes(cmd.id)) continue
 
-              const msg = cmd.message.replace("TASK_ASSIGNED|", "")
               toast(
-                <div className="flex flex-col gap-1 cursor-pointer group" onClick={() => { const route = getTaskRoute(user); if (route) router.push(route) }}>
-                  <span className="font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors"><Bell className="w-4 h-4 text-blue-500" /> New Task</span>
-                  <span className="text-sm text-gray-600">{msg}</span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to view tasks &rarr;</span>
+                <div className="flex flex-col gap-1 cursor-pointer group">
+                  <span className="font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors"><Bell className="w-4 h-4 text-blue-500" /> Notification</span>
+                  <span className="text-sm text-gray-600">{cmd.message}</span>
                 </div>,
                 { duration: 8000 }
               )
-              // Mark as delivered in DB and locally to prevent looping if DB update fails (e.g. RLS or offline)
               delivered.push(cmd.id)
               localStorage.setItem(deliveredKey, JSON.stringify(delivered))
               supabase.from('ims_system_commands').update({ status: 'delivered' }).eq('id', cmd.id).then()
@@ -164,10 +161,32 @@ export function SystemCommandListener() {
       })
       .subscribe()
 
+    // ── Live listener for new tasks assigned to this user ──
+    const taskChannel = supabase
+      .channel('live_tasks')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'ops_tasks' }, (payload) => {
+        const task = payload.new
+        if (currentUser) {
+          const isForMe = task.assigned_to?.includes(currentUser.id) || (currentUser.department && task.assigned_department === currentUser.department)
+          if (isForMe && task.created_by !== currentUser.id) {
+            toast(
+              <div className="flex flex-col gap-1 cursor-pointer group" onClick={() => { const route = getTaskRoute(currentUser); if (route) router.push(route) }}>
+                <span className="font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors"><Bell className="w-4 h-4 text-blue-500" /> New Task Assigned</span>
+                <span className="text-sm text-gray-600">{task.title}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to view tasks &rarr;</span>
+              </div>,
+              { duration: 8000 }
+            )
+          }
+        }
+      })
+      .subscribe()
+
     return () => {
       mounted = false
       clearInterval(heartbeat)
       supabase.removeChannel(channel)
+      supabase.removeChannel(taskChannel)
     }
   }, [processCommands, currentUser?.id]) // intentionally depending on currentUser?.id to trigger re-subscribe if user changes
 
