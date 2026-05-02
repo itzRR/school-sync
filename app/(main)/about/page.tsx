@@ -223,9 +223,9 @@ export default function AboutPage() {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                {[
-                  { name: "Dr. Amanda Perera", role: "Head of BIM", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80", cred: "Ph.D. in Architecture" },
+                  { name: "Hiruni Piumika", role: "Head of BIM", img: "/hiruni.webp", cred: "Ph.D. in Architecture" },
                   { name: "Rajith Silva", role: "Senior CAD Instructor", img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80", cred: "Autodesk Certified Professional" },
-                  { name: "Sarah Fernando", role: "Project Management Lead", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80", cred: "PMP Certified" },
+                  { name: "Sanduni Gunathilake", role: "Project Management Lead", img: "/sanduni.webp", cred: "PMP Certified" },
                   { name: "Kevin Costa", role: "MEP Specialist", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80", cred: "M.Sc. Engineering" }
                ].map((inst, i) => (
                   <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} key={i} className="group relative rounded-[2rem] overflow-hidden bg-[#F8FAFC] border border-gray-100">
