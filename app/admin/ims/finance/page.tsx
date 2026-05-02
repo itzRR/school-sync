@@ -341,10 +341,14 @@ export default function FinanceDashboard() {
         </div>
       </motion.header>
 
-      <div className="flex">
+      <div className="flex relative">
+        {/* Mobile Overlay */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setMobileMenuOpen(false)} />
+        )}
         {/* Sidebar */}
         <motion.aside initial={{ x: -100 }} animate={{ x: 0 }}
-          className={`bg-white border-r border-gray-200 h-screen sticky top-0 z-40 w-60 flex flex-col ${mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50' : 'hidden md:flex'}`}>
+          className={`bg-white border-r border-gray-200 h-screen z-50 w-60 flex flex-col flex-shrink-0 ${mobileMenuOpen ? 'fixed inset-y-0 left-0' : 'hidden md:flex sticky top-0'}`}>
           {mobileMenuOpen && <div className="flex justify-end p-3 md:hidden"><button onClick={() => setMobileMenuOpen(false)} className="text-gray-900"><X size={20} /></button></div>}
 
           {/* Profile Card */}

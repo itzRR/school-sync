@@ -102,9 +102,11 @@ function findActiveGroup(groups: NavGroup[], pathname: string): string | null {
 /* ─── Component ─── */
 interface AdminSidebarProps {
   currentUser?: AuthUser
+  mobileOpen?: boolean
+  setMobileOpen?: (open: boolean) => void
 }
 
-export function AdminSidebar({ currentUser }: AdminSidebarProps) {
+export function AdminSidebar({ currentUser, mobileOpen, setMobileOpen }: AdminSidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
@@ -171,7 +173,15 @@ export function AdminSidebar({ currentUser }: AdminSidebarProps) {
   /* ─── Collapsed icon-only view: show group icon as a divider ─── */
   if (collapsed) {
     return (
-      <div className="flex flex-col h-full bg-[#0A1A2F] text-white transition-all duration-300 flex-shrink-0 w-16">
+      <>
+        {mobileOpen && (
+          <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setMobileOpen?.(false)} />
+        )}
+        <div className={cn(
+          "flex flex-col h-full bg-[#0A1A2F] text-white transition-all duration-300 flex-shrink-0 w-16",
+          "fixed md:static inset-y-0 left-0 z-50",
+          mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        )}>
         {/* Logo */}
         <div className="flex items-center justify-center p-4 border-b border-white/10">
           <button
@@ -262,12 +272,21 @@ export function AdminSidebar({ currentUser }: AdminSidebarProps) {
           </button>
         </div>
       </div>
+      </>
     )
   }
 
   /* ─── Full expanded sidebar ─── */
   return (
-    <div className="flex flex-col h-full bg-[#0A1A2F] text-white transition-all duration-300 flex-shrink-0 w-64">
+    <>
+      {mobileOpen && (
+        <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setMobileOpen?.(false)} />
+      )}
+      <div className={cn(
+        "flex flex-col h-full bg-[#0A1A2F] text-white transition-all duration-300 flex-shrink-0 w-64",
+        "fixed md:static inset-y-0 left-0 z-50",
+        mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+      )}>
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/10">
         <div className="flex items-center gap-2">
@@ -462,5 +481,6 @@ export function AdminSidebar({ currentUser }: AdminSidebarProps) {
         </button>
       </div>
     </div>
+    </>
   )
 }
