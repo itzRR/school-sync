@@ -323,12 +323,12 @@ export default function HRDashboard() {
         )}
       </AnimatePresence>
 
-      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex items-center justify-between">
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex flex-wrap gap-4 items-center justify-between">
         <div className="flex items-center gap-3">
           <button className="md:hidden text-gray-600" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-          <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shrink-0">
             <Users className="w-6 h-6 text-gray-900" />
           </div>
           <div>
@@ -336,18 +336,18 @@ export default function HRDashboard() {
             <p className="text-gray-500 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <QuickGuide
             guideKey="hr_dashboard"
             dashboardName="HR"
             accentGradient="from-purple-500 to-pink-500"
             steps={hrGuideSteps}
           />
-          <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">Back to Admin</button>
+          <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-sm font-medium">Back to Admin</button>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl border border-red-200 hover:bg-red-100 transition-colors font-medium">
-            <LogOut className="w-4 h-4" /> Logout
+            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl border border-red-200 hover:bg-red-100 transition-colors font-medium text-sm md:text-base">
+            <LogOut className="w-4 h-4" /> <span className="hidden sm:inline">Logout</span>
           </motion.button>
         </div>
       </motion.header>
@@ -577,30 +577,32 @@ export default function HRDashboard() {
                 </div>
               </div>
               <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-                <table className="w-full text-sm text-gray-700">
-                  <thead className="bg-gray-100">
-                    <tr>{['Month','Employee','Amount','Paid On','Payslip','Actions'].map(h => (
-                      <th key={h} className="text-left px-4 py-3 text-gray-500 text-xs uppercase">{h}</th>
-                    ))}</tr>
-                  </thead>
-                  <tbody>
-                    {payouts.map(p => (
-                      <tr key={p.id} className="border-t border-gray-100 hover:bg-gray-100">
-                        <td className="px-4 py-3 font-semibold text-purple-700">{p.month}</td>
-                        <td className="px-4 py-3 text-gray-900">{p.employee_name}</td>
-                        <td className="px-4 py-3 font-bold text-green-700">LKR {p.amount.toLocaleString()}</td>
-                        <td className="px-4 py-3 text-gray-500">{p.paid_on || '-'}</td>
-                        <td className="px-4 py-3">
-                          <button onClick={() => generatePayslipPDF(p)} className="px-3 py-1 glass-button text-xs rounded-lg flex items-center gap-1 border border-gray-200"><FileText className="w-3 h-3"/> PDF</button>
-                        </td>
-                        <td className="px-4 py-3">
-                          {isHead && <button onClick={() => handleDeletePayout(p.id)} className="p-1.5 hover:text-red-600 text-gray-400"><Trash2 className="w-4 h-4" /></button>}
-                        </td>
-                      </tr>
-                    ))}
-                    {payouts.length === 0 && <tr><td colSpan={6} className="text-center py-12 text-gray-400">No payroll records.</td></tr>}
-                  </tbody>
-                </table>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-gray-700 whitespace-nowrap md:whitespace-normal">
+                    <thead className="bg-gray-100">
+                      <tr>{['Month','Employee','Amount','Paid On','Payslip','Actions'].map(h => (
+                        <th key={h} className="text-left px-4 py-3 text-gray-500 text-xs uppercase">{h}</th>
+                      ))}</tr>
+                    </thead>
+                    <tbody>
+                      {payouts.map(p => (
+                        <tr key={p.id} className="border-t border-gray-100 hover:bg-gray-100">
+                          <td className="px-4 py-3 font-semibold text-purple-700">{p.month}</td>
+                          <td className="px-4 py-3 text-gray-900">{p.employee_name}</td>
+                          <td className="px-4 py-3 font-bold text-green-700">LKR {p.amount.toLocaleString()}</td>
+                          <td className="px-4 py-3 text-gray-500">{p.paid_on || '-'}</td>
+                          <td className="px-4 py-3">
+                            <button onClick={() => generatePayslipPDF(p)} className="px-3 py-1 glass-button text-xs rounded-lg flex items-center gap-1 border border-gray-200"><FileText className="w-3 h-3"/> PDF</button>
+                          </td>
+                          <td className="px-4 py-3">
+                            {isHead && <button onClick={() => handleDeletePayout(p.id)} className="p-1.5 hover:text-red-600 text-gray-400"><Trash2 className="w-4 h-4" /></button>}
+                          </td>
+                        </tr>
+                      ))}
+                      {payouts.length === 0 && <tr><td colSpan={6} className="text-center py-12 text-gray-400">No payroll records.</td></tr>}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}

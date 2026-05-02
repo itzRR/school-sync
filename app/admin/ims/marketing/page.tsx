@@ -510,35 +510,37 @@ export default function MarketingDashboard() {
             <div className="space-y-4">
               <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"><Bell className="w-5 h-5 text-orange-500"/> Action Required: Follow-ups</h2>
               <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-                <table className="w-full text-sm text-gray-700">
-                  <thead className="bg-gray-100">
-                    <tr>{['Lead','Method','Due Date','Notes','Status'].map(h => (
-                      <th key={h} className="text-left px-4 py-3 text-gray-500 text-xs uppercase">{h}</th>
-                    ))}</tr>
-                  </thead>
-                  <tbody>
-                    {upcomingFollowUps.map((f: any, i) => (
-                      <tr key={i} className="border-t border-gray-100 hover:bg-gray-100">
-                        <td className="px-4 py-3 font-semibold text-gray-900">{f.leadName}</td>
-                        <td className="px-4 py-3"><span className="px-2 py-1 rounded-md bg-gray-100 text-xs">{f.method}</span></td>
-                        <td className="px-4 py-3 text-yellow-700 font-bold">{f.due_date}</td>
-                        <td className="px-4 py-3 text-gray-500 italic">"{f.note}"</td>
-                        <td className="px-4 py-3">
-                          <button onClick={() => {
-                            const lead = leads.find(l => l.id === f.leadId);
-                            if (lead) {
-                              const idx = lead.follow_ups.findIndex(fu => fu.due_date === f.due_date && fu.note === f.note);
-                              if (idx !== -1) toggleFollowUpDone(lead, idx);
-                            }
-                          }} className="px-3 py-1 glass-button text-xs rounded-lg border border-gray-200 hover:bg-green-100 hover:border-green-500/50 hover:text-green-700 transition-colors">
-                            Mark Done
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                    {upcomingFollowUps.length === 0 && <tr><td colSpan={5} className="text-center py-12 text-gray-400">No pending follow-ups! Great job.</td></tr>}
-                  </tbody>
-                </table>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-gray-700 whitespace-nowrap md:whitespace-normal">
+                    <thead className="bg-gray-100">
+                      <tr>{['Lead','Method','Due Date','Notes','Status'].map(h => (
+                        <th key={h} className="text-left px-4 py-3 text-gray-500 text-xs uppercase">{h}</th>
+                      ))}</tr>
+                    </thead>
+                    <tbody>
+                      {upcomingFollowUps.map((f: any, i) => (
+                        <tr key={i} className="border-t border-gray-100 hover:bg-gray-100">
+                          <td className="px-4 py-3 font-semibold text-gray-900">{f.leadName}</td>
+                          <td className="px-4 py-3"><span className="px-2 py-1 rounded-md bg-gray-100 text-xs">{f.method}</span></td>
+                          <td className="px-4 py-3 text-yellow-700 font-bold">{f.due_date}</td>
+                          <td className="px-4 py-3 text-gray-500 italic">"{f.note}"</td>
+                          <td className="px-4 py-3">
+                            <button onClick={() => {
+                              const lead = leads.find(l => l.id === f.leadId);
+                              if (lead) {
+                                const idx = lead.follow_ups.findIndex(fu => fu.due_date === f.due_date && fu.note === f.note);
+                                if (idx !== -1) toggleFollowUpDone(lead, idx);
+                              }
+                            }} className="px-3 py-1 glass-button text-xs rounded-lg border border-gray-200 hover:bg-green-100 hover:border-green-500/50 hover:text-green-700 transition-colors">
+                              Mark Done
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                      {upcomingFollowUps.length === 0 && <tr><td colSpan={5} className="text-center py-12 text-gray-400">No pending follow-ups! Great job.</td></tr>}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}

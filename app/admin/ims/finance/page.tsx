@@ -312,12 +312,12 @@ export default function FinanceDashboard() {
       </AnimatePresence>
 
       {/* Header */}
-      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex items-center justify-between">
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex flex-wrap gap-4 items-center justify-between">
         <div className="flex items-center gap-3">
           <button className="md:hidden text-gray-900" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-violet-500 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-violet-500 rounded-xl flex items-center justify-center shrink-0">
             <DollarSign className="w-6 h-6 text-gray-900" />
           </div>
           <div>
@@ -325,18 +325,18 @@ export default function FinanceDashboard() {
             <p className="text-gray-500 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <QuickGuide
             guideKey="finance_dashboard"
             dashboardName="Finance"
             accentGradient="from-blue-500 to-violet-500"
             steps={financeGuideSteps}
           />
-          <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl">Back to Admin</button>
+          <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl text-sm font-medium">Back to Admin</button>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200 hover:bg-red-500/30">
-            <LogOut className="w-4 h-4" /> Logout
+            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200 hover:bg-red-500/30 text-sm md:text-base">
+            <LogOut className="w-4 h-4" /> <span className="hidden sm:inline">Logout</span>
           </motion.button>
         </div>
       </motion.header>
@@ -523,29 +523,31 @@ export default function FinanceDashboard() {
               </div>
 
               <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-                <table className="w-full text-sm text-gray-700">
-                  <thead className="bg-gray-100">
-                    <tr>{['Date','Category','Amount','Notes','Actions'].map(h => (
-                      <th key={h} className="text-left px-4 py-3 text-gray-500 text-xs uppercase">{h}</th>
-                    ))}</tr>
-                  </thead>
-                  <tbody>
-                    {expenses.map(e => (
-                      <tr key={e.id} className="border-t border-gray-100 hover:bg-gray-100">
-                        <td className="px-4 py-3 text-gray-600">{e.date}</td>
-                        <td className="px-4 py-3 font-semibold text-gray-900">
-                          <span className="px-2 py-1 rounded-md bg-gray-100 text-xs border border-gray-200">{e.category}</span>
-                        </td>
-                        <td className="px-4 py-3 font-bold text-red-600">LKR {e.amount.toLocaleString()}</td>
-                        <td className="px-4 py-3 text-gray-500">{e.notes}</td>
-                        <td className="px-4 py-3">
-                          {isHead && <button onClick={() => handleDeleteExpense(e.id)} className="p-1.5 hover:text-red-600 text-gray-400"><Trash2 className="w-4 h-4" /></button>}
-                        </td>
-                      </tr>
-                    ))}
-                    {expenses.length === 0 && <tr><td colSpan={5} className="text-center py-12 text-gray-400">No expenses logged yet.</td></tr>}
-                  </tbody>
-                </table>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-gray-700 whitespace-nowrap md:whitespace-normal">
+                    <thead className="bg-gray-100">
+                      <tr>{['Date','Category','Amount','Notes','Actions'].map(h => (
+                        <th key={h} className="text-left px-4 py-3 text-gray-500 text-xs uppercase">{h}</th>
+                      ))}</tr>
+                    </thead>
+                    <tbody>
+                      {expenses.map(e => (
+                        <tr key={e.id} className="border-t border-gray-100 hover:bg-gray-100">
+                          <td className="px-4 py-3 text-gray-600">{e.date}</td>
+                          <td className="px-4 py-3 font-semibold text-gray-900">
+                            <span className="px-2 py-1 rounded-md bg-gray-100 text-xs border border-gray-200">{e.category}</span>
+                          </td>
+                          <td className="px-4 py-3 font-bold text-red-600">LKR {e.amount.toLocaleString()}</td>
+                          <td className="px-4 py-3 text-gray-500">{e.notes}</td>
+                          <td className="px-4 py-3">
+                            {isHead && <button onClick={() => handleDeleteExpense(e.id)} className="p-1.5 hover:text-red-600 text-gray-400"><Trash2 className="w-4 h-4" /></button>}
+                          </td>
+                        </tr>
+                      ))}
+                      {expenses.length === 0 && <tr><td colSpan={5} className="text-center py-12 text-gray-400">No expenses logged yet.</td></tr>}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}
