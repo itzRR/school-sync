@@ -9,6 +9,7 @@ import { getOpsTasks, createOpsTask, updateOpsTask, deleteOpsTask, completeOpsTa
 import { getCurrentUser } from "@/lib/auth"
 import type { OpsTask, Profile } from "@/types"
 import * as XLSX from "xlsx"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 const DEPARTMENTS = ["Academic", "Marketing", "Finance", "HR", "IT", "Operations"]
 const PRIORITY_COLORS = {
@@ -106,7 +107,7 @@ export default function IMSTasksPage({ embedded = false }: { embedded?: boolean 
 
   const handleDelete = async (id: string) => {
     if (!canDelete) return toast.error("You don't have permission to delete tasks")
-    if (!confirm("Delete this task?")) return
+    if (!(await confirmDialog("Delete this task?"))) return
     try {
       await deleteOpsTask(id)
       setTasks(prev => prev.filter(t => t.id !== id))

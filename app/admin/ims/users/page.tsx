@@ -24,6 +24,7 @@ import {
 import { sanitizeName, isValidName, isValidEmail } from "@/lib/validation"
 import type { Permission } from "@/lib/permissions"
 import type { Profile, UserRole } from "@/types"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 import * as XLSX from "xlsx"
 
 const IMS_ROLES: UserRole[] = [
@@ -305,7 +306,7 @@ export default function IMSUsersPage() {
   const handleToggleDisable = async (p: Profile) => {
     if (!isAdmin) return toast.error("Only admins can disable accounts")
     if (p.id === currentUser?.id) return toast.error("You cannot disable your own account")
-    if (!confirm(`${p.disabled ? "Enable" : "Disable"} ${p.full_name}?`)) return
+    if (!(await confirmDialog(`${p.disabled ? "Enable" : "Disable"} ${p.full_name}?`))) return
     try {
       await disableUser(p.id, !p.disabled)
       setProfiles(prev => prev.map(x => x.id === p.id ? { ...x, disabled: !p.disabled } : x))

@@ -29,6 +29,7 @@ import SriLankaCalendar from "@/components/ims/SriLankaCalendar"
 import StaffAttendance from "@/components/ims/StaffAttendance"
 import ProfileSection from "@/components/ims/ProfileSection"
 import IMSTasksPage from "../tasks/page"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 const DEPARTMENTS = ["Academic", "Marketing", "Finance", "HR", "IT", "Operations"]
 const LEAVE_TYPES = ["Annual", "Sick", "Emergency", "Maternity/Paternity", "Other"]
@@ -130,7 +131,7 @@ export default function HRDashboard() {
   }
 
   const handleDeleteLeave = async (id: string) => {
-    if (!confirm("Delete this leave request?")) return
+    if (!(await confirmDialog("Delete this leave request?"))) return
     try { await deleteHrLeaveRequest(id); setLeaves(prev => prev.filter(l => l.id !== id)); toast.success("Deleted") }
     catch (e: any) { toast.error(e.message) }
   }
@@ -148,7 +149,7 @@ export default function HRDashboard() {
   }
 
   const handleDeletePayout = async (id: string) => {
-    if (!confirm("Delete this payout?")) return
+    if (!(await confirmDialog("Delete this payout?"))) return
     try { await deleteHrSalaryPayout(id); setPayouts(prev => prev.filter(p => p.id !== id)); toast.success("Deleted") }
     catch (e: any) { toast.error(e.message) }
   }
@@ -166,7 +167,7 @@ export default function HRDashboard() {
   }
 
   const handleDeleteReview = async (id: string) => {
-    if (!confirm("Delete this review?")) return
+    if (!(await confirmDialog("Delete this review?"))) return
     try { await deleteHrPerformanceReview(id); setReviews(prev => prev.filter(r => r.id !== id)); toast.success("Deleted") }
     catch (e: any) { toast.error(e.message) }
   }

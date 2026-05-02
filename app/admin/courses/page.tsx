@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { BookOpen, Search, Plus } from "lucide-react"
 import { getCourses, deleteCourse } from "@/lib/data"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState<any[]>([])
@@ -32,7 +33,7 @@ export default function CoursesPage() {
   }, [search, courses])
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this course? This cannot be undone.")) return
+    if (!(await confirmDialog("Delete this course? This cannot be undone."))) return
     await deleteCourse(id)
     setCourses(prev => prev.filter(c => c.id !== id))
   }

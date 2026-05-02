@@ -8,6 +8,7 @@ import { Plus, Trash2, X, Calendar, RefreshCw, Clock, UserCircle } from "lucide-
 import { getHrRoster, createHrRoster, deleteHrRoster, getAllProfiles } from "@/lib/ims-data"
 import { getCurrentUser } from "@/lib/auth"
 import type { HrRoster, Profile } from "@/types"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 const ROSTER_TYPES = ["Shift", "Duty", "On-call", "Other"] as const
 const SHIFTS = ["Morning", "Afternoon", "Evening", "Night", "Full Day"]
@@ -69,7 +70,7 @@ export default function IMSRosterPage() {
 
   const handleDelete = async (id: string) => {
     if (!canEdit) return toast.error("You don't have permission to delete roster entries")
-    if (!confirm("Remove this roster entry?")) return
+    if (!(await confirmDialog("Remove this roster entry?"))) return
     try {
       await deleteHrRoster(id)
       setRoster(prev => prev.filter(r => r.id !== id))

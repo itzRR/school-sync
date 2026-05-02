@@ -12,6 +12,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { getEvents, deleteEvent } from "@/lib/data"
 import { formatCurrency, formatDate } from "@/lib/utils"
 import type { Event } from "@/types"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 export default function AdminEventsPage() {
   const [events, setEvents] = useState<Event[]>([])
@@ -33,7 +34,7 @@ export default function AdminEventsPage() {
   )
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Delete this event?")) return
+    if (!(await confirmDialog("Delete this event?"))) return
     await deleteEvent(id)
     loadEvents()
   }

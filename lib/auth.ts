@@ -1,4 +1,4 @@
-﻿import { createBrowserClient } from '@supabase/ssr'
+import { createBrowserClient } from '@supabase/ssr'
 import type { UserRole } from '@/types'
 import type { Permission } from '@/lib/permissions'
 import { hasPermission as _hasPermission } from '@/lib/permissions'
@@ -21,6 +21,8 @@ export interface AuthUser {
   disabled?: boolean
   permissions: Permission[]
   task_delete_permission?: boolean
+  created_at?: string
+  last_active?: string
 }
 
 export async function signUp(
@@ -72,7 +74,7 @@ export async function signIn(
     // Fetch basic profile first (always exists)
     const { data: profile } = await supabase
       .from('profiles')
-      .select('full_name, role, position, department, access_level, disabled')
+      .select('full_name, role, position, department, access_level, disabled, created_at, last_active')
       .eq('id', data.user.id)
       .single()
 
@@ -141,6 +143,8 @@ export async function signIn(
         disabled: profile.disabled,
         permissions,
         task_delete_permission,
+        created_at: profile.created_at,
+        last_active: profile.last_active,
       },
       error: null,
     }
@@ -165,7 +169,7 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
     // Fetch basic profile
     const { data: profile } = await supabase
       .from('profiles')
-      .select('full_name, role, position, department, access_level, disabled')
+      .select('full_name, role, position, department, access_level, disabled, created_at, last_active')
       .eq('id', user.id)
       .single()
 
@@ -194,6 +198,8 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
       access_level: profile?.access_level,
       permissions,
       task_delete_permission,
+      created_at: profile?.created_at,
+      last_active: profile?.last_active,
     }
   } catch (err) {
     console.error('getCurrentUser error:', err)

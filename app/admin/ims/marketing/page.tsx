@@ -24,6 +24,7 @@ import SriLankaCalendar from "@/components/ims/SriLankaCalendar"
 import StaffAttendance from "@/components/ims/StaffAttendance"
 import ProfileSection from "@/components/ims/ProfileSection"
 import IMSTasksPage from "../tasks/page"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 const STATUSES: LeadStatus[] = ["New", "Contacted", "Follow-up", "Converted", "Lost"]
 const SOURCES: LeadSource[] = ["Facebook", "Website", "Walk-in", "Referral", "WhatsApp", "Other"]
@@ -128,7 +129,7 @@ export default function MarketingDashboard() {
 
   const handleDeleteLead = async (id: string) => {
     if (!isHead) return toast.error("Only managers can delete leads")
-    if (!confirm("Delete this lead?")) return
+    if (!(await confirmDialog("Delete this lead?"))) return
     try {
       await deleteMarketingLead(id)
       setLeads(prev => prev.filter(l => l.id !== id))
@@ -149,7 +150,7 @@ export default function MarketingDashboard() {
 
   const handleDeleteCampaign = async (id: string) => {
     if (!isHead) return toast.error("Only managers can delete campaigns")
-    if (!confirm("Delete this campaign?")) return
+    if (!(await confirmDialog("Delete this campaign?"))) return
     try {
       await deleteMarketingCampaign(id)
       setCampaigns(prev => prev.filter(c => c.id !== id))

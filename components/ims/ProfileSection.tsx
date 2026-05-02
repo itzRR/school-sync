@@ -12,6 +12,7 @@ import {
 
 import type { Profile } from "@/types"
 import { updateProfileRole } from "@/lib/ims-data"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 // ── Google Drive link → thumbnail URL converter ────────────────────────────
 const convertToThumbnail = (url: string): string => {
@@ -42,7 +43,7 @@ export const Avatar = ({ photoURL, name, size = "lg", className = "" }: { photoU
   return (
     <div className={`${className || s.outer} rounded-2xl overflow-hidden flex-shrink-0 relative`}>
       {resolvedUrl && !imgError ? (
-        <img src={resolvedUrl} alt={name || "Avatar"} className="w-full h-full object-cover" onError={() => setImgError(true)} referrerPolicy="no-referrer" crossOrigin="anonymous" />
+        <img src={resolvedUrl} alt={name || "Avatar"} className="w-full h-full object-cover" onError={() => setImgError(true)} referrerPolicy="no-referrer" />
       ) : (
         <div className="w-full h-full bg-gradient-to-br from-[#02559c] to-[#3b9ced] flex items-center justify-center">
           <span className={`${s.text} font-bold text-white`}>{initials}</span>
@@ -117,7 +118,7 @@ const PhotoEditor = ({ uid, currentPhotoURL, name, onClose, onUpdate }: { uid: s
           <div className="relative">
             <div className="w-28 h-28 rounded-2xl overflow-hidden border-4 border-white/10 shadow-lg">
               {preview && !previewError ? (
-                <img src={preview} alt="Preview" className="w-full h-full object-cover" onError={() => setPreviewError(true)} referrerPolicy="no-referrer" crossOrigin="anonymous" />
+                <img src={preview} alt="Preview" className="w-full h-full object-cover" onError={() => setPreviewError(true)} referrerPolicy="no-referrer" />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-[#02559c] to-[#3b9ced] flex items-center justify-center">
                   <span className="text-3xl font-bold text-white">{(name || "?").split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()}</span>
@@ -295,7 +296,7 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
   }
 
   const handleDeleteDoc = async (docId: string) => {
-    if (!window.confirm("Remove this document?")) return
+    if (!(await confirmDialog("Remove this document?"))) return
     try {
       const updatedDocs = (localUser.documents || []).filter(d => d.id !== docId)
       await updateProfileRole(localUser.id, { documents: updatedDocs })

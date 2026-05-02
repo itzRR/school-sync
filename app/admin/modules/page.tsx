@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Layers, Plus, ChevronDown, ChevronUp } from "lucide-react"
 import { getCourses, getModulesByCourse, createModule, deleteModule } from "@/lib/data"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 export default function ModulesPage() {
   const [courses, setCourses] = useState<any[]>([])
@@ -50,7 +51,7 @@ export default function ModulesPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this module?")) return
+    if (!(await confirmDialog("Delete this module?"))) return
     await deleteModule(id)
     setModules(prev => prev.filter(m => m.id !== id))
   }

@@ -21,6 +21,7 @@ import SriLankaCalendar from "@/components/ims/SriLankaCalendar"
 import StaffAttendance from "@/components/ims/StaffAttendance"
 import ProfileSection from "@/components/ims/ProfileSection"
 import IMSTasksPage from "../tasks/page"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 interface AcademicStudent {
   id: string; name: string; email: string; contact: string
@@ -205,7 +206,7 @@ export default function AcademicDashboard() {
 
   const handleDeleteStudent = async (id: string) => {
     if (!isHead) return toast.error("Only heads can delete students")
-    if (!confirm("Delete this student?")) return
+    if (!(await confirmDialog("Delete this student?"))) return
     try {
       await supabase.from("ims_academic_students").delete().eq("id", id)
       setStudents(prev => prev.filter(s => s.id !== id))
@@ -215,7 +216,7 @@ export default function AcademicDashboard() {
 
   const handleDeleteCourse = async (id: string) => {
     if (!isHead) return toast.error("Only heads can delete courses")
-    if (!confirm("Delete this course?")) return
+    if (!(await confirmDialog("Delete this course?"))) return
     try {
       await supabase.from("ims_academic_courses").delete().eq("id", id)
       setCourses(prev => prev.filter(c => c.id !== id))
@@ -225,7 +226,7 @@ export default function AcademicDashboard() {
 
   const handleDeleteBatch = async (id: string) => {
     if (!isHead) return toast.error("Only heads can delete batches")
-    if (!confirm("Delete this batch?")) return
+    if (!(await confirmDialog("Delete this batch?"))) return
     try {
       await supabase.from("ims_academic_batches").delete().eq("id", id)
       setBatches(prev => prev.filter(b => b.id !== id))

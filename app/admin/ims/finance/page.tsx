@@ -21,6 +21,7 @@ import SriLankaCalendar from "@/components/ims/SriLankaCalendar"
 import StaffAttendance from "@/components/ims/StaffAttendance"
 import ProfileSection from "@/components/ims/ProfileSection"
 import IMSTasksPage from "../tasks/page"
+import { confirmDialog } from "@/components/ui/global-confirm-dialog"
 
 const EXPENSE_CATS = ['Utilities', 'Rent', 'Salaries', 'Marketing', 'Equipment', 'Maintenance', 'Other'] as const;
 const PAYMENT_METHODS = ['Cash', 'Bank Transfer', 'Online'] as const;
@@ -84,7 +85,7 @@ export default function FinanceDashboard() {
 
   const handleDeletePayment = async (id: string, invoiceId?: string | null) => {
     if (!isHead) return toast.error('Only Department Heads can delete payments');
-    if (!confirm('Delete this payment?')) return;
+    if (!(await confirmDialog('Delete this payment?'))) return;
     try {
       await deleteImsPayment(id);
       if (invoiceId) {
@@ -103,7 +104,7 @@ export default function FinanceDashboard() {
 
   const handleDeleteInvoice = async (id: string) => {
     if (!isHead) return toast.error('Only Department Heads can delete invoices');
-    if (!confirm('Delete this invoice?')) return;
+    if (!(await confirmDialog('Delete this invoice?'))) return;
     try {
       await deleteImsInvoice(id);
       setInvoices(prev => prev.filter(i => i.id !== id));
@@ -113,7 +114,7 @@ export default function FinanceDashboard() {
 
   const handleDeleteExpense = async (id: string) => {
     if (!isHead) return toast.error('Only Department Heads can delete expenses');
-    if (!confirm('Delete this expense?')) return;
+    if (!(await confirmDialog('Delete this expense?'))) return;
     try {
       await deleteImsExpense(id);
       setExpenses(prev => prev.filter(e => e.id !== id));

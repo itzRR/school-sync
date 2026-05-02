@@ -9,6 +9,16 @@ import { supabase } from "@/lib/supabase"
 import { getCurrentUser, signOut } from "@/lib/auth"
 import type { ImsSystemCommand } from "@/types"
 
+const getTaskRoute = (user: any) => {
+  if (user?.department) {
+    const dept = user.department.toLowerCase()
+    if (["marketing", "academic", "finance", "hr"].includes(dept)) {
+      return `/admin/ims/${dept}?tab=tasks`
+    }
+  }
+  return '/admin/ims/tasks'
+}
+
 export function SystemCommandListener() {
   const [currentUser, setCurrentUser] = useState<any>(null)
   const [blockingCommand, setBlockingCommand] = useState<ImsSystemCommand | null>(null)
@@ -58,7 +68,7 @@ export function SystemCommandListener() {
           if (cmd.type === "popup" && cmd.message?.startsWith("TASK_ASSIGNED|")) {
             const msg = cmd.message.replace("TASK_ASSIGNED|", "")
             toast(
-              <div className="flex flex-col gap-1 cursor-pointer group" onClick={() => router.push('/admin/ims/tasks')}>
+              <div className="flex flex-col gap-1 cursor-pointer group" onClick={() => router.push(getTaskRoute(user))}>
                 <span className="font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors"><Bell className="w-4 h-4 text-blue-500" /> New Task</span>
                 <span className="text-sm text-gray-600">{msg}</span>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to view tasks &rarr;</span>
@@ -90,6 +100,24 @@ export function SystemCommandListener() {
       setCurrentUser(user)
       if (user) {
         await processCommands(user)
+
+        const { data: tasks } = await supabase.from('ims_ops_tasks').select('assigned_to, assigned_department').eq('status', 'pending')
+        if (tasks) {
+          const myPending = tasks.filter(t => 
+            t.assigned_to?.includes(user.id) || 
+            (user.department && t.assigned_department === user.department)
+          )
+          if (myPending.length > 0) {
+            toast(
+              <div className="flex flex-col gap-1 cursor-pointer group" onClick={() => router.push(getTaskRoute(user))}>
+                <span className="font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors"><Bell className="w-4 h-4 text-blue-500" /> Action Required</span>
+                <span className="text-sm text-gray-600">You have {myPending.length} pending task(s) to complete.</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to view tasks &rarr;</span>
+              </div>,
+              { duration: 10000, id: "pending_tasks_reminder" }
+            )
+          }
+        }
       }
     }
 
