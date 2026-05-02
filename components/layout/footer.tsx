@@ -9,10 +9,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-5">
-              <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-blue-400 rounded-xl flex items-center justify-center">
-                <GraduationCap className="h-5 w-5 text-white" />
-              </div>
-              <span className="font-bold text-lg text-gray-900">Scholar Sync</span>
+              <img src="/cadd-logo.png" alt="CADD Centre Logo" className="h-10 w-auto object-contain" />
             </div>
             <p className="text-gray-500 text-sm leading-relaxed mb-5">
               Sri Lanka&apos;s premier education platform, empowering learners with world-class courses and events.
@@ -71,7 +68,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-100 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-gray-400 text-sm">© {new Date().getFullYear()} Scholar Sync. All rights reserved.</p>
+          <p className="text-gray-400 text-sm">© {new Date().getFullYear()} CADD Centre Lanka. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/privacy" className="text-gray-400 hover:text-blue-600 text-sm transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="text-gray-400 hover:text-blue-600 text-sm transition-colors">Terms of Service</Link>

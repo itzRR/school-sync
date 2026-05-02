@@ -124,7 +124,7 @@ export default function HomePage() {
                     key={index} 
                     src={src} 
                     alt={`Client Logo ${index + 1}`} 
-                    className="h-16 md:h-20 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 mix-blend-multiply" 
+                    className="h-16 md:h-20 w-auto max-w-[200px] object-contain flex-shrink-0 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 mix-blend-multiply" 
                   />
                 ))}
               </div>

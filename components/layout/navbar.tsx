@@ -71,14 +71,6 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5">
             <img src="/cadd-logo.png" alt="CADD Centre Logo" className="h-8 w-auto object-contain" />
-            <div className="hidden sm:block">
-              <span className="font-bold text-sm leading-none text-gray-900">
-                CADD Centre Lanka
-              </span>
-              <p className="text-xs leading-none mt-0.5 text-blue-600 font-bold">
-                ASMS
-              </p>
-            </div>
           </Link>
 
           {/* Desktop nav */}
