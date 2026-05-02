@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState, useCallback } from "react"
 import Link from "next/link"
@@ -58,7 +58,7 @@ export default function AdminDashboard() {
     }
   }, [loadStats])
 
-  if (isLoading) {
+  if (isLoading && !stats) {
     return (
       <div className="min-h-screen bg-gray-50 p-4 md:p-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
     )
   }
 
-  if (error || !stats) {
+  if (!stats && error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
