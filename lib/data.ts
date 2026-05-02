@@ -433,10 +433,10 @@ export async function getDashboardStats() {
   const monthlyRevenue = Array.from({ length: 6 }, (_, i) => {
     const d = new Date(now.getFullYear(), now.getMonth() - 5 + i, 1)
     const month = d.toLocaleString('default', { month: 'short', year: '2-digit' })
-    const revenue = enrollmentRevenue?.filter(e => {
+    const revenue = (enrollmentRevenue || []).filter(e => {
       const ed = new Date(e.created_at)
       return ed.getMonth() === d.getMonth() && ed.getFullYear() === d.getFullYear()
-    }).reduce((sum, e) => sum + (e.amount_paid || 0), 0) || 0
+    }).reduce((sum, e) => sum + (e.amount_paid || 0), 0)
     return { month, revenue }
   })
 
