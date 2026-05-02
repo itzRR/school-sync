@@ -70,17 +70,25 @@ export function SystemCommandListener() {
         if (cmd.type === "broadcast" || cmd.type === "popup") {
           // Task assigned notification
           if (cmd.type === "popup" && cmd.message?.startsWith("TASK_ASSIGNED|")) {
-            const msg = cmd.message.replace("TASK_ASSIGNED|", "")
-            toast(
-              <div className="flex flex-col gap-1 cursor-pointer group" onClick={() => { const route = getTaskRoute(user); if (route) router.push(route) }}>
-                <span className="font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors"><Bell className="w-4 h-4 text-blue-500" /> New Task</span>
-                <span className="text-sm text-gray-600">{msg}</span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to view tasks &rarr;</span>
-              </div>,
-              { duration: 8000 }
-            )
-            // Mark as delivered
-            supabase.from('ims_system_commands').update({ status: 'delivered' }).eq('id', cmd.id).then()
+            const deliveredKey = `delivered_cmds_${user.id}`
+            try {
+              const delivered = JSON.parse(localStorage.getItem(deliveredKey) || "[]")
+              if (delivered.includes(cmd.id)) continue
+
+              const msg = cmd.message.replace("TASK_ASSIGNED|", "")
+              toast(
+                <div className="flex flex-col gap-1 cursor-pointer group" onClick={() => { const route = getTaskRoute(user); if (route) router.push(route) }}>
+                  <span className="font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors"><Bell className="w-4 h-4 text-blue-500" /> New Task</span>
+                  <span className="text-sm text-gray-600">{msg}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to view tasks &rarr;</span>
+                </div>,
+                { duration: 8000 }
+              )
+              // Mark as delivered in DB and locally to prevent looping if DB update fails (e.g. RLS or offline)
+              delivered.push(cmd.id)
+              localStorage.setItem(deliveredKey, JSON.stringify(delivered))
+              supabase.from('ims_system_commands').update({ status: 'delivered' }).eq('id', cmd.id).then()
+            } catch (err) {}
             continue
           }
 

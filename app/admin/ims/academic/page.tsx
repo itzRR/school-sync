@@ -111,6 +111,17 @@ export default function AcademicDashboard() {
   }, [])
 
   useEffect(() => { loadData() }, [loadData])
+  
+  useEffect(() => {
+    const handleSwitchTab = (e: any) => setActiveTab(e.detail)
+    window.addEventListener('switch-tab', handleSwitchTab)
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search)
+      const tab = params.get('tab')
+      if (tab) setActiveTab(tab)
+    }
+    return () => window.removeEventListener('switch-tab', handleSwitchTab)
+  }, [])
   useEffect(() => { const t = setTimeout(() => setShowLoadingAnimation(false), 2000); return () => clearTimeout(t); }, [])
 
   const handleLogout = async () => {
