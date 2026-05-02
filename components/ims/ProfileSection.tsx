@@ -13,6 +13,7 @@ import {
 import type { Profile } from "@/types"
 import { updateProfileRole } from "@/lib/ims-data"
 import { confirmDialog } from "@/components/ui/global-confirm-dialog"
+import { supabase } from "@/lib/supabase"
 
 // ── Google Drive link → thumbnail URL converter ────────────────────────────
 const convertToThumbnail = (url: string): string => {
@@ -230,6 +231,22 @@ const DocumentEditor = ({ uid, existingDocs = [], onClose, onUpdate }: { uid: st
             <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g. Degree Certificate" 
               className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
           </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-600">Upload Image File</label>
+            <label className="flex items-center justify-center gap-2 w-full py-2.5 px-4 border border-dashed border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors text-sm text-gray-700 font-medium">
+              <Upload className="w-4 h-4 text-gray-500" />
+              <span>Click to select file...</span>
+              <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
+            </label>
+          </div>
+          
+          <div className="relative flex items-center py-2">
+            <div className="flex-grow border-t border-gray-200"></div>
+            <span className="flex-shrink-0 mx-4 text-xs font-medium text-gray-400">OR</span>
+            <div className="flex-grow border-t border-gray-200"></div>
+          </div>
+
           <div className="space-y-2">
             <label className="text-sm font-bold text-gray-600">Image URL / Drive Link</label>
             <div className="relative">
@@ -278,6 +295,17 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
   const [showPhotoEditor, setShowPhotoEditor] = useState(false)
   const [showDocEditor, setShowDocEditor] = useState(false)
   const [localUser, setLocalUser] = useState<Profile>(userData)
+
+  React.useEffect(() => {
+    const fetchFullProfile = async () => {
+      const { data, error } = await supabase.from('profiles').select('*').eq('id', userData.id).single()
+      if (data && !error) {
+        setLocalUser(prev => ({ ...prev, ...data }))
+        setEditedName(data.full_name || "")
+      }
+    }
+    fetchFullProfile()
+  }, [userData.id])
 
   const handleSave = async () => {
     if (!editedName.trim()) return toast.error("Name cannot be empty")
