@@ -58,9 +58,10 @@ export function SystemCommandListener() {
           if (cmd.type === "popup" && cmd.message?.startsWith("TASK_ASSIGNED|")) {
             const msg = cmd.message.replace("TASK_ASSIGNED|", "")
             toast(
-              <div className="flex flex-col gap-1">
-                <span className="font-bold flex items-center gap-2"><Bell className="w-4 h-4 text-blue-500" /> New Task</span>
+              <div className="flex flex-col gap-1 cursor-pointer group" onClick={() => router.push('/admin/ims/tasks')}>
+                <span className="font-bold flex items-center gap-2 group-hover:text-blue-600 transition-colors"><Bell className="w-4 h-4 text-blue-500" /> New Task</span>
                 <span className="text-sm text-gray-600">{msg}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to view tasks &rarr;</span>
               </div>,
               { duration: 8000 }
             )
