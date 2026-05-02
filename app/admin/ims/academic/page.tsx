@@ -20,6 +20,7 @@ import { getAcademicResults, createAcademicResult, deleteAcademicResult, type Ac
 import SriLankaCalendar from "@/components/ims/SriLankaCalendar"
 import StaffAttendance from "@/components/ims/StaffAttendance"
 import ProfileSection from "@/components/ims/ProfileSection"
+import IMSTasksPage from "../tasks/page"
 
 interface AcademicStudent {
   id: string; name: string; email: string; contact: string
@@ -276,6 +277,7 @@ export default function AcademicDashboard() {
     {
       label: '📋 My Work',
       items: [
+        { id: 'tasks',          label: 'Tasks',            icon: List,         badge: 0 },
         { id: 'my-attendance',  label: 'My Attendance',    icon: Clock,        badge: 0 },
         { id: 'profile',        label: 'My Profile',       icon: User,         badge: 0 },
       ]
@@ -676,6 +678,12 @@ export default function AcademicDashboard() {
           )}
           {activeTab === 'profile' && currentUser && (
             <ProfileSection userData={currentUser} />
+          )}
+
+          {activeTab === 'tasks' && (
+            <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 min-h-[600px]">
+              <IMSTasksPage embedded={true} />
+            </div>
           )}
 
         </main>

@@ -18,7 +18,7 @@ const PRIORITY_COLORS = {
 }
 const PRIORITY_DOT = { low: "bg-green-500", medium: "bg-yellow-500", high: "bg-red-500" }
 
-export default function IMSTasksPage() {
+export default function IMSTasksPage({ embedded = false }: { embedded?: boolean } = {}) {
   const [tasks, setTasks] = useState<OpsTask[]>([])
   const [users, setUsers] = useState<Profile[]>([])
   const [loading, setLoading] = useState(true)
@@ -152,7 +152,7 @@ export default function IMSTasksPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8 space-y-6 text-gray-900 selection:bg-blue-500/20">
+    <div className={embedded ? "space-y-6 text-gray-900 selection:bg-blue-500/20" : "min-h-screen bg-gray-50 p-4 md:p-8 space-y-6 text-gray-900 selection:bg-blue-500/20"}>
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>

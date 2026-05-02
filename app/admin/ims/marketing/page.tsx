@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import React, { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -23,6 +23,7 @@ import type { MarketingLead, MarketingCampaign, Profile, LeadStatus, LeadSource,
 import SriLankaCalendar from "@/components/ims/SriLankaCalendar"
 import StaffAttendance from "@/components/ims/StaffAttendance"
 import ProfileSection from "@/components/ims/ProfileSection"
+import IMSTasksPage from "../tasks/page"
 
 const STATUSES: LeadStatus[] = ["New", "Contacted", "Follow-up", "Converted", "Lost"]
 const SOURCES: LeadSource[] = ["Facebook", "Website", "Walk-in", "Referral", "WhatsApp", "Other"]
@@ -221,6 +222,7 @@ export default function MarketingDashboard() {
     {
       label: '📋 My Work',
       items: [
+        { id: 'tasks',      label: 'Tasks',           icon: List,         badge: 0 },
         { id: 'attendance', label: 'My Attendance',   icon: Clock,        badge: 0 },
         { id: 'profile',    label: 'My Profile',      icon: User,         badge: 0 },
       ]
@@ -574,6 +576,11 @@ export default function MarketingDashboard() {
           )}
           {activeTab === 'profile' && currentUser && (
             <ProfileSection userData={currentUser} />
+          )}
+          {activeTab === 'tasks' && (
+            <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 min-h-[600px]">
+              <IMSTasksPage embedded={true} />
+            </div>
           )}
 
         </main>
