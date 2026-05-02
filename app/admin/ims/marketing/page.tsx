@@ -273,7 +273,7 @@ export default function MarketingDashboard() {
         )}
       </AnimatePresence>
 
-      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex items-center justify-between">
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex flex-wrap gap-4 items-center justify-between">
         <div className="flex items-center gap-3">
           <button className="md:hidden text-gray-900" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -286,18 +286,18 @@ export default function MarketingDashboard() {
             <p className="text-gray-500 text-sm hidden md:block">CADD Centre - {currentUser?.name}</p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <QuickGuide
             guideKey="marketing_dashboard"
             dashboardName="Marketing"
             accentGradient="from-orange-500 to-pink-500"
             steps={marketingGuideSteps}
           />
-          <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl">Back to Admin</button>
+          <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl text-sm font-medium">Back to Admin</button>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200 hover:bg-red-500/30">
-            <LogOut className="w-4 h-4" /> Logout
+            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl border border-gray-200 hover:bg-red-500/30 text-sm md:text-base">
+            <LogOut className="w-4 h-4" /> <span className="hidden sm:inline">Logout</span>
           </motion.button>
         </div>
       </motion.header>

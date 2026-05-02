@@ -8,7 +8,7 @@ import {
   Home, MessageSquare, GraduationCap, CalendarDays, ClipboardList,
   Award, FileText, FolderOpen, UserCheck, BarChart3, Layers, PhoneCall,
   Building2, TrendingUp, DollarSign, UserCog, ListTodo, Calendar,
-  Terminal, ChevronDown, ChevronUp, Megaphone, ShieldCheck, User
+  Terminal, ChevronDown, ChevronUp, Megaphone, ShieldCheck, User, X
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { signOut } from "@/lib/auth"
@@ -170,8 +170,11 @@ export function AdminSidebar({ currentUser, mobileOpen, setMobileOpen }: AdminSi
     setExpandedGroups(prev => ({ ...prev, [label]: !prev[label] }))
   }
 
+  // On mobile, the collapsed state should not apply. It should always show the full drawer.
+  const isEffectivelyCollapsed = collapsed && !mobileOpen
+
   /* ─── Collapsed icon-only view: show group icon as a divider ─── */
-  if (collapsed) {
+  if (isEffectivelyCollapsed) {
     return (
       <>
         {mobileOpen && (
@@ -301,10 +304,13 @@ export function AdminSidebar({ currentUser, mobileOpen, setMobileOpen }: AdminSi
           </div>
         </div>
         <button
-          onClick={() => setCollapsed(true)}
+          onClick={() => {
+            if (mobileOpen !== undefined) setMobileOpen?.(false)
+            setCollapsed(true)
+          }}
           className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
         >
-          <ChevronLeft className="h-4 w-4" />
+          {mobileOpen ? <X className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </button>
       </div>
 
