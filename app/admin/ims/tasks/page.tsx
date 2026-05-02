@@ -421,7 +421,14 @@ export default function IMSTasksPage({ embedded = false }: { embedded?: boolean 
                               assigned_to: e.target.checked ? [...p.assigned_to, u.id] : p.assigned_to.filter(id => id !== u.id)
                             }))} />
                           <span className="text-sm text-gray-700 font-medium">{u.full_name || u.email}</span>
-                          <span className="text-xs text-gray-400 ml-auto capitalize">{u.role.replace(/_/g," ")}</span>
+                          <div className="ml-auto flex flex-col items-end gap-0.5">
+                            {u.department && (
+                              <span className="text-[9px] bg-gray-200 text-gray-600 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                                {u.department}
+                              </span>
+                            )}
+                            <span className="text-[11px] text-gray-400 capitalize">{u.role.replace(/_/g," ")}</span>
+                          </div>
                         </label>
                       ))}
                     </div>

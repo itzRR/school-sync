@@ -346,8 +346,12 @@ export default function HRDashboard() {
 
           <div className="px-4 pt-5 pb-4 border-b border-gray-200">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-gray-900 font-bold text-sm flex-shrink-0">
-                {currentUser?.name?.charAt(0).toUpperCase() || 'H'}
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-gray-900 font-bold text-sm flex-shrink-0 overflow-hidden">
+                {currentUser?.avatar_url ? (
+                  <img src={currentUser.avatar_url} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  currentUser?.name?.charAt(0).toUpperCase() || 'H'
+                )}
               </div>
               <div className="min-w-0">
                 <p className="text-purple-700 text-xs font-semibold">Human Resources</p>
@@ -436,8 +440,12 @@ export default function HRDashboard() {
                       <tr key={emp.id} className={`group bg-gray-50 hover:bg-purple-50 transition-all rounded-2xl border border-gray-100 ${emp.disabled ? 'opacity-50' : ''}`}>
                           <td className="px-4 py-4 rounded-l-2xl">
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-200 flex items-center justify-center text-purple-600 font-bold shadow-inner">
-                                {emp.full_name?.charAt(0).toUpperCase() || emp.email.charAt(0).toUpperCase()}
+                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-200 flex items-center justify-center text-purple-600 font-bold shadow-inner overflow-hidden">
+                                {emp.avatar_url ? (
+                                  <img src={emp.avatar_url} alt="" className="w-full h-full object-cover" />
+                                ) : (
+                                  emp.full_name?.charAt(0).toUpperCase() || emp.email.charAt(0).toUpperCase()
+                                )}
                               </div>
                               <div className="min-w-0">
                                 <p className="font-bold text-gray-900 text-[15px] truncate">{emp.full_name || emp.email}</p>

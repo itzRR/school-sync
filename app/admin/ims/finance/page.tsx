@@ -338,8 +338,12 @@ export default function FinanceDashboard() {
           {/* Profile Card */}
           <div className="px-4 pt-5 pb-4 border-b border-gray-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-gray-900 font-bold text-sm flex-shrink-0">
-                {currentUser?.name?.charAt(0).toUpperCase() || 'F'}
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-gray-900 font-bold text-sm flex-shrink-0 overflow-hidden">
+                {currentUser?.avatar_url ? (
+                  <img src={currentUser.avatar_url} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  currentUser?.name?.charAt(0).toUpperCase() || 'F'
+                )}
               </div>
               <div className="min-w-0">
                 <p className="text-blue-600 text-xs font-semibold">Finance Dept.</p>

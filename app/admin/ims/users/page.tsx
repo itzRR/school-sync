@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
@@ -451,8 +451,12 @@ export default function IMSUsersPage() {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="relative">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-gray-900 font-bold shadow-lg">
-                              {p.full_name?.charAt(0) || p.email.charAt(0).toUpperCase()}
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-gray-900 font-bold shadow-lg overflow-hidden">
+                              {p.avatar_url ? (
+                                <img src={p.avatar_url} alt="" className="w-full h-full object-cover" />
+                              ) : (
+                                p.full_name?.charAt(0) || p.email.charAt(0).toUpperCase()
+                              )}
                             </div>
                             {isOnline(p) ? (
                               <span className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5">
