@@ -68,8 +68,13 @@ export function SystemCommandListener() {
         }
 
         if (cmd.type === "broadcast" || cmd.type === "popup") {
+          // Ignore legacy TASK_ASSIGNED popups (now handled via ops_tasks directly)
+          if (cmd.type === "popup" && cmd.message?.startsWith("TASK_ASSIGNED|")) {
+            continue
+          }
+
           // Normal popups (non-task)
-          if (cmd.type === "popup" && !cmd.message?.startsWith("TASK_ASSIGNED|")) {
+          if (cmd.type === "popup") {
             const deliveredKey = `delivered_cmds_${user.id}`
             try {
               const delivered = JSON.parse(localStorage.getItem(deliveredKey) || "[]")
