@@ -14,7 +14,7 @@ import { getFeaturedCourses } from "@/lib/data"
 import { formatCurrency } from "@/lib/utils"
 import type { Course } from "@/types"
 
-const fadeIn = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }
+const fadeIn = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } }
 
 export default function HomePage() {
@@ -96,16 +96,39 @@ export default function HomePage() {
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent" />
       </section>
 
-      {/* ── STATS / LOGOS ───────────────────────────────────────── */}
-      <section className="py-12 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 overflow-hidden">
-          <p className="text-center text-sm font-semibold text-gray-400 uppercase tracking-widest mb-8">Trusted by industry leaders globally</p>
-          <div className="flex justify-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-             {/* Replace with real logos later, using text for now */}
-             <span className="font-black text-2xl tracking-tighter">AutoDesk</span>
-             <span className="font-black text-2xl tracking-tighter">Bentley</span>
-             <span className="font-black text-2xl tracking-tighter">Oracle</span>
-             <span className="font-black text-2xl tracking-tighter hidden sm:block">Trimble</span>
+      {/* ── CLIENTS / SUPPORTERS ───────────────────────────────── */}
+      <section className="py-12 bg-white border-b border-gray-100 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 mb-8">
+          <p className="text-center text-sm font-semibold text-gray-400 uppercase tracking-widest">Our Clients & Supporters</p>
+        </div>
+        
+        {/* Infinite Logo Carousel */}
+        <div className="relative flex overflow-hidden group max-w-7xl mx-auto w-full">
+          <div className="animate-marquee flex whitespace-nowrap hover:[animation-play-state:paused] items-center">
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="flex items-center gap-12 md:gap-24 px-6 md:px-12">
+                {[
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/1-1.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/3-2.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/4-2.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/5-1-1.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/7-1.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/8-2.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/10-1.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/13-1.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/17-1-1.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/18-1-1.jpg",
+                  "https://caddcentre.lk/wp-content/uploads/2024/06/19-1.jpg",
+                ].map((src, index) => (
+                  <img 
+                    key={index} 
+                    src={src} 
+                    alt={`Client Logo ${index + 1}`} 
+                    className="h-16 md:h-20 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 mix-blend-multiply" 
+                  />
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </section>

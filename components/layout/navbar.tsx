@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
@@ -70,9 +70,7 @@ export function Navbar() {
         <div className={`flex items-center justify-between transition-all duration-500 ${isScrolled ? "h-16" : "h-20"}`}>
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-400 rounded-lg flex items-center justify-center shadow-md">
-              <GraduationCap className="h-4 w-4 text-white" />
-            </div>
+            <img src="/cadd-logo.png" alt="CADD Centre Logo" className="h-8 w-auto object-contain" />
             <div className="hidden sm:block">
               <span className="font-bold text-sm leading-none text-gray-900">
                 CADD Centre Lanka

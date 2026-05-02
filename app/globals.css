@@ -29,6 +29,11 @@
     /* Effects */
     --color-glass-overlay: rgba(255, 255, 255, 0.06);  /* card overlay effect */
     --color-border-hint: rgba(0, 0, 0, 0.08);          /* subtle borders / outlines */
+
+    --animate-marquee: marquee 30s linear infinite;
+    @keyframes marquee {
+      to { transform: translateX(-50%); }
+    }
 }
 
 
