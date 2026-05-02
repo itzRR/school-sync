@@ -58,7 +58,23 @@ export default function AdminDashboard() {
     }
   }, [loadStats])
 
-  if (isLoading && !stats) {
+  if (!stats) {
+    if (error) {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Activity className="h-8 w-8 text-red-400" />
+            </div>
+            <p className="text-red-500 font-medium">{error || "No data available"}</p>
+            <button onClick={loadStats} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors">
+              Retry
+            </button>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className="min-h-screen bg-gray-50 p-4 md:p-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -73,22 +89,6 @@ export default function AdminDashboard() {
           {[...Array(2)].map((_, i) => (
             <div key={i} className="bg-white rounded-2xl p-6 border border-gray-100 animate-pulse h-64" />
           ))}
-        </div>
-      </div>
-    )
-  }
-
-  if (!stats && error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Activity className="h-8 w-8 text-red-400" />
-          </div>
-          <p className="text-red-500 font-medium">{error || "No data available"}</p>
-          <button onClick={loadStats} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors">
-            Retry
-          </button>
         </div>
       </div>
     )
