@@ -1,4 +1,4 @@
-// ─── Input Validation Utilities ─────────────────────────────────
+﻿// ─── Input Validation Utilities ─────────────────────────────────
 // Shared validation logic for all forms across Scholar-Sync
 
 /** Allow only letters, spaces, dots, and hyphens (no numbers, no symbols) */
@@ -11,7 +11,7 @@ export function sanitizeName(value: string): string {
   return value.replace(/[^A-Za-z\s.\-']/g, "")
 }
 
-/** Validate email format — must contain @ and a domain */
+/** Validate email format - must contain @ and a domain */
 export function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
 }
@@ -78,7 +78,7 @@ export function isRequired(value: string): boolean {
   return value.trim().length > 0
 }
 
-/** Validate salary / amount — must be a positive number */
+/** Validate salary / amount - must be a positive number */
 export function isValidAmount(value: number): boolean {
   return !isNaN(value) && value > 0
 }

@@ -1,5 +1,5 @@
 // ============================================================
-// CADD Centre Unified — Type Definitions
+// CADD Centre Unified - Type Definitions
 // Covers both ASMS (Academic & Student Management System)
 // and IMS (Institute Management System)
 // ============================================================

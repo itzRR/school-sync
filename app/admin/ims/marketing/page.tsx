@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import React, { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -11,6 +11,7 @@ import {
   Megaphone, Plus, Edit, Trash2, X, Search, Phone, Mail, Bell,
   CheckCircle, TrendingUp, Users, Download, Filter, Star, List, RefreshCw, LogOut, Calendar, Clock, User, MessageSquare, Menu
 } from "lucide-react"
+import { QuickGuide, type GuideStep } from "@/components/ui/quick-guide"
 
 import {
   getMarketingLeads, createMarketingLead, updateMarketingLead,
@@ -98,6 +99,14 @@ export default function MarketingDashboard() {
     await signOut()
     router.push('/auth/login')
   }
+
+  const marketingGuideSteps: GuideStep[] = [
+    { title: "Lead Pipeline", description: "View, create, and manage prospective student leads. Filter by status (New, Contacted, Follow-up, Converted, Lost) and source to track your pipeline.", icon: Users, gradient: "from-orange-500 to-pink-500", tip: "Click the status cards at the top to quick-filter leads." },
+    { title: "Campaigns", description: "Create marketing campaigns linked to specific sources (Facebook, WhatsApp, Walk-in, etc.) and track how many leads each campaign generates.", icon: Megaphone, gradient: "from-pink-500 to-rose-500" },
+    { title: "Follow-ups", description: "Schedule call, WhatsApp, or email follow-ups for each lead. The sidebar shows pending follow-ups that need your attention.", icon: Bell, gradient: "from-yellow-500 to-orange-500", tip: "Follow-ups with upcoming due dates are highlighted with a badge." },
+    { title: "Reports & Analytics", description: "See conversion rates, leads by source, and campaign performance at a glance.", icon: TrendingUp, gradient: "from-emerald-500 to-cyan-500" },
+    { title: "Your Workspace", description: "Check your attendance, update your profile, and view the Sri Lanka calendar - all accessible from the sidebar.", icon: User, gradient: "from-blue-500 to-indigo-500", tip: "Use 'Export' to download all leads as an Excel spreadsheet." },
+  ]
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -264,6 +273,12 @@ export default function MarketingDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <QuickGuide
+            guideKey="marketing_dashboard"
+            dashboardName="Marketing"
+            accentGradient="from-orange-500 to-pink-500"
+            steps={marketingGuideSteps}
+          />
           <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl">Back to Admin</button>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}

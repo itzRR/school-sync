@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
@@ -175,7 +175,7 @@ export default function SriLankaCalendar({ accentColor = "blue" }: { accentColor
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
             <CalendarDays className="h-6 w-6 text-blue-500" /> Calendar
           </h1>
-          <p className="text-sm text-gray-500 mt-1">Sri Lanka — Personal Work Events</p>
+          <p className="text-sm text-gray-500 mt-1">Sri Lanka - Personal Work Events</p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
           {weather && (

@@ -27,10 +27,10 @@ export default async function VerifyCertificatePage({ params }: { params: Promis
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div><p className="text-slate-500">Certificate Number</p><p className="font-semibold">{certificate.certificate_number}</p></div>
                 <div><p className="text-slate-500">Issued On</p><p className="font-semibold">{new Date(certificate.issued_at).toLocaleString()}</p></div>
-                <div><p className="text-slate-500">Student</p><p className="font-semibold">{certificate.profiles?.full_name || '—'}</p></div>
-                <div><p className="text-slate-500">Student ID</p><p className="font-semibold">{certificate.profiles?.student_id || '—'}</p></div>
-                <div><p className="text-slate-500">Course</p><p className="font-semibold">{certificate.courses?.title || '—'}</p></div>
-                <div><p className="text-slate-500">Level</p><Badge className="bg-blue-100 text-blue-800">{certificate.courses?.level || '—'}</Badge></div>
+                <div><p className="text-slate-500">Student</p><p className="font-semibold">{certificate.profiles?.full_name || '-'}</p></div>
+                <div><p className="text-slate-500">Student ID</p><p className="font-semibold">{certificate.profiles?.student_id || '-'}</p></div>
+                <div><p className="text-slate-500">Course</p><p className="font-semibold">{certificate.courses?.title || '-'}</p></div>
+                <div><p className="text-slate-500">Level</p><Badge className="bg-blue-100 text-blue-800">{certificate.courses?.level || '-'}</Badge></div>
               </div>
               {certificate.pdf_url && <a className="inline-flex px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium" href={certificate.pdf_url} target="_blank">Open certificate PDF</a>}
             </>

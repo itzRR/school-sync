@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -79,7 +79,7 @@ export default function MyAttendancePage() {
                 style={{ width: `${pct}%` }}
               />
             </div>
-            {pct < 75 && <p className="text-xs text-yellow-600 mt-2">⚠ Attendance below 75% — please speak to your coordinator</p>}
+            {pct < 75 && <p className="text-xs text-yellow-600 mt-2">⚠ Attendance below 75% - please speak to your coordinator</p>}
           </div>
         )}
 
@@ -113,14 +113,14 @@ export default function MyAttendancePage() {
                     return (
                       <tr key={r.id} className="border-b hover:bg-gray-50">
                         <td className="py-3 px-5 font-medium">{r.date}</td>
-                        <td className="py-3 px-5 text-gray-600">{r.batches?.name || "—"}</td>
+                        <td className="py-3 px-5 text-gray-600">{r.batches?.name || "-"}</td>
                         <td className="py-3 px-5">
                           <div className="flex items-center gap-1.5">
                             <Icon className={`h-4 w-4 ${meta.color}`} />
                             <Badge className={meta.bg}>{r.status}</Badge>
                           </div>
                         </td>
-                        <td className="py-3 px-5 text-gray-400 text-xs">{r.notes || "—"}</td>
+                        <td className="py-3 px-5 text-gray-400 text-xs">{r.notes || "-"}</td>
                       </tr>
                     )
                   })}

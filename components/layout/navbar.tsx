@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
@@ -31,7 +31,7 @@ export function Navbar() {
   const router   = useRouter()
 
   useEffect(() => {
-    // onAuthStateChange fires immediately with INITIAL_SESSION — no need for a separate getCurrentUser() call
+    // onAuthStateChange fires immediately with INITIAL_SESSION - no need for a separate getCurrentUser() call
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         getCurrentUser().then(setUser)

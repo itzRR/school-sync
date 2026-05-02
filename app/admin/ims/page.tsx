@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
@@ -9,6 +9,7 @@ import {
   Megaphone, GraduationCap, Building2, AlertCircle,
   CheckCircle, Calendar, Terminal, Menu, LogOut, ArrowRight, Home
 } from "lucide-react"
+import { QuickGuide, type GuideStep } from "@/components/ui/quick-guide"
 
 import { getIMSDashboardStats } from "@/lib/ims-data"
 import { getCurrentUser, signOut } from "@/lib/auth"
@@ -38,6 +39,16 @@ export default function IMSDashboardPage() {
     router.push('/auth/login')
   }
 
+  const imsGuideSteps: GuideStep[] = [
+    { title: "IMS Overview", description: "This is your central hub for all institute operations. Each department module has its own dashboard with dedicated features.", icon: Building2, gradient: "from-blue-500 to-sky-400", tip: "The top stat cards show real-time numbers across all departments." },
+    { title: "Marketing Module", description: "Track leads from inquiry to enrollment. Manage campaigns, schedule follow-ups, and analyze conversion rates.", icon: Megaphone, gradient: "from-orange-500 to-pink-500", tip: "Leads marked as 'Converted' will auto-create student records." },
+    { title: "Academic Ops", description: "Manage internal academic operations - register students, create courses & batches, track attendance, and publish exam results.", icon: GraduationCap, gradient: "from-emerald-500 to-cyan-500" },
+    { title: "Finance Module", description: "Record payments, generate invoices with PDF downloads, log expenses, and view profit & loss reports.", icon: DollarSign, gradient: "from-blue-500 to-indigo-500", tip: "Link payments to invoices for automatic status tracking." },
+    { title: "HR Module", description: "Manage the staff directory, process leave requests, handle payroll, and track performance reviews.", icon: UserCog, gradient: "from-purple-500 to-pink-500" },
+    { title: "Tasks & Collaboration", description: "Create and assign cross-department tasks. Track progress and manage priorities in one shared workspace.", icon: ListTodo, gradient: "from-yellow-500 to-orange-500" },
+    { title: "Roster & Control Panel", description: "Schedule staff shifts in the Roster and use the Control Panel for system-wide actions like broadcasts and forced logouts.", icon: Terminal, gradient: "from-red-500 to-rose-500", tip: "The Control Panel is super admin only." },
+  ]
+
   const modules = [
     {
       title: "Marketing",
@@ -45,7 +56,7 @@ export default function IMSDashboardPage() {
       icon: Megaphone,
       gradient: "from-orange-500 to-pink-500",
       description: "Leads, campaigns & follow-ups",
-      stat: stats ? `${stats.activeLeads} active leads` : "—",
+      stat: stats ? `${stats.activeLeads} active leads` : "-",
       badge: stats?.activeLeads ? `${stats.activeLeads}` : "0",
       badgeColor: "bg-orange-500/20 text-orange-700 border-orange-500/20",
     },
@@ -55,7 +66,7 @@ export default function IMSDashboardPage() {
       icon: GraduationCap,
       gradient: "from-emerald-500 to-cyan-500",
       description: "Students, courses & batches",
-      stat: stats ? `${stats.totalStudents} students` : "—",
+      stat: stats ? `${stats.totalStudents} students` : "-",
       badge: stats?.totalStudents ? `${stats.totalStudents}` : "0",
       badgeColor: "bg-emerald-500/20 text-emerald-700 border-emerald-500/20",
     },
@@ -65,7 +76,7 @@ export default function IMSDashboardPage() {
       icon: DollarSign,
       gradient: "from-blue-500 to-indigo-500",
       description: "Payments, invoices & expenses",
-      stat: stats ? `LKR ${stats.totalRevenue.toLocaleString()} collected` : "—",
+      stat: stats ? `LKR ${stats.totalRevenue.toLocaleString()} collected` : "-",
       badge: stats?.pendingPayments ? "Unpaid" : "Clear",
       badgeColor: stats?.pendingPayments ? "bg-red-100 text-red-600 border-red-200" : "bg-blue-500/20 text-blue-600 border-blue-500/20",
     },
@@ -75,7 +86,7 @@ export default function IMSDashboardPage() {
       icon: UserCog,
       gradient: "from-purple-500 to-pink-500",
       description: "Staff, leaves & salary",
-      stat: stats ? `${stats.pendingLeaves} pending leaves` : "—",
+      stat: stats ? `${stats.pendingLeaves} pending leaves` : "-",
       badge: stats?.pendingLeaves ? `${stats.pendingLeaves} pending` : "All clear",
       badgeColor: stats?.pendingLeaves ? "bg-orange-500/20 text-orange-700 border-orange-500/20" : "bg-purple-100 text-purple-600 border-purple-200",
     },
@@ -85,7 +96,7 @@ export default function IMSDashboardPage() {
       icon: Users,
       gradient: "from-cyan-500 to-blue-500",
       description: "Manage staff accounts & roles",
-      stat: stats ? `${stats.totalStaff} staff members` : "—",
+      stat: stats ? `${stats.totalStaff} staff members` : "-",
       badge: stats?.totalStaff ? `${stats.totalStaff}` : "0",
       badgeColor: "bg-cyan-500/20 text-cyan-700 border-cyan-500/20",
     },
@@ -95,7 +106,7 @@ export default function IMSDashboardPage() {
       icon: ListTodo,
       gradient: "from-yellow-500 to-orange-500",
       description: "Cross-department shared tasks",
-      stat: stats ? `${stats.openTasks} open tasks` : "—",
+      stat: stats ? `${stats.openTasks} open tasks` : "-",
       badge: stats?.openTasks ? `${stats.openTasks} open` : "All done",
       badgeColor: stats?.openTasks ? "bg-yellow-100 text-yellow-700 border-yellow-200" : "bg-yellow-100 text-yellow-700 border-yellow-200",
     },
@@ -154,10 +165,16 @@ export default function IMSDashboardPage() {
           </div>
           <div>
             <h1 className="text-xl font-bold text-blue-700">IMS Overview</h1>
-            <p className="text-gray-500 text-sm hidden md:block">CADD Centre Lanka — Operations &amp; Management Hub</p>
+            <p className="text-gray-500 text-sm hidden md:block">CADD Centre Lanka - Operations &amp; Management Hub</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <QuickGuide
+            guideKey="ims_overview_dashboard"
+            dashboardName="IMS Overview"
+            accentGradient="from-blue-600 to-sky-400"
+            steps={imsGuideSteps}
+          />
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
             className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl border border-red-200 hover:bg-red-100 transition-colors font-medium">

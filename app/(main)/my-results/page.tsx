@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -106,8 +106,8 @@ export default function MyResultsPage() {
                   {assessments.map(a => (
                     <tr key={a.id} className="border-b hover:bg-gray-50">
                       <td className="py-3 px-5 font-medium">{a.title}</td>
-                      <td className="py-3 px-5 text-gray-600 text-xs">{a.enrollments?.courses?.title || "—"}</td>
-                      <td className="py-3 px-5 text-gray-600">{a.modules?.title || "—"}</td>
+                      <td className="py-3 px-5 text-gray-600 text-xs">{a.enrollments?.courses?.title || "-"}</td>
+                      <td className="py-3 px-5 text-gray-600">{a.modules?.title || "-"}</td>
                       <td className="py-3 px-5">
                         <Badge className={TYPE_COLORS[a.type] || "bg-gray-100 text-gray-700"}>
                           {a.type.replace(/_/g, " ")}
@@ -116,15 +116,15 @@ export default function MyResultsPage() {
                       <td className="py-3 px-5 font-semibold">
                         {a.marks_obtained != null
                           ? <span>{a.marks_obtained}<span className="text-gray-400 font-normal">/{a.total_marks}</span></span>
-                          : <span className="text-gray-400">—</span>}
+                          : <span className="text-gray-400">-</span>}
                       </td>
                       <td className="py-3 px-5">
                         {a.grade
                           ? <Badge className={GRADE_COLORS[a.grade] || "bg-gray-100 text-gray-700"}>{a.grade}</Badge>
-                          : <span className="text-gray-400">—</span>}
+                          : <span className="text-gray-400">-</span>}
                       </td>
                       <td className="py-3 px-5 text-gray-400 text-xs">
-                        {a.conducted_at ? new Date(a.conducted_at).toLocaleDateString() : "—"}
+                        {a.conducted_at ? new Date(a.conducted_at).toLocaleDateString() : "-"}
                       </td>
                     </tr>
                   ))}

@@ -12,6 +12,7 @@ import {
   Edit, Trash2, X, Search, BarChart3, CheckCircle,
   Download, Award, Clock, Star, Menu, List, Calendar, User, LogOut
 } from "lucide-react"
+import { QuickGuide, type GuideStep } from "@/components/ui/quick-guide"
 
 import { supabase } from "@/lib/supabase"
 import { getCurrentUser, signOut } from "@/lib/auth"
@@ -114,6 +115,14 @@ export default function AcademicDashboard() {
     await signOut()
     router.push('/auth/login')
   }
+
+  const academicGuideSteps: GuideStep[] = [
+    { title: "Student Management", description: "Register students, assign them to courses and batches, and track their status (Active, Completed, Dropped).", icon: Users, gradient: "from-emerald-500 to-cyan-500", tip: "Each student gets a unique ID like STU-XXXXXXXX automatically." },
+    { title: "Courses & Batches", description: "Create courses with duration, fees, and instructor details. Then organize students into batches with start/end dates.", icon: BookOpen, gradient: "from-blue-500 to-cyan-500" },
+    { title: "Class Attendance", description: "Mark attendance per batch per day. View attendance history with rates, and identify students who need attention.", icon: CheckCircle, gradient: "from-green-500 to-emerald-500", tip: "Click 'Mark Attendance' from any batch card for quick access." },
+    { title: "Exam Results", description: "Record exam scores for students with pass/fail tracking. Results are linked to students and courses.", icon: Award, gradient: "from-yellow-500 to-orange-500" },
+    { title: "Reports & Certificates", description: "View enrollment stats per course, pass rates, and generate PDF certificates for completed students.", icon: BarChart3, gradient: "from-purple-500 to-pink-500", tip: "Click the certificate icon next to any student to generate a professional PDF certificate." },
+  ]
 
   const handleStudentSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -327,6 +336,12 @@ export default function AcademicDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <QuickGuide
+            guideKey="academic_dashboard"
+            dashboardName="Academic Ops"
+            accentGradient="from-emerald-500 to-cyan-500"
+            steps={academicGuideSteps}
+          />
           <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl">Back to Admin</button>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}

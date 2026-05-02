@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -92,7 +92,7 @@ export default function CertificatesPage() {
                   <option value="">-- Select completed enrollment --</option>
                   {enrollments.filter(e => e.status === "completed").map(e => (
                     <option key={e.id} value={e.id}>
-                      {e.profiles?.full_name} — {e.courses?.title}
+                      {e.profiles?.full_name} - {e.courses?.title}
                     </option>
                   ))}
                 </select>
@@ -149,10 +149,10 @@ export default function CertificatesPage() {
                   ) : filtered.map(cert => (
                     <tr key={cert.id} className="border-b hover:bg-gray-50">
                       <td className="py-3 px-4 font-mono text-xs font-semibold text-blue-700">{cert.certificate_number}</td>
-                      <td className="py-3 px-4 font-medium">{cert.profiles?.full_name || "—"}</td>
-                      <td className="py-3 px-4 text-gray-500 text-xs">{cert.profiles?.student_id || "—"}</td>
-                      <td className="py-3 px-4 text-gray-600 max-w-xs truncate">{cert.courses?.title || "—"}</td>
-                      <td className="py-3 px-4 text-gray-500 text-xs">{cert.courses?.level || "—"}</td>
+                      <td className="py-3 px-4 font-medium">{cert.profiles?.full_name || "-"}</td>
+                      <td className="py-3 px-4 text-gray-500 text-xs">{cert.profiles?.student_id || "-"}</td>
+                      <td className="py-3 px-4 text-gray-600 max-w-xs truncate">{cert.courses?.title || "-"}</td>
+                      <td className="py-3 px-4 text-gray-500 text-xs">{cert.courses?.level || "-"}</td>
                       <td className="py-3 px-4">
                         <Badge className={typeColor(cert.type)}>{cert.type.replace("_", " ")}</Badge>
                       </td>

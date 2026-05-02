@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -162,11 +162,11 @@ export default function StudentsPage() {
                     <tr><td colSpan={8} className="text-center py-8 text-gray-500">No students found</td></tr>
                   ) : filtered.map(student => (
                     <tr key={student.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4 font-mono text-xs text-blue-700">{student.student_id || "—"}</td>
-                      <td className="py-3 px-4 font-medium">{student.full_name || "—"}</td>
+                      <td className="py-3 px-4 font-mono text-xs text-blue-700">{student.student_id || "-"}</td>
+                      <td className="py-3 px-4 font-medium">{student.full_name || "-"}</td>
                       <td className="py-3 px-4 text-gray-600">{student.email}</td>
-                      <td className="py-3 px-4 text-gray-600">{student.phone || "—"}</td>
-                      <td className="py-3 px-4 text-gray-600 max-w-xs truncate">{student.education_background || "—"}</td>
+                      <td className="py-3 px-4 text-gray-600">{student.phone || "-"}</td>
+                      <td className="py-3 px-4 text-gray-600 max-w-xs truncate">{student.education_background || "-"}</td>
                       <td className="py-3 px-4">
                         <Badge className={student.is_active ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}>
                           {student.is_active ? "Active" : "Inactive"}

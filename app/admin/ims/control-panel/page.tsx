@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import React from "react"
 import { useState, useEffect, useCallback } from "react"
@@ -263,7 +263,7 @@ export default function IMSControlPanelPage() {
                 </optgroup>
               </select>
               {(cmdType === "force_logout" || cmdType === "disable_user") && (
-                <p className="text-xs text-orange-500 font-medium">⚠ Must target a specific user — cannot apply to all at once.</p>
+                <p className="text-xs text-orange-500 font-medium">⚠ Must target a specific user - cannot apply to all at once.</p>
               )}
             </div>
 
@@ -401,14 +401,14 @@ export default function IMSControlPanelPage() {
                   <tr><td colSpan={5} className="text-center py-12 text-gray-400">No login history found</td></tr>
                 ) : recentLogins.map(log => (
                   <tr key={log.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="py-4 px-6 font-semibold text-gray-900">{log.user_name || "—"}</td>
-                    <td className="py-4 px-6 text-gray-500 text-xs">{log.email || "—"}</td>
+                    <td className="py-4 px-6 font-semibold text-gray-900">{log.user_name || "-"}</td>
+                    <td className="py-4 px-6 text-gray-500 text-xs">{log.email || "-"}</td>
                     <td className="py-4 px-6 text-gray-600 text-xs">
-                      {log.login_time ? format(new Date(log.login_time), "MMM d yyyy, HH:mm:ss") : "—"}
+                      {log.login_time ? format(new Date(log.login_time), "MMM d yyyy, HH:mm:ss") : "-"}
                     </td>
-                    <td className="py-4 px-6 text-cyan-700 text-xs font-mono">{log.ip_address || "—"}</td>
+                    <td className="py-4 px-6 text-cyan-700 text-xs font-mono">{log.ip_address || "-"}</td>
                     <td className="py-4 px-6 text-gray-400 text-xs max-w-[200px] truncate" title={log.device_info || ""}>
-                      {log.device_info ? log.device_info.replace(/Mozilla\/[^ ]+/, "").substring(0, 50) + "…" : "—"}
+                      {log.device_info ? log.device_info.replace(/Mozilla\/[^ ]+/, "").substring(0, 50) + "…" : "-"}
                     </td>
                   </tr>
                 ))}
@@ -433,7 +433,7 @@ export default function IMSControlPanelPage() {
                 {(u.full_name || "?")[0].toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-bold text-gray-900 truncate">{u.full_name || "—"}</p>
+                <p className="font-bold text-gray-900 truncate">{u.full_name || "-"}</p>
                 <p className="text-xs text-gray-400 truncate">{u.email}</p>
                 <div className="flex items-center gap-2 mt-2 flex-wrap">
                   <span className="inline-flex px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-100 text-blue-700 border border-blue-200 capitalize">

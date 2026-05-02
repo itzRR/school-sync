@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -92,7 +92,7 @@ export default function AssessmentsPage() {
               <option value="">-- Select student enrollment --</option>
               {enrollments.map(e => (
                 <option key={e.id} value={e.id}>
-                  {e.profiles?.full_name} — {e.courses?.title} ({e.batches?.name || "No batch"})
+                  {e.profiles?.full_name} - {e.courses?.title} ({e.batches?.name || "No batch"})
                 </option>
               ))}
             </select>
@@ -145,7 +145,7 @@ export default function AssessmentsPage() {
                     <div className="space-y-1">
                       <Label className="text-xs">Grade</Label>
                       <select className="w-full border rounded-md px-3 py-2 text-sm" value={form.grade} onChange={e => set("grade", e.target.value)}>
-                        <option value="">—</option>
+                        <option value="">-</option>
                         <option>A</option><option>B</option><option>C</option><option>D</option><option>F</option>
                       </select>
                     </div>
@@ -180,14 +180,14 @@ export default function AssessmentsPage() {
                           <td className="py-2 px-4">
                             <Badge className={typeColor(a.type)}>{a.type.replace("_", " ")}</Badge>
                           </td>
-                          <td className="py-2 px-4 text-gray-600">{a.modules?.title || "—"}</td>
+                          <td className="py-2 px-4 text-gray-600">{a.modules?.title || "-"}</td>
                           <td className="py-2 px-4">
-                            {a.marks_obtained != null ? `${a.marks_obtained} / ${a.total_marks}` : "—"}
+                            {a.marks_obtained != null ? `${a.marks_obtained} / ${a.total_marks}` : "-"}
                           </td>
                           <td className="py-2 px-4">
-                            {a.grade ? <Badge className={gradeColor(a.grade)}>{a.grade}</Badge> : "—"}
+                            {a.grade ? <Badge className={gradeColor(a.grade)}>{a.grade}</Badge> : "-"}
                           </td>
-                          <td className="py-2 px-4 text-gray-500 text-xs">{a.conducted_at ? formatDateTime(a.conducted_at) : "—"}</td>
+                          <td className="py-2 px-4 text-gray-500 text-xs">{a.conducted_at ? formatDateTime(a.conducted_at) : "-"}</td>
                         </tr>
                       ))}
                     </tbody>

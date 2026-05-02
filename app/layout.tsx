@@ -1,4 +1,4 @@
-import "./globals.css";
+﻿import "./globals.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
@@ -6,7 +6,7 @@ import { SystemCommandListener } from "@/components/layout/system-command-listen
 
 export const metadata: Metadata = {
   title: "CADD Centre Lanka",
-  description: "Academic & Student Management System — Institute Management System",
+  description: "Academic & Student Management System - Institute Management System",
 };
 
 export default function RootLayout({

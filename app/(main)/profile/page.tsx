@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -92,7 +92,7 @@ export default function ProfilePage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-          {/* Left — Avatar & Summary */}
+          {/* Left - Avatar & Summary */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
             className="lg:col-span-1 space-y-6">
 
@@ -143,7 +143,7 @@ export default function ProfilePage() {
             </div>
           </motion.div>
 
-          {/* Right — Form */}
+          {/* Right - Form */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
             className="lg:col-span-2">
             <div className="bg-white border border-gray-200 rounded-[2.5rem] p-8 shadow-sm">

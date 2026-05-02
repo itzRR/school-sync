@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -322,7 +322,7 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
                   {isEditing ? (
                     <input type="text" value={editedName} onChange={e => setEditedName(e.target.value)} className="w-full bg-white border border-blue-300 rounded-xl px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" autoFocus />
                   ) : (
-                    <p className="text-base font-semibold text-gray-800 bg-white px-4 py-2.5 rounded-xl border border-gray-100">{localUser.full_name || "—"}</p>
+                    <p className="text-base font-semibold text-gray-800 bg-white px-4 py-2.5 rounded-xl border border-gray-100">{localUser.full_name || "-"}</p>
                   )}
                 </div>
                 <div className="space-y-1">

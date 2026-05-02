@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -173,8 +173,8 @@ export default function ResourcesPage() {
                         <td className="py-3 px-4">
                           <Badge className={TYPE_COLORS[r.type]}>{r.type}</Badge>
                         </td>
-                        <td className="py-3 px-4 text-gray-600">{r.courses?.title || "—"}</td>
-                        <td className="py-3 px-4 text-gray-600">{r.modules?.title || "—"}</td>
+                        <td className="py-3 px-4 text-gray-600">{r.courses?.title || "-"}</td>
+                        <td className="py-3 px-4 text-gray-600">{r.modules?.title || "-"}</td>
                         <td className="py-3 px-4 text-gray-500 text-xs">{formatDateTime(r.created_at)}</td>
                         <td className="py-3 px-4">
                           <Button variant="outline" size="sm" asChild>

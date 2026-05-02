@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
@@ -253,7 +253,7 @@ export default function IMSUsersPage() {
         office_assets: createForm.office_assets,
       })
       // After creation, update permissions if any extras were set
-      toast.success("User created — they can now log in with their credentials")
+      toast.success("User created - they can now log in with their credentials")
       setShowCreateModal(false); setCreateForm(emptyForm); setCreateTouched({})
       await loadData()
     } catch (e: any) { toast.error(e.message) }
@@ -320,7 +320,7 @@ export default function IMSUsersPage() {
       AccessLevel: p.access_level,
       ExtraPermissions: ((p.permissions as Permission[]) || []).join(', '),
       Status: p.disabled ? "Disabled" : "Active",
-      Joined: p.created_at ? format(new Date(p.created_at), "yyyy-MM-dd") : "—",
+      Joined: p.created_at ? format(new Date(p.created_at), "yyyy-MM-dd") : "-",
     })))
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, ws, "Users")
@@ -466,7 +466,7 @@ export default function IMSUsersPage() {
                             )}
                           </div>
                           <div>
-                            <p className="font-semibold text-gray-900">{p.full_name || '—'}</p>
+                            <p className="font-semibold text-gray-900">{p.full_name || '-'}</p>
                             <p className="text-xs text-gray-500">{p.email}</p>
                           </div>
                         </div>
@@ -605,7 +605,7 @@ export default function IMSUsersPage() {
                   <ShieldPlus className="h-5 w-5 text-cyan-700" />
                   Role & Permissions
                 </h2>
-                <p className="text-sm text-gray-500 mt-0.5">{editingProfile.full_name} — {editingProfile.email}</p>
+                <p className="text-sm text-gray-500 mt-0.5">{editingProfile.full_name} - {editingProfile.email}</p>
               </div>
               <button onClick={() => setShowEditModal(false)} className="p-2 bg-gray-100 hover:bg-gray-100 text-gray-900 rounded-full transition-colors">
                 <X className="h-5 w-5" />

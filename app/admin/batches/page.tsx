@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
@@ -85,7 +85,7 @@ export default function BatchesPage() {
                   ) : filtered.map(batch => (
                     <tr key={batch.id} className="border-b hover:bg-gray-50">
                       <td className="py-3 px-4 font-medium">{batch.name}</td>
-                      <td className="py-3 px-4 text-gray-600">{batch.courses?.title || "—"}</td>
+                      <td className="py-3 px-4 text-gray-600">{batch.courses?.title || "-"}</td>
                       <td className="py-3 px-4">
                         <Badge className={modeColor(batch.mode)}>{batch.mode}</Badge>
                       </td>

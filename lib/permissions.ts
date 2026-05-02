@@ -1,5 +1,5 @@
-// ============================================================
-// CADD Centre — Granular Permissions System
+﻿// ============================================================
+// CADD Centre - Granular Permissions System
 // Admins/super_admins can grant extra access beyond base role.
 // Permissions stored as JSONB array in profiles.permissions
 // ============================================================

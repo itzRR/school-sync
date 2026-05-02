@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import type React from "react"
 import { useState } from "react"
@@ -125,7 +125,7 @@ export default function NewEventPage() {
           <CardHeader><CardTitle>Capacity & Pricing</CardTitle></CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2"><Label>Capacity</Label><Input type="number" value={form.capacity} onChange={(e) => set("capacity", e.target.value)} /></div>
-            <div className="space-y-2"><Label>Price (Rs.) — 0 for Free</Label><Input type="number" value={form.price} onChange={(e) => set("price", e.target.value)} /></div>
+            <div className="space-y-2"><Label>Price (Rs.) - 0 for Free</Label><Input type="number" value={form.price} onChange={(e) => set("price", e.target.value)} /></div>
             <div className="space-y-2"><Label>Image URL</Label><Input value={form.image_url} onChange={(e) => set("image_url", e.target.value)} placeholder="https://..." /></div>
           </CardContent>
         </Card>

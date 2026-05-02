@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -103,7 +103,7 @@ export default function NewBatchPage() {
 
             <div className="space-y-2">
               <Label>Schedule *</Label>
-              <Input placeholder="e.g. Mon, Wed, Fri — 9:00 AM to 12:00 PM" value={form.schedule} onChange={e => set("schedule", e.target.value)} required />
+              <Input placeholder="e.g. Mon, Wed, Fri - 9:00 AM to 12:00 PM" value={form.schedule} onChange={e => set("schedule", e.target.value)} required />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -127,7 +127,7 @@ export default function NewBatchPage() {
 
             <div className="space-y-2">
               <Label>Venue / Platform</Label>
-              <Input placeholder="e.g. CADD Centre — Room 3A or Zoom" value={form.venue} onChange={e => set("venue", e.target.value)} />
+              <Input placeholder="e.g. CADD Centre - Room 3A or Zoom" value={form.venue} onChange={e => set("venue", e.target.value)} />
             </div>
 
             <div className="flex gap-3 pt-2">

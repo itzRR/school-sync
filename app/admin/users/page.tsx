@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -98,9 +98,9 @@ export default function UsersPage() {
                     <tr><td colSpan={7} className="text-center py-8 text-gray-500">No users found</td></tr>
                   ) : filtered.map(user => (
                     <tr key={user.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4 font-medium">{user.full_name || "—"}</td>
+                      <td className="py-3 px-4 font-medium">{user.full_name || "-"}</td>
                       <td className="py-3 px-4 text-gray-600">{user.email}</td>
-                      <td className="py-3 px-4 font-mono text-xs text-blue-700">{user.student_id || "—"}</td>
+                      <td className="py-3 px-4 font-mono text-xs text-blue-700">{user.student_id || "-"}</td>
                       <td className="py-3 px-4">
                         <Badge className={ROLE_COLORS[user.role] || "bg-gray-100 text-gray-800"}>
                           {user.role?.replace("_", " ")}

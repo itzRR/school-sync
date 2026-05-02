@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
@@ -91,7 +91,7 @@ export default function IMSTasksPage() {
   const exportTasks = () => {
     const ws = XLSX.utils.json_to_sheet(tasks.map(t => ({
       Title: t.title, Priority: t.priority, Status: t.status,
-      DueDate: t.due_date, Department: t.assigned_department || "—",
+      DueDate: t.due_date, Department: t.assigned_department || "-",
     })))
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, ws, "Tasks")

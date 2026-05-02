@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -69,7 +69,7 @@ export default function MyCoursesPage() {
             {active.length > 0 && (
               <section>
                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-                  In Progress — {active.length}
+                  In Progress - {active.length}
                 </h2>
                 <div className="space-y-4">
                   {active.map(enrollment => (
@@ -81,7 +81,7 @@ export default function MyCoursesPage() {
             {completed.length > 0 && (
               <section>
                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-                  Completed — {completed.length}
+                  Completed - {completed.length}
                 </h2>
                 <div className="space-y-4">
                   {completed.map(enrollment => (

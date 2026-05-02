@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -118,7 +118,7 @@ export default function MyProgressPage() {
                                         </div>
                                         <Badge className={STATUS_META[record.status || 'not_started']?.badge || 'bg-gray-100 text-gray-700'}>{record.status?.replace('_', ' ')}</Badge>
                                       </div>
-                                      {(record.score != null || record.max_score != null) && <p className="text-[11px] text-gray-600 mt-1">Score: {record.score ?? '—'}{record.max_score != null ? ` / ${record.max_score}` : ''}</p>}
+                                      {(record.score != null || record.max_score != null) && <p className="text-[11px] text-gray-600 mt-1">Score: {record.score ?? '-'}{record.max_score != null ? ` / ${record.max_score}` : ''}</p>}
                                     </div>
                                   ))}
                                 </div>

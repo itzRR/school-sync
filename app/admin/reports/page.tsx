@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useMemo, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -54,7 +54,7 @@ export default function ReportsPage() {
         enrollments.reduce((acc: any, e: any) => {
           const key = e.batches?.name || "Unassigned"
           if (!acc[key]) {
-            acc[key] = { batch: key, course: e.courses?.title || "—", total: 0, confirmed: 0, completed: 0 }
+            acc[key] = { batch: key, course: e.courses?.title || "-", total: 0, confirmed: 0, completed: 0 }
           }
           acc[key].total++
           if (e.status === "confirmed") acc[key].confirmed++
@@ -71,7 +71,7 @@ export default function ReportsPage() {
         certificates.reduce((acc: any, cert: any) => {
           const key = cert.courses?.title || "Unknown"
           if (!acc[key]) {
-            acc[key] = { course: key, level: cert.courses?.level || "—", total: 0, professional_bim: 0, course_completion: 0 }
+            acc[key] = { course: key, level: cert.courses?.level || "-", total: 0, professional_bim: 0, course_completion: 0 }
           }
           acc[key].total++
           if (cert.type === "professional_bim") acc[key].professional_bim++
@@ -169,10 +169,10 @@ export default function ReportsPage() {
                 <tbody>
                   {enrollments.map((e: any) => (
                     <tr key={e.id} className="border-b">
-                      <td className="py-3 px-4">{e.profiles?.full_name || "—"}</td>
-                      <td className="py-3 px-4 text-xs text-blue-700">{e.profiles?.student_id || "—"}</td>
-                      <td className="py-3 px-4">{e.courses?.title || "—"}</td>
-                      <td className="py-3 px-4">{e.batches?.name || "—"}</td>
+                      <td className="py-3 px-4">{e.profiles?.full_name || "-"}</td>
+                      <td className="py-3 px-4 text-xs text-blue-700">{e.profiles?.student_id || "-"}</td>
+                      <td className="py-3 px-4">{e.courses?.title || "-"}</td>
+                      <td className="py-3 px-4">{e.batches?.name || "-"}</td>
                       <td className="py-3 px-4">{formatCurrency(e.amount_paid || 0)}</td>
                       <td className="py-3 px-4"><Badge className="bg-blue-100 text-blue-800">{e.status}</Badge></td>
                     </tr>

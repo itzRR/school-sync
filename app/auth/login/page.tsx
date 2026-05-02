@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import type React from "react"
 import { useState, useEffect } from "react"
@@ -55,7 +55,7 @@ export default function LoginPage() {
       return
     }
 
-    // Successful login — navigate based on role
+    // Successful login - navigate based on role
     const redirect = getParam("redirect")
     const destination = redirect || (user.role === "admin" ? "/admin" : "/dashboard")
 

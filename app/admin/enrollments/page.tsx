@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -104,10 +104,10 @@ export default function EnrollmentsPage() {
                     <tr><td colSpan={9} className="text-center py-8 text-gray-500">No enrollments found</td></tr>
                   ) : filtered.map(e => (
                     <tr key={e.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4 font-medium">{e.profiles?.full_name || "—"}</td>
-                      <td className="py-3 px-4 font-mono text-xs text-blue-700">{e.profiles?.student_id || "—"}</td>
-                      <td className="py-3 px-4 text-gray-600 max-w-xs truncate">{e.courses?.title || "—"}</td>
-                      <td className="py-3 px-4 text-gray-600 text-xs">{e.batches?.name || "—"}</td>
+                      <td className="py-3 px-4 font-medium">{e.profiles?.full_name || "-"}</td>
+                      <td className="py-3 px-4 font-mono text-xs text-blue-700">{e.profiles?.student_id || "-"}</td>
+                      <td className="py-3 px-4 text-gray-600 max-w-xs truncate">{e.courses?.title || "-"}</td>
+                      <td className="py-3 px-4 text-gray-600 text-xs">{e.batches?.name || "-"}</td>
                       <td className="py-3 px-4 font-semibold">{formatCurrency(e.amount_paid)}</td>
                       <td className="py-3 px-4">
                         <Badge className={paymentColor(e.payment_status)}>{e.payment_status}</Badge>

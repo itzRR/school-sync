@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState, useCallback } from "react"
 import Link from "next/link"
@@ -7,8 +7,9 @@ import { motion } from "framer-motion"
 import {
   Users, BookOpen, CalendarDays, UserCheck, ClipboardList,
   Award, TrendingUp, BarChart3, ArrowUpRight, RefreshCw,
-  Activity, GraduationCap, Clock
+  Activity, GraduationCap, Clock, PhoneCall, FolderOpen, MessageSquare, Layers
 } from "lucide-react"
+import { QuickGuide, type GuideStep } from "@/components/ui/quick-guide"
 import { getDashboardStats } from "@/lib/data"
 import { supabase } from "@/lib/supabase"
 import { formatCurrency, formatDateTime } from "@/lib/utils"
@@ -104,6 +105,16 @@ export default function AdminDashboard() {
     { title: "Attendance Rate",   value: `${stats.attendanceRate}%`, icon: BarChart3,   gradient: "from-rose-500 to-rose-600",      bg: "bg-rose-50",  text: "text-rose-700",  href: "/admin/attendance" },
   ]
 
+  const adminGuideSteps: GuideStep[] = [
+    { title: "Welcome to ASMS Dashboard", description: "This is your central hub for managing the entire academic system. View real-time stats, revenue, enrollments, and student lifecycle - all at a glance.", icon: GraduationCap, gradient: "from-blue-500 to-cyan-500", tip: "Stats auto-refresh every 30 seconds and update in real-time when changes happen." },
+    { title: "Managing People", description: "Under the 'People' group in the sidebar, you'll find Leads (prospective students), Students (enrolled), and Trainers. Click any stat card to jump directly to that section.", icon: Users, gradient: "from-blue-500 to-blue-600", tip: "Use the sidebar groups - click a category to expand it and see its items." },
+    { title: "Courses & Batches", description: "Set up your courses with modules, then create batches to group students into scheduled classes. Enrollments link students to specific courses and batches.", icon: BookOpen, gradient: "from-purple-500 to-purple-600", tip: "Follow the Student Lifecycle Flow at the bottom of this dashboard to see the full journey." },
+    { title: "Attendance & Assessments", description: "Track student attendance per batch and manage assessments to evaluate performance. Both sections are under 'Operations' in the sidebar.", icon: CalendarDays, gradient: "from-cyan-500 to-cyan-600" },
+    { title: "Certificates & Resources", description: "Issue certificates for completed students and manage shared learning resources. Find these in the 'Operations' group in the sidebar.", icon: Award, gradient: "from-yellow-500 to-amber-500" },
+    { title: "Reports & Messages", description: "View detailed analytics about revenue, enrollments, and attendance under 'Insights'. Send and receive messages to communicate with students and staff.", icon: BarChart3, gradient: "from-rose-500 to-rose-600", tip: "The sidebar groups collapse/expand - only the active section stays open for easy navigation." },
+    { title: "Institute Management (IMS)", description: "Expand 'Institute Mgmt' in the sidebar for department-level dashboards - Marketing, Academic Ops, Finance, HR, Staff Users, Tasks, Roster, and the Control Panel.", icon: Activity, gradient: "from-emerald-500 to-emerald-600", tip: "Each IMS department has its own guide! Look for the 'Guide' button when you enter them." },
+  ]
+
   const maxRevenue = Math.max(...stats.monthlyRevenue.map(m => m.revenue), 1)
 
   return (
@@ -129,6 +140,12 @@ export default function AdminDashboard() {
             </span>
             Live · {lastRefreshed.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </div>
+          <QuickGuide
+            guideKey="admin_asms_dashboard"
+            dashboardName="ASMS Dashboard"
+            accentGradient="from-blue-600 to-cyan-500"
+            steps={adminGuideSteps}
+          />
           <button onClick={loadStats} className="flex items-center gap-2 px-3 py-2 bg-white hover:bg-gray-50 text-gray-600 rounded-xl border border-gray-200 text-sm font-medium transition-all hover:shadow-sm">
             <RefreshCw className="h-3.5 w-3.5" /> Refresh
           </button>
@@ -341,12 +358,12 @@ export default function AdminDashboard() {
                       <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">
                         {(e.profiles?.full_name || "?")[0].toUpperCase()}
                       </div>
-                      <span className="font-medium text-gray-900 truncate max-w-[120px]">{e.profiles?.full_name || "—"}</span>
+                      <span className="font-medium text-gray-900 truncate max-w-[120px]">{e.profiles?.full_name || "-"}</span>
                     </div>
                   </td>
-                  <td className="py-3.5 px-6 text-gray-400 text-xs font-mono hidden md:table-cell">{e.profiles?.student_id || "—"}</td>
-                  <td className="py-3.5 px-6 text-gray-600 text-xs max-w-[140px] truncate">{e.courses?.title || "—"}</td>
-                  <td className="py-3.5 px-6 text-gray-500 text-xs hidden lg:table-cell">{e.batches?.name || "—"}</td>
+                  <td className="py-3.5 px-6 text-gray-400 text-xs font-mono hidden md:table-cell">{e.profiles?.student_id || "-"}</td>
+                  <td className="py-3.5 px-6 text-gray-600 text-xs max-w-[140px] truncate">{e.courses?.title || "-"}</td>
+                  <td className="py-3.5 px-6 text-gray-500 text-xs hidden lg:table-cell">{e.batches?.name || "-"}</td>
                   <td className="py-3.5 px-6 font-bold text-gray-900">{formatCurrency(e.amount_paid)}</td>
                   <td className="py-3.5 px-6">
                     <Badge className={`text-[10px] font-bold ${

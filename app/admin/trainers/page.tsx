@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -147,10 +147,10 @@ export default function TrainersPage() {
                     <tr><td colSpan={8} className="text-center py-8 text-gray-500">No trainers found</td></tr>
                   ) : filtered.map(trainer => (
                     <tr key={trainer.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4 font-medium">{trainer.full_name || "—"}</td>
+                      <td className="py-3 px-4 font-medium">{trainer.full_name || "-"}</td>
                       <td className="py-3 px-4 text-gray-600">{trainer.email}</td>
-                      <td className="py-3 px-4 text-gray-600">{trainer.phone || "—"}</td>
-                      <td className="py-3 px-4 text-gray-600">{trainer.specialization || "—"}</td>
+                      <td className="py-3 px-4 text-gray-600">{trainer.phone || "-"}</td>
+                      <td className="py-3 px-4 text-gray-600">{trainer.specialization || "-"}</td>
                       <td className="py-3 px-4 text-gray-600">{trainer.assigned_batches || 0} batches · {trainer.assigned_modules || 0} modules</td>
                       <td className="py-3 px-4 text-gray-600 text-xs">Attendance {trainer.attendance_rate || 0}%{trainer.average_score != null ? ` · Avg ${trainer.average_score}` : ""}</td>
                       <td className="py-3 px-4">

@@ -1,4 +1,4 @@
-import { createBrowserClient } from '@supabase/ssr'
+﻿import { createBrowserClient } from '@supabase/ssr'
 import type { UserRole } from '@/types'
 import type { Permission } from '@/lib/permissions'
 import { hasPermission as _hasPermission } from '@/lib/permissions'
@@ -157,7 +157,7 @@ export async function signOut(): Promise<void> {
 export async function getCurrentUser(): Promise<AuthUser | null> {
   try {
     const supabase = getClient()
-    // Use getSession() instead of getUser() — reads from localStorage, no browser lock
+    // Use getSession() instead of getUser() - reads from localStorage, no browser lock
     const { data: { session } } = await supabase.auth.getSession()
     const user = session?.user
     if (!user) return null

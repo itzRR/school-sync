@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -58,7 +58,7 @@ export default function AttendancePage() {
           >
             <option value="">-- Choose a batch --</option>
             {batches.map(b => (
-              <option key={b.id} value={b.id}>{b.name} — {b.courses?.title}</option>
+              <option key={b.id} value={b.id}>{b.name} - {b.courses?.title}</option>
             ))}
           </select>
         </div>
@@ -93,7 +93,7 @@ export default function AttendancePage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CalendarDays className="h-5 w-5" />
-            Attendance Records {selectedDate && `— ${selectedDate}`}
+            Attendance Records {selectedDate && `- ${selectedDate}`}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -119,14 +119,14 @@ export default function AttendancePage() {
                 <tbody>
                   {attendance.map(record => (
                     <tr key={record.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4 font-medium">{record.enrollments?.profiles?.full_name || "—"}</td>
-                      <td className="py-3 px-4 font-mono text-xs text-blue-700">{record.enrollments?.profiles?.student_id || "—"}</td>
+                      <td className="py-3 px-4 font-medium">{record.enrollments?.profiles?.full_name || "-"}</td>
+                      <td className="py-3 px-4 font-mono text-xs text-blue-700">{record.enrollments?.profiles?.student_id || "-"}</td>
                       <td className="py-3 px-4 text-gray-600">{record.date}</td>
                       <td className="py-3 px-4">
                         <Badge className={statusColor(record.status)}>{record.status}</Badge>
                       </td>
                       <td className="py-3 px-4 text-gray-500 text-xs">{record.entry_method || "manual"}</td>
-                      <td className="py-3 px-4 text-gray-500 text-xs">{record.notes || "—"}</td>
+                      <td className="py-3 px-4 text-gray-500 text-xs">{record.notes || "-"}</td>
                     </tr>
                   ))}
                 </tbody>

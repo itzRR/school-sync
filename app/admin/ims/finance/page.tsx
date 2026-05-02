@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { LogOut, DollarSign, FileText, TrendingDown, TrendingUp, Plus, Trash2, X, Search, BarChart3, Menu, Download, CreditCard, Receipt, List, Calendar, CalendarDays, Clock, User } from 'lucide-react';
+import { QuickGuide, type GuideStep } from "@/components/ui/quick-guide"
 import { format } from 'date-fns';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
@@ -72,6 +73,13 @@ export default function FinanceDashboard() {
     await signOut();
     router.push('/auth/login');
   };
+
+  const financeGuideSteps: GuideStep[] = [
+    { title: "Recording Payments", description: "Log student payments with amount, method (Cash, Bank Transfer, Online), and optionally link them to invoices for automatic tracking.", icon: CreditCard, gradient: "from-blue-500 to-violet-500", tip: "Click the receipt icon on any payment to download a PDF receipt." },
+    { title: "Invoice Management", description: "Create invoices with line items, track their status (Unpaid, Partial, Paid), and generate professional PDF invoices for students.", icon: FileText, gradient: "from-indigo-500 to-purple-500", tip: "Use 'Pay Now' on unpaid invoices to quickly record a payment." },
+    { title: "Expense Tracking", description: "Log institute expenses by category (Utilities, Rent, Salaries, Marketing, etc.) to track where money is going.", icon: TrendingDown, gradient: "from-red-500 to-orange-500" },
+    { title: "P&L Reports", description: "View total revenue vs expenses and net profit at a glance. Export all financial data to Excel.", icon: BarChart3, gradient: "from-emerald-500 to-cyan-500", tip: "Use the Export button to download payments and expenses as an Excel file." },
+  ];
 
   const handleDeletePayment = async (id: string, invoiceId?: string | null) => {
     if (!isHead) return toast.error('Only Department Heads can delete payments');
@@ -304,6 +312,12 @@ export default function FinanceDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <QuickGuide
+            guideKey="finance_dashboard"
+            dashboardName="Finance"
+            accentGradient="from-blue-500 to-violet-500"
+            steps={financeGuideSteps}
+          />
           <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl">Back to Admin</button>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}

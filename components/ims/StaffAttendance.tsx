@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
@@ -18,7 +18,7 @@ function durationStr(timeIn: string, timeOut?: string | null): string {
 }
 
 function timeStr(iso: string) {
-  try { return format(parseISO(iso), "hh:mm a") } catch { return "—" }
+  try { return format(parseISO(iso), "hh:mm a") } catch { return "-" }
 }
 
 export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean }) {
@@ -209,7 +209,7 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
         ))}
       </div>
 
-      {/* Tabs — only if admin */}
+      {/* Tabs - only if admin */}
       {isAdmin && (
         <div className="flex gap-1 border-b border-gray-200">
           {(["my", "team"] as const).map(t => (
@@ -263,7 +263,7 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
                 <td className="py-3 px-4 text-gray-500 text-xs max-w-[150px] truncate" title={s.daily_report || ""}>
                   {s.daily_report ? (
                     <span className="flex items-center gap-1"><FileText className="h-3 w-3" />{s.daily_report}</span>
-                  ) : "—"}
+                  ) : "-"}
                 </td>
               </tr>
             ))}

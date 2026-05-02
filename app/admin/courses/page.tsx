@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
@@ -47,7 +47,7 @@ export default function CoursesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Courses</h1>
-          <p className="text-gray-600 mt-1">Manage CADD programmes — BIM, CAD, Project Management</p>
+          <p className="text-gray-600 mt-1">Manage CADD programmes - BIM, CAD, Project Management</p>
         </div>
         <Button asChild>
           <Link href="/admin/courses/new"><Plus className="h-4 w-4 mr-2" /> New Course</Link>

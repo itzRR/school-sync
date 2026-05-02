@@ -110,7 +110,7 @@ export async function middleware(request: NextRequest) {
       return response
     }
 
-    // Visiting /admin (ASMS dashboard) — IMS-only roles without asms_full get redirected
+    // Visiting /admin (ASMS dashboard) - IMS-only roles without asms_full get redirected
     if (pathname === '/admin' || pathname.startsWith('/admin/') && !pathname.startsWith('/admin/ims')) {
       const hasAsms = hasPermission(role, grantedPermissions, 'asms_full')
       if (!hasAsms && IMS_ONLY_ROLES.includes(role)) {

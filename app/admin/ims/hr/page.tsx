@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import React, { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -13,6 +13,7 @@ import {
   Edit, Trash2, X, Search, CheckCircle,
   Download, Clock, Menu, LogOut, Briefcase, FileText, XCircle, Power, User, Calendar
 } from "lucide-react"
+import { QuickGuide, type GuideStep } from "@/components/ui/quick-guide"
 
 import {
   getIMSStaff, updateProfileRole, createStaffUser,
@@ -98,6 +99,14 @@ export default function HRDashboard() {
     await signOut()
     router.push('/auth/login')
   }
+
+  const hrGuideSteps: GuideStep[] = [
+    { title: "Staff Directory", description: "View all staff members with their department, role, and status. Add new staff, edit details, assign shifts, and manage office assets.", icon: Users, gradient: "from-purple-500 to-pink-500", tip: "Hover over a staff row to see Edit and Enable/Disable actions." },
+    { title: "Leave Requests", description: "Staff can submit leave requests (Annual, Sick, Emergency, etc.). Department heads can approve or reject them.", icon: CalendarDays, gradient: "from-orange-500 to-pink-500", tip: "Pending leave count is shown as a badge in the sidebar." },
+    { title: "Payroll Management", description: "Log salary payouts for each employee, generate PDF payslips, and export the full payroll to Excel.", icon: DollarSign, gradient: "from-blue-500 to-indigo-500" },
+    { title: "Performance Reviews", description: "Record quarterly performance scores (0-100) with notes. Track employee performance over time.", icon: Star, gradient: "from-yellow-500 to-orange-500" },
+    { title: "Staff Resources", description: "When adding/editing staff, you can assign shift schedules, office assets (laptops, etc.), and granular permissions.", icon: Briefcase, gradient: "from-emerald-500 to-cyan-500", tip: "Use 'Granular Permissions' to control exactly what each staff member can access." },
+  ]
 
   // ── Leave CRUD ──
   const handleLeaveSubmit = async (e: React.FormEvent) => {
@@ -232,12 +241,12 @@ export default function HRDashboard() {
 
   const generatePayslipPDF = (payout: HrSalaryPayout) => {
     const doc = new jsPDF()
-    doc.setFontSize(18); doc.text("CADD Centre Lanka — Salary Payslip", 14, 20)
+    doc.setFontSize(18); doc.text("CADD Centre Lanka - Salary Payslip", 14, 20)
     doc.setFontSize(12)
     doc.text(`Employee: ${payout.employee_name}`, 14, 35)
     doc.text(`Month: ${payout.month}`, 14, 43)
     doc.text(`Amount: LKR ${payout.amount.toLocaleString()}`, 14, 51)
-    doc.text(`Paid On: ${payout.paid_on || "—"}`, 14, 59)
+    doc.text(`Paid On: ${payout.paid_on || "-"}`, 14, 59)
     if (payout.notes) doc.text(`Notes: ${payout.notes}`, 14, 67)
     doc.save(`payslip_${payout.employee_name}_${payout.month}.pdf`)
   }
@@ -313,6 +322,12 @@ export default function HRDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <QuickGuide
+            guideKey="hr_dashboard"
+            dashboardName="HR"
+            accentGradient="from-purple-500 to-pink-500"
+            steps={hrGuideSteps}
+          />
           <button onClick={() => router.push('/admin/ims')} className="text-gray-600 hover:text-gray-900 px-3 py-2 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">Back to Admin</button>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
@@ -551,7 +566,7 @@ export default function HRDashboard() {
                         <td className="px-4 py-3 font-semibold text-purple-700">{p.month}</td>
                         <td className="px-4 py-3 text-gray-900">{p.employee_name}</td>
                         <td className="px-4 py-3 font-bold text-green-700">LKR {p.amount.toLocaleString()}</td>
-                        <td className="px-4 py-3 text-gray-500">{p.paid_on || '—'}</td>
+                        <td className="px-4 py-3 text-gray-500">{p.paid_on || '-'}</td>
                         <td className="px-4 py-3">
                           <button onClick={() => generatePayslipPDF(p)} className="px-3 py-1 glass-button text-xs rounded-lg flex items-center gap-1 border border-gray-200"><FileText className="w-3 h-3"/> PDF</button>
                         </td>
