@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
@@ -158,9 +158,9 @@ export default function IMSDashboardPage() {
         )}
       </AnimatePresence>
 
-      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex items-center justify-between">
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-white border-b border-gray-200 shadow-sm p-4 md:p-6 flex flex-wrap gap-4 items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-400 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-400 rounded-xl flex items-center justify-center shrink-0">
             <Building2 className="w-6 h-6 text-white" />
           </div>
           <div>
@@ -168,7 +168,7 @@ export default function IMSDashboardPage() {
             <p className="text-gray-500 text-sm hidden md:block">CADD Centre Lanka - Operations &amp; Management Hub</p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <QuickGuide
             guideKey="ims_overview_dashboard"
             dashboardName="IMS Overview"
@@ -177,8 +177,8 @@ export default function IMSDashboardPage() {
           />
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl border border-red-200 hover:bg-red-100 transition-colors font-medium">
-            <LogOut className="w-4 h-4" /> Logout
+            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl border border-red-200 hover:bg-red-100 transition-colors font-medium text-sm md:text-base">
+            <LogOut className="w-4 h-4" /> <span className="hidden sm:inline">Logout</span>
           </motion.button>
         </div>
       </motion.header>
@@ -242,21 +242,21 @@ export default function IMSDashboardPage() {
             </h2>
             <div className="space-y-3">
               {stats.pendingLeaves > 0 && (
-                <div className="flex items-center justify-between p-4 bg-orange-50 rounded-xl border border-orange-200">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-orange-50 rounded-xl border border-orange-200 gap-3">
                   <div className="flex items-center gap-3">
-                    <UserCog className="h-5 w-5 text-orange-500" />
+                    <UserCog className="h-5 w-5 text-orange-500 shrink-0" />
                     <span className="text-sm font-semibold text-orange-800">{stats.pendingLeaves} leave request{stats.pendingLeaves > 1 ? 's' : ''} awaiting approval</span>
                   </div>
-                  <Link href="/admin/ims/hr" className="px-4 py-2 bg-orange-100 text-orange-700 hover:bg-orange-200 text-xs font-bold rounded-lg transition-colors">Review</Link>
+                  <Link href="/admin/ims/hr" className="px-4 py-2 bg-orange-100 text-orange-700 hover:bg-orange-200 text-xs font-bold rounded-lg transition-colors text-center w-full sm:w-auto">Review</Link>
                 </div>
               )}
               {stats.openTasks > 0 && (
-                <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-xl border border-yellow-200">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-yellow-50 rounded-xl border border-yellow-200 gap-3">
                   <div className="flex items-center gap-3">
-                    <ListTodo className="h-5 w-5 text-yellow-600" />
+                    <ListTodo className="h-5 w-5 text-yellow-600 shrink-0" />
                     <span className="text-sm font-semibold text-yellow-800">{stats.openTasks} task{stats.openTasks > 1 ? 's' : ''} pending completion</span>
                   </div>
-                  <Link href="/admin/ims/tasks" className="px-4 py-2 bg-yellow-100 text-yellow-700 hover:bg-yellow-200 text-xs font-bold rounded-lg transition-colors">View Tasks</Link>
+                  <Link href="/admin/ims/tasks" className="px-4 py-2 bg-yellow-100 text-yellow-700 hover:bg-yellow-200 text-xs font-bold rounded-lg transition-colors text-center w-full sm:w-auto">View Tasks</Link>
                 </div>
               )}
               {stats.convertedLeads > 0 && (

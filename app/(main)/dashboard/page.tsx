@@ -70,22 +70,22 @@ export default function DashboardPage() {
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
           className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-          <div className="flex items-center gap-5">
-            <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-blue-600 to-sky-400 flex items-center justify-center shadow-lg shadow-blue-500/20">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+            <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-blue-600 to-sky-400 flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0 mx-auto sm:mx-0">
               <User className="w-8 h-8 text-white" />
             </div>
-            <div>
-              <h1 className="text-3xl font-black text-gray-900 tracking-tight">
+            <div className="text-center sm:text-left">
+              <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
                 Welcome back, <span className="text-blue-600">{user?.name?.split(" ")[0]}</span> 👋
               </h1>
               <p className="text-gray-500 text-sm mt-1 font-medium">Your CADD Centre Lanka student portal is active.</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Button asChild variant="outline" className="border-gray-200 text-gray-700 hover:bg-gray-100 rounded-xl px-6 h-12">
+          <div className="flex flex-col sm:flex-row w-full md:w-auto items-stretch sm:items-center gap-3">
+            <Button asChild variant="outline" className="border-gray-200 text-gray-700 hover:bg-gray-100 rounded-xl px-6 h-12 w-full sm:w-auto">
               <Link href="/profile">My Profile</Link>
             </Button>
-            <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 h-12 shadow-md border-none font-bold">
+            <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 h-12 shadow-md border-none font-bold w-full sm:w-auto">
               <Link href="/courses">Browse Courses</Link>
             </Button>
           </div>
