@@ -3,7 +3,8 @@
 import { useEffect, useState, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { AlertOctagon, Info } from "lucide-react"
+import { AlertOctagon, Info, Bell } from "lucide-react"
+import { toast } from "sonner"
 import { supabase } from "@/lib/supabase"
 import { getCurrentUser, signOut } from "@/lib/auth"
 import type { ImsSystemCommand } from "@/types"
@@ -53,6 +54,21 @@ export function SystemCommandListener() {
         }
 
         if (cmd.type === "broadcast" || cmd.type === "popup") {
+          // Task assigned notification
+          if (cmd.type === "popup" && cmd.message?.startsWith("TASK_ASSIGNED|")) {
+            const msg = cmd.message.replace("TASK_ASSIGNED|", "")
+            toast(
+              <div className="flex flex-col gap-1">
+                <span className="font-bold flex items-center gap-2"><Bell className="w-4 h-4 text-blue-500" /> New Task</span>
+                <span className="text-sm text-gray-600">{msg}</span>
+              </div>,
+              { duration: 8000 }
+            )
+            // Mark as delivered
+            supabase.from('ims_system_commands').update({ status: 'delivered' }).eq('id', cmd.id).then()
+            continue
+          }
+
           // Keep the most recent blocking command
           if (!activeBlockingCmd) {
             activeBlockingCmd = cmd as ImsSystemCommand

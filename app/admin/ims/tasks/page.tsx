@@ -1,11 +1,11 @@
-﻿"use client"
+"use client"
 
 import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
 import { format, isAfter, isBefore, addDays, isToday } from "date-fns"
 import { motion, AnimatePresence } from "framer-motion"
 import { Plus, Trash2, X, CheckCircle, Clock, AlertTriangle, ListTodo, Download, RefreshCw, Filter } from "lucide-react"
-import { getOpsTasks, createOpsTask, updateOpsTask, deleteOpsTask, completeOpsTask, getAllProfiles, subscribeToOpsTasks } from "@/lib/ims-data"
+import { getOpsTasks, createOpsTask, updateOpsTask, deleteOpsTask, completeOpsTask, getAllProfiles, subscribeToOpsTasks, createSystemCommand } from "@/lib/ims-data"
 import { getCurrentUser } from "@/lib/auth"
 import type { OpsTask, Profile } from "@/types"
 import * as XLSX from "xlsx"
@@ -64,6 +64,32 @@ export default function IMSTasksPage() {
         assigned_department: assignType === "department" ? taskForm.assigned_department : null,
         created_by: currentUser?.id,
       })
+      
+      // Dispatch beautiful notifications
+      if (assignType === "department" && taskForm.assigned_department) {
+        await createSystemCommand({
+          type: "popup",
+          message: `TASK_ASSIGNED|You have a new department task: ${taskForm.title}`,
+          target_user_id: `dept:${taskForm.assigned_department}`,
+          target_user_name: `${taskForm.assigned_department} Department`,
+          sent_by_id: currentUser?.id || null,
+          sent_by_name: currentUser?.full_name || "System",
+          status: "pending"
+        })
+      } else {
+        for (const uid of assigned) {
+          await createSystemCommand({
+            type: "popup",
+            message: `TASK_ASSIGNED|You have a new task: ${taskForm.title}`,
+            target_user_id: uid,
+            target_user_name: users.find(u => u.id === uid)?.full_name || "User",
+            sent_by_id: currentUser?.id || null,
+            sent_by_name: currentUser?.full_name || "System",
+            status: "pending"
+          })
+        }
+      }
+
       setTasks(prev => [created, ...prev])
       toast.success("Task created")
       setShowModal(false); setTaskForm(emptyForm)

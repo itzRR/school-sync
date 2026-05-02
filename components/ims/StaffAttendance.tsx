@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
@@ -6,7 +6,7 @@ import { format, parseISO, differenceInMinutes } from "date-fns"
 import { Clock, LogIn, LogOut, CheckCircle, FileText, Download, RefreshCw, User, Calendar, Loader2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { supabase } from "@/lib/supabase"
-import { getMyAttendance, getAllAttendance, clockIn, clockOut, type StaffAttendanceSession } from "@/lib/ims-data"
+import { getMyAttendance, getAllAttendance, getDepartmentAttendance, clockIn, clockOut, type StaffAttendanceSession } from "@/lib/ims-data"
 import * as XLSX from "xlsx"
 
 function durationStr(timeIn: string, timeOut?: string | null): string {
@@ -32,17 +32,30 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
   const [showReportModal, setShowReportModal] = useState(false)
   const [reportText, setReportText] = useState("")
   const [clockingOut, setClocingOut] = useState(false)
+  const [isDepartmentHead, setIsDepartmentHead] = useState(false)
+  const [userDept, setUserDept] = useState<string | null>(null)
 
   const today = new Date().toISOString().slice(0, 10)
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user) {
-        setUserId(data.user.id)
-        const name = data.user.user_metadata?.full_name || data.user.email?.split("@")[0] || "Staff"
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        setUserId(user.id)
+        const name = user.user_metadata?.full_name || user.email?.split("@")[0] || "Staff"
         setUserName(name)
+
+        // Fetch profile to check department and role
+        const { data: profile } = await supabase.from('profiles').select('department, position, role').eq('id', user.id).single()
+        if (profile) {
+          setUserDept(profile.department)
+          const isHead = profile.position?.toLowerCase().includes('head') || profile.position?.toLowerCase().includes('manager')
+          const isGlobalAdmin = ['admin', 'super_admin', 'branch_manager'].includes(profile.role)
+          setIsDepartmentHead(isHead || isGlobalAdmin)
+        }
       }
-    })
+    }
+    fetchUser()
   }, [])
 
   const loadData = useCallback(async () => {
@@ -53,13 +66,18 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
       setSessions(mine)
       const active = mine.find(s => s.date === today && !s.time_out)
       setActiveSession(active || null)
+
+      // Admin sees all, Dept head sees their department
       if (isAdmin) {
         const all = await getAllAttendance()
         setAllSessions(all)
+      } else if (isDepartmentHead && userDept) {
+        const deptAtt = await getDepartmentAttendance(userDept)
+        setAllSessions(deptAtt)
       }
     } catch (e: any) { toast.error("Could not load attendance") }
     finally { setLoading(false) }
-  }, [userId, isAdmin, today])
+  }, [userId, isAdmin, isDepartmentHead, userDept, today])
 
   useEffect(() => { loadData() }, [loadData])
 
@@ -209,8 +227,8 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
         ))}
       </div>
 
-      {/* Tabs - only if admin */}
-      {isAdmin && (
+      {/* Tabs - only if admin or department head */}
+      {(isAdmin || isDepartmentHead) && (
         <div className="flex gap-1 border-b border-gray-200">
           {(["my", "team"] as const).map(t => (
             <button key={t} onClick={() => setTab(t)}
@@ -228,7 +246,7 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
-              {(tab === "team" && isAdmin
+              {(tab === "team" && (isAdmin || isDepartmentHead)
                 ? ["Name", "Date", "Time In", "Time Out", "Duration", "Status", "Report"]
                 : ["Date", "Time In", "Time Out", "Duration", "Status", "Report"]
               ).map(h => (
@@ -239,11 +257,11 @@ export default function StaffAttendance({ isAdmin = false }: { isAdmin?: boolean
           <tbody className="divide-y divide-gray-100">
             {loading ? (
               <tr><td colSpan={7} className="text-center py-8"><Loader2 className="h-5 w-5 animate-spin mx-auto text-gray-400" /></td></tr>
-            ) : (tab === "team" && isAdmin ? allSessions : sessions).length === 0 ? (
+            ) : (tab === "team" && (isAdmin || isDepartmentHead) ? allSessions : sessions).length === 0 ? (
               <tr><td colSpan={7} className="text-center py-8 text-gray-400">No attendance records yet</td></tr>
-            ) : (tab === "team" && isAdmin ? allSessions : sessions).map(s => (
+            ) : (tab === "team" && (isAdmin || isDepartmentHead) ? allSessions : sessions).map(s => (
               <tr key={s.id} className={`hover:bg-gray-50 transition-colors ${!s.time_out ? "bg-emerald-50" : ""}`}>
-                {tab === "team" && isAdmin && <td className="py-3 px-4 font-semibold text-gray-900">{s.user_name}</td>}
+                {tab === "team" && (isAdmin || isDepartmentHead) && <td className="py-3 px-4 font-semibold text-gray-900">{s.user_name}</td>}
                 <td className="py-3 px-4 text-gray-600">{s.date}</td>
                 <td className="py-3 px-4 font-medium text-gray-900">{timeStr(s.time_in)}</td>
                 <td className="py-3 px-4 text-gray-600">

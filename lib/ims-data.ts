@@ -654,6 +654,21 @@ export async function getAllAttendance(): Promise<StaffAttendanceSession[]> {
   return data || []
 }
 
+export async function getDepartmentAttendance(department: string): Promise<StaffAttendanceSession[]> {
+  const { data: profiles } = await supabase.from('profiles').select('id').eq('department', department)
+  if (!profiles || profiles.length === 0) return []
+  const userIds = profiles.map(p => p.id)
+
+  const { data, error } = await supabase
+    .from('staff_attendance')
+    .select('*')
+    .in('user_id', userIds)
+    .order('time_in', { ascending: false })
+    .limit(500)
+  if (error) throw error
+  return data || []
+}
+
 export async function clockIn(params: { userId: string; userName: string; sessionIndex: number }): Promise<StaffAttendanceSession> {
   const today = new Date().toISOString().slice(0, 10)
   const now = new Date().toISOString()

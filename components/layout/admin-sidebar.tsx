@@ -143,7 +143,16 @@ export function AdminSidebar({ currentUser }: AdminSidebarProps) {
   const canSeeImsItem = (permission: Permission) =>
     hasPermission(userRole, userPermissions, permission)
 
-  const visibleImsItems = imsNavigationDefs.filter(item => canSeeImsItem(item.permission))
+  const isAdminRole = ['admin', 'super_admin', 'branch_manager'].includes(userRole)
+
+  const visibleImsItems = imsNavigationDefs.filter(item => {
+    if (!canSeeImsItem(item.permission)) return false
+    // Admins only see Overview, Staff Users, Tasks, Roster, Control Panel in the sidebar
+    if (isAdminRole && ['ims_marketing', 'ims_academic', 'ims_finance', 'ims_hr'].includes(item.permission)) {
+      return false
+    }
+    return true
+  })
 
   const handleLogout = async () => {
     await signOut()

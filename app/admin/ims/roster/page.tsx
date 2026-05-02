@@ -18,12 +18,11 @@ const TYPE_COLORS: Record<string, string> = {
   "On-call":  "bg-orange-100 text-orange-700 border-orange-200",
   Other:      "bg-gray-100 text-gray-600 border-gray-200",
 }
-const SHIFT_COLORS: Record<string, string> = {
-  Morning:  "text-yellow-600",
-  Afternoon: "text-orange-600",
-  Evening:  "text-purple-600",
-  Night:    "text-blue-600",
-  "Full Day": "text-cyan-700",
+const getShiftColor = (shift: string) => {
+  if (shift.includes("08:00 AM - 05:00 PM")) return "text-blue-600"
+  if (shift.includes("08:00 AM - 02:00 PM")) return "text-orange-600"
+  if (shift.includes("01:00 PM - 07:00 PM")) return "text-purple-600"
+  return "text-cyan-700"
 }
 
 export default function IMSRosterPage() {
@@ -176,7 +175,7 @@ export default function IMSRosterPage() {
                               {entry.type}
                             </span>
                             {entry.shift && (
-                              <span className={`text-xs font-bold ${SHIFT_COLORS[entry.shift] || 'text-white/60'}`}>
+                              <span className={`text-xs font-bold ${getShiftColor(entry.shift)}`}>
                                 <Clock className="h-3 w-3 inline mr-1" />{entry.shift}
                               </span>
                             )}
@@ -243,13 +242,23 @@ export default function IMSRosterPage() {
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-gray-600">Shift</label>
                   <div className="flex flex-wrap gap-2">
-                    {["", ...SHIFTS].map(s => (
+                    {["", "08:00 AM - 05:00 PM", "08:00 AM - 02:00 PM", "01:00 PM - 07:00 PM", "Custom..."].map(s => (
                       <button key={s} type="button" onClick={() => setForm(p => ({ ...p, shift: s }))}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${form.shift === s ? 'bg-pink-50 border-pink-400 text-pink-700' : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-gray-300'}`}>
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${form.shift === s || (s === "Custom..." && !["", "08:00 AM - 05:00 PM", "08:00 AM - 02:00 PM", "01:00 PM - 07:00 PM"].includes(form.shift)) ? 'bg-pink-50 border-pink-400 text-pink-700' : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-gray-300'}`}>
                         {s || "N/A"}
                       </button>
                     ))}
                   </div>
+                  {!["", "08:00 AM - 05:00 PM", "08:00 AM - 02:00 PM", "01:00 PM - 07:00 PM"].includes(form.shift) && (
+                    <input 
+                      type="text" 
+                      placeholder="e.g. 09:30 AM - 06:30 PM" 
+                      value={form.shift === "Custom..." ? "" : form.shift} 
+                      onChange={e => setForm(p => ({ ...p, shift: e.target.value }))}
+                      className="mt-2 w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-pink-500" 
+                      autoFocus
+                    />
+                  )}
                 </div>
 
                 <div className="space-y-2">

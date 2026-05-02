@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -359,6 +359,29 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
                 )}
               </div>
             </div>
+
+            {/* Office Assets */}
+            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <Star className="w-4 h-4" /> Office Assets
+              </h3>
+              {!localUser.office_assets || localUser.office_assets.length === 0 ? (
+                <div className="text-center py-6 border border-dashed border-gray-200 rounded-xl bg-white">
+                  <p className="text-gray-400 text-sm font-medium">No assets assigned</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {localUser.office_assets.map((asset, idx) => (
+                    <div key={idx} className="bg-white p-3 rounded-xl border border-gray-200 flex flex-col gap-1">
+                      <span className="font-semibold text-gray-900 text-sm">{asset.item}</span>
+                      {asset.serialNo && <span className="text-xs text-gray-500">SN: <span className="font-mono">{asset.serialNo}</span></span>}
+                      {asset.issuedDate && <span className="text-xs text-gray-400">Issued: {asset.issuedDate}</span>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
           </div>
         </div>
       </motion.div>
