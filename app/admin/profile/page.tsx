@@ -53,23 +53,19 @@ export default function AdminProfilePage() {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="max-w-5xl mx-auto p-4 md:p-8 space-y-6"
-    >
-      <button
-        onClick={() => router.back()}
-        className="flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm font-medium transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back
-      </button>
+    <div className="min-h-screen bg-gray-50 selection:bg-blue-500/20">
+      {/* Subtle blobs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-100 blur-[120px] rounded-full opacity-50" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-100 blur-[100px] rounded-full opacity-30" />
+      </div>
 
-      <ProfileSection
-        userData={profile}
-        onUpdateProfile={(data) => setProfile(prev => prev ? { ...prev, ...data } : prev)}
-      />
-    </motion.div>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
+        <ProfileSection
+          userData={profile}
+          onUpdateProfile={(data) => setProfile(prev => prev ? { ...prev, ...data } : prev)}
+        />
+      </div>
+    </div>
   )
 }

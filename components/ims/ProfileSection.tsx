@@ -54,7 +54,7 @@ export const Avatar = ({ photoURL, name, size = "lg", className = "" }: { photoU
   )
 }
 
-const PhotoEditor = ({ uid, currentPhotoURL, name, onClose, onUpdate }: { uid: string, currentPhotoURL?: string | null, name: string | null, onClose: () => void, onUpdate: (url: string) => void }) => {
+export const PhotoEditor = ({ uid, currentPhotoURL, name, onClose, onUpdate }: { uid: string, currentPhotoURL?: string | null, name: string | null, onClose: () => void, onUpdate: (url: string) => void }) => {
   const [url, setUrl] = useState(currentPhotoURL || "")
   const [preview, setPreview] = useState(currentPhotoURL ? convertToThumbnail(currentPhotoURL) : "")
   const [previewError, setPreviewError] = useState(false)
@@ -307,12 +307,13 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
     fetchFullProfile()
   }, [userData.id])
 
-  const handleSave = async () => {
+  const handleSave = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault()
     if (!editedName.trim()) return toast.error("Name cannot be empty")
     setIsLoading(true)
     try {
       await updateProfileRole(localUser.id, { full_name: editedName.trim() })
-      toast.success("Profile updated")
+      toast.success("Profile updated successfully!")
       setIsEditing(false)
       setLocalUser(prev => ({ ...prev, full_name: editedName.trim() }))
       if (onUpdateProfile) onUpdateProfile({ full_name: editedName.trim() })
@@ -336,183 +337,212 @@ export default function ProfileSection({ userData, onUpdateProfile }: { userData
     }
   }
 
+  const inputCls = "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-blue-500/30 focus:border-blue-500 rounded-xl h-12 pl-12 transition-all w-full"
+  
+  const ROLE_LABELS: Record<string, string> = {
+    admin:            "Administrator",
+    academic_manager: "Academic Manager",
+    trainer:          "Trainer",
+    student:          "Student",
+    coordinator:      "Coordinator",
+  }
+
   return (
-    <div className="space-y-6">
+    <>
       <AnimatePresence>
         {showPhotoEditor && <PhotoEditor uid={localUser.id} currentPhotoURL={localUser.avatar_url} name={localUser.full_name} onClose={() => setShowPhotoEditor(false)} onUpdate={(url) => { setLocalUser(p => ({ ...p, avatar_url: url })); if(onUpdateProfile) onUpdateProfile({ avatar_url: url }) }} />}
         {showDocEditor && <DocumentEditor uid={localUser.id} existingDocs={localUser.documents || []} onClose={() => setShowDocEditor(false)} onUpdate={(docs) => { setLocalUser(p => ({ ...p, documents: docs })); if(onUpdateProfile) onUpdateProfile({ documents: docs }) }} />}
       </AnimatePresence>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-100">
-          <div>
-            <h2 className="text-xl md:text-2xl text-gray-900 font-bold">My Profile</h2>
-            <p className="text-sm text-gray-500 mt-1">Manage your account details and settings.</p>
-          </div>
-          <div className="flex gap-3">
-            {isEditing ? (
-              <>
-                <button onClick={() => setIsEditing(false)} className="px-4 py-2.5 bg-white/5 text-white/80 rounded-xl text-sm font-semibold hover:bg-gray-100 transition-colors">Cancel</button>
-                <button onClick={handleSave} disabled={isLoading} className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all flex items-center gap-2">
-                  {isLoading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />} Save
-                </button>
-              </>
-            ) : (
-              <button onClick={() => setIsEditing(true)} className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all flex items-center gap-2">
-                <Edit className="w-4 h-4" /> Edit Profile
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="flex-shrink-0 flex flex-col items-center gap-4 lg:w-1/4">
-            <motion.div whileHover={{ scale: 1.05 }} className="relative group cursor-pointer shadow-xl rounded-2xl" onClick={() => setShowPhotoEditor(true)}>
-              <div className="p-1.5 bg-gradient-to-br from-blue-500/50 to-purple-500/50 rounded-3xl">
-                <Avatar photoURL={localUser.avatar_url} name={localUser.full_name} className="w-40 h-40 md:w-48 md:h-48 rounded-2xl shadow-inner border-2 border-white/10" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Left Column */}
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="lg:col-span-1 space-y-6">
+          
+          {/* Avatar Card */}
+          <div className="bg-white border border-gray-200 rounded-[2.5rem] p-8 text-center shadow-sm hover:shadow-lg transition-shadow duration-300">
+            <div 
+              className="relative w-28 h-28 mx-auto mb-6 group cursor-pointer"
+              onClick={() => setShowPhotoEditor(true)}
+            >
+              <div className="w-full h-full rounded-[2rem] overflow-hidden shadow-lg shadow-blue-500/20">
+                <Avatar photoURL={localUser.avatar_url} name={localUser.full_name} className="w-full h-full" />
               </div>
-              <div className="absolute inset-1.5 rounded-2xl bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
-                <ImageIcon className="w-8 h-8 text-white" />
-                <span className="text-white text-sm font-medium">Update Photo</span>
-              </div>
-            </motion.div>
-            <div className="text-center">
-              <h3 className="text-2xl font-bold text-white">{localUser.full_name || "Anonymous"}</h3>
-              <p className="text-blue-600 font-medium text-sm mt-1">{localUser.position || "Member"}</p>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 mt-3 bg-white/10 text-white rounded-full text-xs font-semibold border border-white/5">
-                <Shield className="w-3.5 h-3.5" /> <span className="capitalize">{localUser.role.replace('_', ' ')}</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="flex-1 space-y-6">
-            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2"><User className="w-4 h-4" /> Personal Information</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-1">
-                  <label className="text-xs font-medium text-gray-500">Full Name</label>
-                  {isEditing ? (
-                    <input type="text" value={editedName} onChange={e => setEditedName(e.target.value)} className="w-full bg-white border border-blue-300 rounded-xl px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" autoFocus />
-                  ) : (
-                    <p className="text-base font-semibold text-gray-800 bg-white px-4 py-2.5 rounded-xl border border-gray-100">{localUser.full_name || "-"}</p>
-                  )}
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-medium text-gray-500">Email Address</label>
-                  <p className="text-base font-semibold text-gray-600 bg-white px-4 py-2.5 rounded-xl border border-gray-100 flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-gray-400" /> <span className="truncate">{localUser.email}</span>
-                  </p>
-                </div>
+              <div className="absolute inset-0 rounded-[2rem] bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center backdrop-blur-sm">
+                <ImageIcon className="w-6 h-6 text-white mb-1" />
+                <span className="text-[10px] text-white font-bold uppercase tracking-widest">Update</span>
               </div>
             </div>
+            
+            <h2 className="text-xl font-bold text-gray-900 mb-1 truncate">{localUser.full_name || "Anonymous"}</h2>
+            <p className="text-gray-400 text-sm mb-6 truncate">{localUser.email}</p>
 
-            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2"><Briefcase className="w-4 h-4" /> Account Details</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-4 rounded-xl border border-blue-200 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"><CalendarIcon className="w-5 h-5" /></div>
-                  <div><p className="text-xs text-blue-500 font-medium">Member Since</p><p className="text-sm font-bold text-blue-800">{localUser.created_at ? format(new Date(localUser.created_at), 'MMM d, yyyy') : 'Unknown'}</p></div>
-                </div>
-                <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700"><Clock className="w-5 h-5" /></div>
-                  <div><p className="text-xs text-emerald-600 font-medium">Last Active</p><p className="text-sm font-bold text-emerald-800">{localUser.last_active ? format(new Date(localUser.last_active), 'MMM d, yyyy') : 'Recently'}</p></div>
-                </div>
-                {localUser.department && (
-                  <div className="bg-purple-50 p-4 rounded-xl border border-purple-200 flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600"><Building className="w-5 h-5" /></div>
-                    <div><p className="text-xs text-purple-500 font-medium">Department</p><p className="text-sm font-bold text-purple-800">{localUser.department}</p></div>
-                  </div>
-                )}
-                {localUser.access_level !== undefined && (
-                  <div className="bg-amber-50 p-4 rounded-xl border border-amber-200 flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600"><Key className="w-5 h-5" /></div>
-                    <div><p className="text-xs text-amber-600 font-medium">Access Level</p><p className="text-sm font-bold text-amber-800">Level {localUser.access_level}</p></div>
-                  </div>
-                )}
+            <div className="flex flex-col gap-3">
+              <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-2.5 flex items-center justify-center gap-2">
+                <Shield className="h-3.5 w-3.5 text-blue-600" />
+                <span className="text-[11px] font-black text-blue-700 uppercase tracking-widest">
+                  {ROLE_LABELS[localUser.role] || localUser.role.replace('_', ' ')}
+                </span>
               </div>
-            </div>
-
-            {/* Office Assets */}
-            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Star className="w-4 h-4" /> Office Assets
-              </h3>
-              {!localUser.office_assets || localUser.office_assets.length === 0 ? (
-                <div className="text-center py-6 border border-dashed border-gray-200 rounded-xl bg-white">
-                  <p className="text-gray-400 text-sm font-medium">No assets assigned</p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {localUser.office_assets.map((asset, idx) => (
-                    <div key={idx} className="bg-white p-3 rounded-xl border border-gray-200 flex flex-col gap-1">
-                      <span className="font-semibold text-gray-900 text-sm">{asset.item}</span>
-                      {asset.serialNo && <span className="text-xs text-gray-500">SN: <span className="font-mono">{asset.serialNo}</span></span>}
-                      {asset.issuedDate && <span className="text-xs text-gray-400">Issued: {asset.issuedDate}</span>}
-                    </div>
-                  ))}
+              {localUser.department && (
+                <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 flex flex-col items-center gap-0.5">
+                  <span className="text-[9px] text-gray-400 font-black uppercase tracking-tighter">Department</span>
+                  <span className="text-sm font-bold text-gray-700 tracking-widest">{localUser.department}</span>
                 </div>
               )}
             </div>
-
           </div>
-        </div>
-      </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-100">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2"><FileText className="w-6 h-6 text-blue-500" /> My Documents</h2>
-            <p className="text-sm text-gray-500 mt-1">Manage your certificates and important files.</p>
-          </div>
-          <button onClick={() => setShowDocEditor(true)} className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all">
-            <Plus className="w-4 h-4" /> New Document
-          </button>
-        </div>
-
-        {!localUser.documents?.length ? (
-          <div className="text-center py-16 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200">
-            <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-              <FileText className="w-8 h-8 text-gray-300" />
+          {/* Account Details Card */}
+          <div className="bg-white border border-gray-200 rounded-[2rem] p-5 shadow-sm space-y-4">
+            <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1 px-2">Account Details</h3>
+            
+            <div className="flex items-center gap-4 px-3 py-2">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600"><CalendarIcon className="w-5 h-5" /></div>
+              <div><p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Member Since</p><p className="text-sm font-bold text-gray-900">{localUser.created_at ? format(new Date(localUser.created_at), 'MMM d, yyyy') : 'Unknown'}</p></div>
             </div>
-            <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">No documents found</p>
-            <p className="text-gray-300 text-xs mt-1">Add certificates or files to see them here.</p>
+            
+            <div className="flex items-center gap-4 px-3 py-2">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600"><Clock className="w-5 h-5" /></div>
+              <div><p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Last Active</p><p className="text-sm font-bold text-gray-900">{localUser.last_active ? format(new Date(localUser.last_active), 'MMM d, yyyy') : 'Recently'}</p></div>
+            </div>
+            
+            {localUser.access_level !== undefined && (
+              <div className="flex items-center gap-4 px-3 py-2">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600"><Key className="w-5 h-5" /></div>
+                <div><p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Access Level</p><p className="text-sm font-bold text-gray-900">Level {localUser.access_level}</p></div>
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {localUser.documents.map((docItem) => {
-              const previewUrl = convertToThumbnail(docItem.url)
-              return (
-                <motion.div key={docItem.id} whileHover={{ y: -5 }} className="relative group bg-white rounded-[1.5rem] overflow-hidden border border-gray-200 hover:border-blue-300 transition-all shadow-sm hover:shadow-md">
-                  <div className="h-44 bg-black/40 overflow-hidden relative">
-                    <img src={previewUrl} alt={docItem.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onError={(e) => { (e.target as any).style.display='none' }} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0e1628] via-transparent to-transparent opacity-60" />
+        </motion.div>
+
+        {/* Right Column */}
+        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="lg:col-span-2 space-y-8">
+          
+          {/* Profile Details Form */}
+          <div className="bg-white border border-gray-200 rounded-[2.5rem] p-8 shadow-sm">
+            <h3 className="text-lg font-black text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1.5 h-6 bg-blue-600 rounded-full" />
+              Profile Details
+            </h3>
+
+            <form onSubmit={handleSave} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-1.5">
+                  <label htmlFor="full_name" className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1 block">Full Name *</label>
+                  <div className="relative group">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-blue-600 transition-colors" />
+                    <input id="full_name" className={inputCls} placeholder="Enter your full name"
+                      value={editedName} onChange={e => setEditedName(e.target.value)} required />
                   </div>
-                  <div className="p-5 relative">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <h4 className="font-bold text-gray-900 text-[15px] truncate leading-tight mb-1" title={docItem.title}>{docItem.title}</h4>
-                        <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                          <CalendarIcon className="w-3 h-3" />
-                          {format(new Date(docItem.addedAt), 'MMM d, yyyy')}
-                        </div>
+                </div>
+                <div className="space-y-1.5">
+                  <label htmlFor="email" className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1 block">Email Address</label>
+                  <div className="relative opacity-60">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input id="email" className={inputCls + " bg-gray-100 border-dashed"} value={localUser.email || ""} disabled />
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-4">
+                <button type="submit"
+                  className="flex-1 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black shadow-lg shadow-blue-500/20 gap-3 border-none transition-all active:scale-[0.98] flex items-center justify-center"
+                  disabled={isLoading || editedName === localUser.full_name}>
+                  {isLoading ? <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" /> : <Save className="h-5 w-5" />}
+                  {isLoading ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Conditional Sections based on Role */}
+          {localUser.role !== 'student' && (
+            <>
+              {/* Office Assets */}
+              <div className="bg-white border border-gray-200 rounded-[2.5rem] p-8 shadow-sm">
+                <h3 className="text-lg font-black text-gray-900 mb-6 flex items-center gap-3">
+                  <div className="w-1.5 h-6 bg-amber-500 rounded-full" />
+                  Office Assets
+                </h3>
+                
+                {!localUser.office_assets || localUser.office_assets.length === 0 ? (
+                  <div className="text-center py-6 border border-dashed border-gray-200 rounded-[1.5rem] bg-gray-50">
+                    <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">No assets assigned</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {localUser.office_assets.map((asset, idx) => (
+                      <div key={idx} className="bg-gray-50 p-4 rounded-[1.5rem] border border-gray-200 flex flex-col gap-1.5">
+                        <span className="font-bold text-gray-900 text-sm">{asset.item}</span>
+                        {asset.serialNo && <span className="text-xs text-gray-500 font-medium">SN: <span className="font-mono bg-white px-2 py-0.5 rounded border border-gray-200">{asset.serialNo}</span></span>}
+                        {asset.issuedDate && <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Issued: {asset.issuedDate}</span>}
                       </div>
-                      <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                        <a href={docItem.url} target="_blank" rel="noreferrer" className="w-8 h-8 bg-blue-500/20 text-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-500 hover:text-gray-900 transition-all border border-blue-500/20 shadow-lg shadow-blue-500/20" title="Open Link">
-                          <LinkIcon className="w-4 h-4" />
-                        </a>
-                        <button onClick={() => handleDeleteDoc(docItem.id)} className="w-8 h-8 bg-red-100 text-red-600 rounded-xl flex items-center justify-center hover:bg-red-500 hover:text-gray-900 transition-all border border-red-200 shadow-lg shadow-red-500/20" title="Delete">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* My Documents */}
+              <div className="bg-white border border-gray-200 rounded-[2.5rem] p-8 shadow-sm">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                  <h3 className="text-lg font-black text-gray-900 flex items-center gap-3">
+                    <div className="w-1.5 h-6 bg-emerald-500 rounded-full" />
+                    My Documents
+                  </h3>
+                  <button onClick={() => setShowDocEditor(true)} className="flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-xl text-sm font-bold transition-all border border-emerald-200">
+                    <Plus className="w-4 h-4" /> Add Document
+                  </button>
+                </div>
+
+                {!localUser.documents?.length ? (
+                  <div className="text-center py-12 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200">
+                    <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center mx-auto mb-3 shadow-sm border border-gray-100">
+                      <FileText className="w-5 h-5 text-gray-300" />
                     </div>
+                    <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">No documents found</p>
                   </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        )}
-      </motion.div>
-    </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {localUser.documents.map((docItem) => {
+                      const previewUrl = convertToThumbnail(docItem.url)
+                      return (
+                        <motion.div key={docItem.id} whileHover={{ y: -4 }} className="relative group bg-gray-50 rounded-[1.5rem] overflow-hidden border border-gray-200 hover:border-emerald-300 transition-all shadow-sm">
+                          <div className="h-32 bg-black/40 overflow-hidden relative">
+                            <img src={previewUrl} alt={docItem.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onError={(e) => { (e.target as any).style.display='none' }} />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#0e1628] via-transparent to-transparent opacity-60" />
+                          </div>
+                          <div className="p-4 relative bg-white">
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="min-w-0">
+                                <h4 className="font-bold text-gray-900 text-sm truncate leading-tight mb-1" title={docItem.title}>{docItem.title}</h4>
+                                <div className="flex items-center gap-1.5 text-[9px] font-bold text-gray-400 uppercase tracking-widest">
+                                  <CalendarIcon className="w-3 h-3" />
+                                  {format(new Date(docItem.addedAt), 'MMM d, yyyy')}
+                                </div>
+                              </div>
+                              <div className="flex gap-1.5">
+                                <a href={docItem.url} target="_blank" rel="noreferrer" className="w-7 h-7 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-100 transition-all border border-blue-100" title="Open Link">
+                                  <LinkIcon className="w-3.5 h-3.5" />
+                                </a>
+                                <button onClick={() => handleDeleteDoc(docItem.id)} className="w-7 h-7 bg-red-50 text-red-600 rounded-lg flex items-center justify-center hover:bg-red-100 transition-all border border-red-100" title="Delete">
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+        </motion.div>
+      </div>
+    </>
   )
 }
 
