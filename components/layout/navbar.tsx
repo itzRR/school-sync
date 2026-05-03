@@ -15,6 +15,7 @@ import {
 import { getCurrentUser, signOut, getDefaultRoute } from "@/lib/auth"
 import type { AuthUser } from "@/lib/auth"
 import { supabase } from "@/lib/supabase"
+import { Avatar } from "@/components/ims/ProfileSection"
 
 const navigation = [
   { name: "Home",     href: "/" },
@@ -26,6 +27,7 @@ const navigation = [
 export function Navbar() {
   const [isOpen, setIsOpen]       = useState(false)
   const [user, setUser]           = useState<AuthUser | null>(null)
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
   const router   = useRouter()
@@ -34,9 +36,16 @@ export function Navbar() {
     // onAuthStateChange fires immediately with INITIAL_SESSION - no need for a separate getCurrentUser() call
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        getCurrentUser().then(setUser)
+        getCurrentUser().then(u => {
+          setUser(u)
+          if (u) {
+            supabase.from("profiles").select("avatar_url").eq("id", session.user.id).single()
+              .then(({ data }) => setAvatarUrl(data?.avatar_url ?? null))
+          }
+        })
       } else {
         setUser(null)
+        setAvatarUrl(null)
       }
     })
     return () => subscription.unsubscribe()
@@ -99,8 +108,8 @@ export function Navbar() {
                     variant="ghost"
                     className="flex items-center gap-2 text-gray-700 hover:bg-gray-100"
                   >
-                    <div className="w-7 h-7 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                      <User className="h-3.5 w-3.5 text-white" />
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-blue-100">
+                      <Avatar photoURL={avatarUrl} name={user.name ?? ""} size="sm" className="w-full h-full" />
                     </div>
                     <span className="text-sm font-medium max-w-[120px] truncate">{user.name?.split(" ")[0]}</span>
                     <ChevronDown className="h-3.5 w-3.5 opacity-60" />
