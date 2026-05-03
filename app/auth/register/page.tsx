@@ -97,8 +97,8 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl mb-4 shadow-lg">
-            <GraduationCap className="w-8 h-8 text-white" />
+          <div className="flex justify-center mb-4">
+            <img src="/cadd-logo.png" alt="CADD Centre Logo" className="h-16 w-auto object-contain" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">CADD Centre Lanka</h1>
           <p className="text-gray-500 text-sm mt-1">Academic & Student Management System</p>
