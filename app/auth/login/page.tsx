@@ -138,7 +138,7 @@ export default function LoginPage() {
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-8">
             <img src="/cadd-logo.png" alt="CADD Centre" className="h-12 w-auto object-contain brightness-200 mx-auto mb-3" />
-            <h1 className="text-2xl font-black text-white">Scholar Sync</h1>
+            <h1 className="text-2xl font-black text-white">CADD Centre</h1>
           </div>
 
           {/* Card */}
@@ -223,7 +223,7 @@ export default function LoginPage() {
                       }}
                     />
                     <button type="button" onClick={() => setShowPassword(!showPassword)} tabIndex={-1}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center text-white/30 hover:text-white/60 transition-colors rounded-lg">
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center text-white/60 hover:text-white transition-colors rounded-lg">
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>

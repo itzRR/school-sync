@@ -121,7 +121,7 @@ export default function RegisterPage() {
           <div>
             <div className="flex items-center gap-2 mb-6">
               <div className="w-6 h-0.5 bg-blue-400" />
-              <span className="text-blue-400 text-xs font-bold uppercase tracking-[0.3em]">Join Scholar Sync</span>
+              <span className="text-blue-400 text-xs font-bold uppercase tracking-[0.3em]">Join CADD Centre</span>
             </div>
             <h2 className="text-5xl font-black text-white leading-[1.1] tracking-tight">
               Start Your
@@ -161,7 +161,7 @@ export default function RegisterPage() {
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-8">
             <img src="/cadd-logo.png" alt="CADD Centre" className="h-12 w-auto object-contain brightness-200 mx-auto mb-3" />
-            <h1 className="text-2xl font-black text-white">Scholar Sync</h1>
+            <h1 className="text-2xl font-black text-white">CADD Centre</h1>
           </div>
 
           {/* Card */}
@@ -268,7 +268,7 @@ export default function RegisterPage() {
                       onBlur={() => handleBlurField("password")}
                       className={inputCls + " pr-12"} style={inputStyle("password", !!fieldErrors.password)} required />
                     <button type="button" onClick={() => setShowPassword(!showPassword)} tabIndex={-1}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center text-white/30 hover:text-white/60 transition-colors rounded-lg">
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center text-white/60 hover:text-white transition-colors rounded-lg">
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
