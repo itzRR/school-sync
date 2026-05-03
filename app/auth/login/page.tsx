@@ -97,7 +97,7 @@ export default function LoginPage() {
           <div>
             <div className="flex items-center gap-2 mb-6">
               <div className="w-6 h-0.5 bg-blue-400" />
-              <span className="text-blue-400 text-xs font-bold uppercase tracking-[0.3em]">Scholar Sync</span>
+              <span className="text-blue-400 text-xs font-bold uppercase tracking-[0.3em]">CADD Centre</span>
             </div>
             <h2 className="text-5xl font-black text-white leading-[1.1] tracking-tight">
               Design Your
